@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model DailyContent {
+  id        String   @id @default(cuid())
+  date      DateTime
+  type      String   // "conversation" | "vocabulary" | "passage"
+  title     String
+  content   String   // Markdown content
+  source    String?
+  tags      String?  // comma-separated
+  pushed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  date        DateTime
+  title       String
+  description String?
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+}
+
+model Streak {
+  id            String    @id @default("default")
+  currentStreak Int       @default(0)
+  longestStreak Int       @default(0)
+  lastActive    DateTime?
+}
+
+model NotionConfig {
+  id        String  @id @default("default")
+  token     String? // encrypted Notion integration token
+  dbEnglish String? // English learning database ID
+  dbPlans   String? // Daily plans database ID
+  enabled   Boolean @default(false)
+}

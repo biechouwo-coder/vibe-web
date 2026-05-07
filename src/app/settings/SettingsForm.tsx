@@ -1,0 +1,86 @@
+'use client'
+
+import { useRef } from 'react'
+import { saveNotionConfig } from '@/actions/learn'
+
+interface SettingsFormProps {
+  config: {
+    token: string | null
+    dbEnglish: string | null
+    dbPlans: string | null
+    enabled: boolean
+  } | null
+}
+
+export default function SettingsForm({ config }: SettingsFormProps) {
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const handleAction = async (formData: FormData) => {
+    await saveNotionConfig(formData)
+    formRef.current?.reset()
+    window.location.reload()
+  }
+
+  return (
+    <form ref={formRef} action={handleAction} className="mt-6 space-y-4">
+      <div>
+        <label htmlFor="token" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          Integration Token
+        </label>
+        <input
+          id="token"
+          name="token"
+          type="password"
+          defaultValue={config?.token ?? ''}
+          placeholder="ntn_xxxxxxxxxxxx"
+          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-emerald-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="dbEnglish" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          English Learning Database ID
+        </label>
+        <input
+          id="dbEnglish"
+          name="dbEnglish"
+          type="text"
+          defaultValue={config?.dbEnglish ?? ''}
+          placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-emerald-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="dbPlans" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          Daily Plans Database ID
+        </label>
+        <input
+          id="dbPlans"
+          name="dbPlans"
+          type="text"
+          defaultValue={config?.dbPlans ?? ''}
+          placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-emerald-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+        />
+      </div>
+
+      <label className="flex items-center gap-2">
+        <input
+          name="enabled"
+          type="checkbox"
+          defaultChecked={config?.enabled ?? false}
+          className="h-4 w-4 rounded border-zinc-300 text-emerald-500 focus:ring-emerald-400"
+        />
+        <span className="text-sm text-zinc-700 dark:text-zinc-300">Enable Notion push</span>
+      </label>
+
+      <button
+        type="submit"
+        className="rounded-xl bg-emerald-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-600"
+      >
+        Save Settings
+      </button>
+    </form>
+  )
+}

@@ -1,0 +1,39 @@
+'use client'
+
+import { useRef } from 'react'
+import { createTask } from '@/actions/plans'
+
+export default function AddTaskForm() {
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const handleAction = async (formData: FormData) => {
+    await createTask(formData)
+    formRef.current?.reset()
+  }
+
+  return (
+    <form ref={formRef} action={handleAction} className="flex gap-2">
+      <div className="flex flex-1 gap-2 rounded-xl border border-zinc-200 bg-white p-1 dark:border-zinc-800 dark:bg-black">
+        <input
+          name="title"
+          type="text"
+          placeholder="Add a new task..."
+          required
+          className="flex-1 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-zinc-400"
+        />
+        <input
+          name="description"
+          type="text"
+          placeholder="Description (optional)"
+          className="hidden w-40 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-zinc-400 sm:block"
+        />
+      </div>
+      <button
+        type="submit"
+        className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-600 active:bg-emerald-700"
+      >
+        Add
+      </button>
+    </form>
+  )
+}
