@@ -1,10 +1,11 @@
 export const dynamic = 'force-dynamic'
 
-import { getDailyStats } from '@/actions/plans'
+import { getDailyStats, getTodaysTasks } from '@/actions/plans'
 import { fetchTodaysContent } from '@/actions/learn'
 import StreakBadge from '@/components/ui/StreakBadge'
 import ProgressBar from '@/components/layout/ProgressBar'
 import DailyCard from '@/components/learn/DailyCard'
+import HomeTaskList from '@/components/plans/HomeTaskList'
 import Link from 'next/link'
 
 function formatDate(): string {
@@ -19,6 +20,7 @@ function formatDate(): string {
 export default async function Home() {
   const stats = await getDailyStats()
   const content = await fetchTodaysContent()
+  const tasks = await getTodaysTasks()
 
   return (
     <div className="space-y-8">
@@ -104,6 +106,22 @@ export default async function Home() {
             pushed={content.passage.pushed}
             detailHref={`/learn/${content.passage.id}`}
           />
+        </div>
+      </section>
+
+      {/* Today's Tasks */}
+      <section>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Today&apos;s Tasks</h2>
+          <Link
+            href="/plans"
+            className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
+          >
+            Manage all →
+          </Link>
+        </div>
+        <div className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-black">
+          <HomeTaskList tasks={tasks} />
         </div>
       </section>
     </div>
