@@ -304,5 +304,41 @@ export async function getAllTodaysContent() {
   const vocabulary = await getDailyVocabulary()
   const passage = await getDailyPassage()
 
+  // Auto-create tasks for today's learning content
+  await ensureLearningTasks(conversation, vocabulary, passage)
+
   return { conversation, vocabulary, passage }
+}
+
+async function ensureLearningTasks(
+  conversation: { id: string; title: string },
+  vocabulary: { id: string; title: string },
+  passage: { id: string; title: string }
+) {
+  const date = getDateOnly()
+  const taskDefs = [
+    { title: `💬 ${conversation.title}`, contentId: conversation.id },
+    { title: `📝 ${vocabulary.title}`, contentId: vocabulary.id },
+    { title: `📄 ${passage.title}`, contentId: passage.id },
+  ]
+
+  const existingTasks = await prisma.task.findMany({
+    where: { date },
+    select: { title: true },
+  })
+  const existingTitles = new Set(existingTasks.map((t) => t.title))
+
+  const newTasks = taskDefs
+    .filter((t) => !existingTitles.has(t.title))
+    .map((t, i) => ({
+      date,
+      title: t.title,
+      description: 'Daily learning task',
+      sortOrder: i,
+      completed: false,
+    }))
+
+  if (newTasks.length > 0) {
+    await prisma.task.createMany({ data: newTasks })
+  }
 }
