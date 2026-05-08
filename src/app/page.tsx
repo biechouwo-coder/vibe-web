@@ -70,6 +70,22 @@ export default async function Home() {
         </Link>
       </section>
 
+      {/* Today's Tasks */}
+      <section>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Today&apos;s Tasks</h2>
+          <Link
+            href="/plans"
+            className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
+          >
+            Manage all →
+          </Link>
+        </div>
+        <div className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-black">
+          <HomeTaskList tasks={tasks} />
+        </div>
+      </section>
+
       {/* Today's learning content */}
       <section>
         <div className="mb-4 flex items-center justify-between">
@@ -106,22 +122,6 @@ export default async function Home() {
             pushed={content.passage.pushed}
             detailHref={`/learn/${content.passage.id}`}
           />
-        </div>
-      </section>
-
-      {/* Today's Tasks */}
-      <section>
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Today&apos;s Tasks</h2>
-          <Link
-            href="/plans"
-            className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
-          >
-            Manage all →
-          </Link>
-        </div>
-        <div className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-black">
-          <HomeTaskList tasks={tasks} />
         </div>
       </section>
     </div>
