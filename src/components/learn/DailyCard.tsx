@@ -86,9 +86,13 @@ function parseVocabLines(text: string): VocabItem[] {
 }
 
 function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: Omit<DailyCardProps, 'type'>) {
-  const { dialogue, vocabulary, translation } = parseConversation(content)
-  const dialogueLines = parseDialogueLines(dialogue)
-  const vocabList = parseVocabLines(vocabulary)
+  const { dialogue } = parseConversation(content)
+
+  // Extract first line of dialogue as summary
+  const firstLine = dialogue.split('\n').find((l) => l.includes(':'))
+  const summary = firstLine
+    ? firstLine.replace(/^["']|["']$/g, '').replace(/^.*?:\s*/, '').replace(/^["']|["']$/g, '').trim()
+    : ''
 
   return (
     <motion.div
@@ -107,53 +111,14 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
         </div>
       </div>
 
-      {/* Dialogue bubbles */}
-      {dialogueLines.length > 0 && (
-        <div className="mt-4 space-y-2.5">
-          {dialogueLines.slice(0, 6).map((dl, i) => (
-            <div
-              key={i}
-              className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}
-            >
-              <div
-                className={`max-w-[90%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed ${
-                  dl.isYou
-                    ? 'rounded-tr-md bg-emerald-500 text-white'
-                    : 'rounded-tl-md bg-white text-zinc-700 shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-zinc-700'
-                }`}
-              >
-                {!dl.isYou && (
-                  <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
-                    {dl.speaker}
-                  </span>
-                )}
-                <span>{dl.message.length > 120 ? dl.message.slice(0, 120) + '...' : dl.message}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Summary */}
+      {summary && (
+        <p className="mt-3 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 line-clamp-2">
+          {summary}
+        </p>
       )}
 
-      {/* Vocabulary chips */}
-      {vocabList.length > 0 && (
-        <div className="mt-4 border-t border-blue-200/50 pt-3 dark:border-blue-800/50">
-          <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-zinc-400">Key Vocabulary</p>
-          <div className="flex flex-wrap gap-1.5">
-            {vocabList.slice(0, 4).map((v, i) => (
-              <span
-                key={i}
-                className="inline-flex items-center gap-1 rounded-lg bg-white/70 px-2.5 py-1 text-xs shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-800/70 dark:ring-zinc-700"
-              >
-                <span className="font-medium text-zinc-800 dark:text-zinc-200">{v.term}</span>
-                <span className="text-zinc-400">·</span>
-                <span className="text-zinc-500 dark:text-zinc-400">{v.definition}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Tags & actions */}
+      {/* Tags */}
       <div className="mt-4 flex items-center gap-2">
         <div className="flex flex-wrap gap-1.5">
           {tags?.split(',').map((tag) => (
