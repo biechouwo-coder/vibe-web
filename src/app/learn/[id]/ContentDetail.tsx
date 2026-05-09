@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import VocabCards from '@/components/learn/VocabCards'
 import type { DailyContentWithMeta } from '@/types'
 
 interface ContentDetailProps {
@@ -170,7 +171,77 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
   )
 }
 
-// ── Default content renderer (vocabulary / passage) ──
+// ── Vocabulary card parser ──
+
+function parseVocabSections(text: string) {
+  const sections = text.split(/(?=## \d+\.)/).filter(Boolean)
+  return sections.map((section) => {
+    const termMatch = section.match(/## \d+\.\s*(.+?)\s*(?:\/(.+?)\/)?\s*(?:\((.+?)\))?/)
+    const defMatch = section.match(/\*\*Definition:\*\*\s*(.+)/)
+    const exampleMatch = section.match(/\*\*Example:\*\*\s*"(.+)"|\*\*Example:\*\*\s*(.+)/)
+    const chineseMatch = section.match(/\*\*Chinese:\*\*\s*(.+)/)
+
+    return {
+      term: termMatch?.[1]?.trim() || '',
+      phonetic: termMatch?.[2]?.trim() || '',
+      definition: defMatch?.[1]?.trim() || '',
+      example: (exampleMatch?.[1] || exampleMatch?.[2] || '').trim(),
+      chinese: chineseMatch?.[1]?.trim() || '',
+    }
+  }).filter((v) => v.term)
+}
+
+// ── Vocabulary Card Detail ──
+
+function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
+  const items = parseVocabSections(content.content)
+
+  return (
+    <div className="mx-auto max-w-2xl">
+      <a href="/learn" className="inline-flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-600">
+        ← Back
+      </a>
+
+      <div className="mt-4 mb-6">
+        <span className="text-sm font-medium uppercase tracking-wider text-purple-600 dark:text-purple-400">
+          📚 Vocabulary
+        </span>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight">{content.title}</h1>
+        <p className="mt-1 text-xs text-zinc-400">
+          {new Date(content.date).toLocaleDateString()}
+          {content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).join(' · ')}`}
+        </p>
+      </div>
+
+      {items.length > 0 ? (
+        <VocabCards items={items} />
+      ) : (
+        <div className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
+          {renderMarkdown(content.content)}
+        </div>
+      )}
+
+      <div className="mt-8 flex items-center gap-3">
+        <button
+          onClick={handlePush}
+          disabled={content.pushed}
+          className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-colors ${
+            content.pushed
+              ? 'bg-zinc-100 text-zinc-400 dark:bg-zinc-900'
+              : 'bg-emerald-500 text-white hover:bg-emerald-600'
+          }`}
+        >
+          {content.pushed ? '✅ Already pushed to Notion' : '📤 Push to Notion'}
+        </button>
+        {content.source && (
+          <span className="text-xs text-zinc-400">Source: {content.source}</span>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ── Default content renderer (passage / fallback) ──
 
 function renderMarkdown(text: string) {
   const lines = text.split('\n')
@@ -272,6 +343,10 @@ export default function ContentDetail({ content, pushAction }: ContentDetailProp
 
   if (content.type === 'conversation') {
     return <ConversationDetail content={content} handlePush={handlePush} />
+  }
+
+  if (content.type === 'vocabulary') {
+    return <VocabularyDetail content={content} handlePush={handlePush} />
   }
 
   return <DefaultDetail content={content} handlePush={handlePush} />
