@@ -17,76 +17,14 @@ const typeConfig = {
   passage: { emoji: '📖', color: 'bg-amber-50 dark:bg-amber-950/20', border: 'border-amber-200 dark:border-amber-800', label: 'Reading Passage' },
 }
 
-// Parse conversation content into sections
-function parseConversation(content: string) {
-  const parts = content.split(/\*\*Dialogue:\*\*|\*\*Key Vocabulary:\*\*|\*\*Translation:\*\*/).filter(Boolean)
-
-  let dialogue = ''
-  let vocabulary = ''
-  let translation = ''
-
-  // Determine which section is which based on content markers
-  const rawSections = content.match(/\*\*(Dialogue|Key Vocabulary|Translation):\*\*/g) || []
-  const sectionTexts = content.split(/\*\*(Dialogue|Key Vocabulary|Translation):\*\*/).filter(Boolean)
-
-  let i = 0
-  const sections: Record<string, string> = {}
-  while (i < rawSections.length && i + 1 < sectionTexts.length) {
-    // The sectionTexts alternate between section names and content
-    // Find the index in sectionTexts
-    const nameIdx = sectionTexts.findIndex((s) => rawSections[i].includes(s))
-    break
-  }
-
-  // Simpler approach: find each section by header
+// Parse conversation content to extract only the dialogue section
+function parseConversationDialogue(content: string) {
   const dialogueMatch = content.match(/\*\*Dialogue:\*\*([\s\S]*?)(?=\*\*Key Vocabulary:\*\*|\*\*Translation:\*\*|$)/)
-  const vocabMatch = content.match(/\*\*Key Vocabulary:\*\*([\s\S]*?)(?=\*\*Translation:\*\*|$)/)
-  const transMatch = content.match(/\*\*Translation:\*\*([\s\S]*?)$/)
-
-  return {
-    dialogue: dialogueMatch ? dialogueMatch[1].trim() : '',
-    vocabulary: vocabMatch ? vocabMatch[1].trim() : '',
-    translation: transMatch ? transMatch[1].trim() : '',
-  }
-}
-
-// Parse dialogue lines into speaker-message pairs
-function parseDialogueLines(text: string) {
-  const lines = text.split('\n').filter(Boolean)
-  const speakers = ['Professor', 'You', 'Classmate', 'Team Member']
-
-  return lines
-    .map((line) => {
-      const speaker = speakers.find((s) => line.startsWith(`${s}:`))
-      if (speaker) {
-        return {
-          speaker,
-          message: line.replace(`${speaker}:`, '').replace(/^["']|["']$/g, '').trim(),
-          isYou: speaker === 'You',
-        }
-      }
-      return null
-    })
-    .filter((item): item is NonNullable<typeof item> => item !== null)
-}
-
-interface VocabItem { term: string; definition: string }
-
-// Parse vocabulary lines
-function parseVocabLines(text: string): VocabItem[] {
-  return text
-    .split('\n')
-    .filter((l) => l.trim().startsWith('-'))
-    .map((l) => {
-      const match = l.match(/-\s*(.+?):\s*(.+)/)
-      if (match) return { term: match[1].trim(), definition: match[2].trim() }
-      return null
-    })
-    .filter((item): item is VocabItem => item !== null)
+  return dialogueMatch ? dialogueMatch[1].trim() : ''
 }
 
 function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: Omit<DailyCardProps, 'type'>) {
-  const { dialogue } = parseConversation(content)
+  const dialogue = parseConversationDialogue(content)
 
   // Extract first line of dialogue as summary
   const firstLine = dialogue.split('\n').find((l) => l.includes(':'))
@@ -100,16 +38,12 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
       animate={{ opacity: 1, y: 0 }}
       className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white p-5 dark:border-blue-800 dark:from-blue-950/20 dark:to-black"
     >
-      {/* Header */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-lg dark:bg-blue-900/50">💬</span>
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wider text-blue-600 dark:text-blue-400">Daily Conversation</p>
-            <h3 className="font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
-          </div>
-        </div>
-      </div>
+      {/* Header with type badge */}
+      <span className="inline-flex items-center gap-1 rounded-lg bg-blue-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+        💬 Daily Conversation
+      </span>
+
+      <h3 className="mt-3 font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
 
       {/* Summary */}
       {summary && (
@@ -169,17 +103,18 @@ function DefaultCard({ title, type, content, tags, pushed, onPush, detailHref }:
       animate={{ opacity: 1, y: 0 }}
       className={`rounded-2xl border ${cfg.border} ${cfg.color} p-5`}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">{cfg.emoji}</span>
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">{cfg.label}</p>
-            <h3 className="font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
-          </div>
-        </div>
-      </div>
+      {/* Type badge at top */}
+      <span className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold uppercase tracking-wider ${
+        type === 'vocabulary'
+          ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'
+          : 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+      }`}>
+        {cfg.emoji} {cfg.label}
+      </span>
 
-      <div className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 whitespace-pre-line line-clamp-4">
+      <h3 className="mt-3 font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
+
+      <div className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 whitespace-pre-line line-clamp-4">
         {preview}
       </div>
 

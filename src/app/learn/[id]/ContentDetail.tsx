@@ -70,8 +70,14 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <a href="/learn" className="inline-flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-600">
-        ← Back
+      <a
+        href="/learn"
+        className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-600 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-800 hover:shadow-md dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
+      >
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back
       </a>
 
       {/* Header */}
@@ -198,8 +204,14 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
 
   return (
     <div className="mx-auto max-w-2xl">
-      <a href="/learn" className="inline-flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-600">
-        ← Back
+      <a
+        href="/learn"
+        className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-600 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-800 hover:shadow-md dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
+      >
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back
       </a>
 
       <div className="mt-4 mb-6">
