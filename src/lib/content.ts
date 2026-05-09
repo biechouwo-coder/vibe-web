@@ -15,10 +15,10 @@ Classmate: "That's fascinating! Do you think carbon pricing alone is sufficient?
 You: "That's a great question. Carbon pricing is essential but not sufficient on its own. We also need regulatory frameworks, green investment incentives, and technological innovation to make the transition work."
 
 **Key Vocabulary:**
-- Carbon pricing: 碳定价
-- Regulatory framework: 监管框架
-- Green investment: 绿色投资
-- Emission reduction: 减排
+- Carbon pricing /ˈkɑːbən ˈpraɪsɪŋ/: 碳定价
+- Regulatory framework /ˈreɡjələtɔːri ˈfreɪmwɜːrk/: 监管框架
+- Green investment /ɡriːn ɪnˈvestmənt/: 绿色投资
+- Emission reduction /ɪˈmɪʃən rɪˈdʌkʃən/: 减排
 
 **Translation:**
 教授："大家早上好。我们来轮流做一下自我介绍。告诉我们你的名字、背景以及你为什么选择这个项目。"
@@ -40,10 +40,10 @@ Team Member: "Good point. Let's split the work — I'll gather data on carbon em
 You: "Sounds good. I'll also prepare a comparative framework so we can evaluate the pilot zones consistently. Let's set a checkpoint for Friday."
 
 **Key Vocabulary:**
-- Green bond: 绿色债券
-- Pilot zone: 试点区域
-- Policy analysis: 政策分析
-- Comparative framework: 比较框架
+- Green bond /ɡriːn bɒnd/: 绿色债券
+- Pilot zone /ˈpaɪlət zoʊn/: 试点区域
+- Policy analysis /ˈpɒləsi əˈnæləsɪs/: 政策分析
+- Comparative framework /kəmˈpærətɪv ˈfreɪmwɜːrk/: 比较框架
 
 **Translation:**
 队友："我们的可持续金融项目，应该分析特斯拉的绿色债券发行，还是研究中国绿色金融试点区？"
@@ -67,11 +67,11 @@ Professor: "Interesting. Did you control for credit ratings?"
 You: "Yes, I controlled for credit ratings, industry sector, and bond maturity. The ESG premium remained statistically significant at the 5% level."
 
 **Key Vocabulary:**
-- ESG scores: ESG评分
-- Corporate bond yields: 公司债券收益率
-- Basis points (bps): 基点
-- Borrowing costs: 借贷成本
-- Statistically significant: 统计显著性
+- ESG scores /iː es dʒiː skɔːrz/: ESG评分
+- Corporate bond yields /ˈkɔːrpərət bɒnd jiːldz/: 公司债券收益率
+- Basis points (bps) /ˈbeɪsɪs pɔɪnts/: 基点
+- Borrowing costs /ˈbɒroʊɪŋ kɒsts/: 借贷成本
+- Statistically significant /stəˈtɪstɪkli sɪɡˈnɪfɪkənt/: 统计显著性
 
 **Translation:**
 你："今天我向大家展示我对亚洲市场ESG评分与公司债收益率相关性的分析。"
@@ -86,27 +86,27 @@ You: "Yes, I controlled for credit ratings, industry sector, and bond maturity. 
 const vocabularyContent = [
   {
     title: 'Carbon Market Fundamentals',
-    content: `## 1. Carbon Pricing (碳定价)
+    content: `## 1. Carbon Pricing /ˈkɑːbən ˈpraɪsɪŋ/ (碳定价)
 **Definition:** A policy tool that sets a price on greenhouse gas emissions to incentivize reduction.
 **Example:** "The EU Emissions Trading System is the world's largest carbon pricing mechanism."
 **Chinese:** 碳定价是一种对温室气体排放设定价格以激励减排的政策工具。
 
-## 2. Carbon Credit (碳信用)
+## 2. Carbon Credit /ˈkɑːbən ˈkredɪt/ (碳信用)
 **Definition:** A permit representing the right to emit one tonne of CO₂, often tradeable in carbon markets.
 **Example:** "One carbon credit equals one tonne of CO₂ equivalent reduced or removed from the atmosphere."
 **Chinese:** 碳信用是一种代表排放一吨CO₂权利的许可，可在碳市场中交易。
 
-## 3. Carbon Footprint (碳足迹)
+## 3. Carbon Footprint /ˈkɑːbən ˈfʊtprɪnt/ (碳足迹)
 **Definition:** The total amount of greenhouse gases produced by an individual, organization, or product.
 **Example:** "Many companies are now required to disclose their carbon footprint in annual reports."
 **Chinese:** 碳足迹是指个人、组织或产品所产生的温室气体总量。
 
-## 4. Net Zero (净零排放)
+## 4. Net Zero /net ˈzɪroʊ/ (净零排放)
 **Definition:** Balancing the amount of greenhouse gases emitted with an equivalent amount removed.
 **Example:** "China has pledged to achieve carbon neutrality by 2060, which is a form of net zero commitment."
 **Chinese:** 净零排放是指将排放的温室气体量与等量的移除量相平衡。
 
-## 5. Greenwashing (漂绿)
+## 5. Greenwashing /ˈɡriːnwɒʃɪŋ/ (漂绿)
 **Definition:** Misleading claims about environmental benefits of a product or practice.
 **Example:** "Investors are increasingly wary of greenwashing in ESG reporting."
 **Chinese:** 漂绿是指对产品或实践的环境效益进行误导性宣传。`,
@@ -114,27 +114,27 @@ const vocabularyContent = [
   },
   {
     title: 'Green Finance Essentials',
-    content: `## 1. Green Bond (绿色债券)
+    content: `## 1. Green Bond /ɡriːn bɒnd/ (绿色债券)
 **Definition:** A fixed-income instrument specifically earmarked to raise money for climate and environmental projects.
 **Example:** "The World Bank issued the first green bond in 2008 to support climate projects."
 **Chinese:** 绿色债券是一种专门为气候和环境项目筹集资金的固定收益工具。
 
-## 2. ESG Integration (ESG整合)
+## 2. ESG Integration /iː es dʒiː ˌɪntɪˈɡreɪʃən/ (ESG整合)
 **Definition:** The systematic inclusion of environmental, social, and governance factors into investment decisions.
 **Example:** "ESG integration has become mainstream among institutional investors."
 **Chinese:** ESG整合是指系统性地将环境、社会和治理因素纳入投资决策。
 
-## 3. Climate Risk (气候风险)
+## 3. Climate Risk /ˈklaɪmət rɪsk/ (气候风险)
 **Definition:** Financial risks posed by climate change, including physical risks and transition risks.
 **Example:** "Banks are now required to stress-test their portfolios against climate risk scenarios."
 **Chinese:** 气候风险是气候变化带来的金融风险，包括物理风险和转型风险。
 
-## 4. Carbon Tax (碳税)
+## 4. Carbon Tax /ˈkɑːbən tæks/ (碳税)
 **Definition:** A tax imposed on the burning of carbon-based fuels, proportional to carbon content.
 **Example:** "Sweden has one of the highest carbon taxes at approximately €120 per tonne of CO₂."
 **Chinese:** 碳税是对含碳燃料燃烧征收的税，与碳含量成比例。
 
-## 5. Sustainable Finance (可持续金融)
+## 5. Sustainable Finance /səˈsteɪnəbl ˈfaɪnæns/ (可持续金融)
 **Definition:** Financial services that integrate environmental, social, and governance criteria into business decisions.
 **Example:** "The EU Sustainable Finance Disclosure Regulation requires funds to disclose their sustainability risks."
 **Chinese:** 可持续金融是将ESG标准融入商业决策的金融服务。`,
@@ -142,27 +142,27 @@ const vocabularyContent = [
   },
   {
     title: 'Academic Research Terms',
-    content: `## 1. Methodology (方法论)
+    content: `## 1. Methodology /ˌmeθəˈdɒlədʒi/ (方法论)
 **Definition:** A systematic approach used to conduct research, including data collection and analysis methods.
 **Example:** "The paper employs a difference-in-differences methodology to estimate the policy impact."
 **Chinese:** 方法论是进行研究时使用的系统性方法，包括数据收集和分析方法。
 
-## 2. Endogeneity (内生性)
+## 2. Endogeneity /ˌendəʊdʒəˈniːəti/ (内生性)
 **Definition:** A situation where an explanatory variable is correlated with the error term, biasing estimates.
 **Example:** "The authors use instrumental variables to address endogeneity concerns."
 **Chinese:** 内生性是解释变量与误差项相关导致估计偏误的情况。
 
-## 3. Panel Data (面板数据)
+## 3. Panel Data /ˈpænəl ˈdeɪtə/ (面板数据)
 **Definition:** Data that tracks the same subjects over multiple time periods.
 **Example:** "Panel data allows researchers to control for unobserved heterogeneity."
 **Chinese:** 面板数据是追踪同一主体在多个时间周期内变化的数据。
 
-## 4. Causal Inference (因果推断)
+## 4. Causal Inference /ˈkɔːzəl ˈɪnfərəns/ (因果推断)
 **Definition:** The process of determining whether a cause-effect relationship exists.
 **Example:** "Randomized controlled trials are considered the gold standard for causal inference."
 **Chinese:** 因果推断是确定因果关系是否存在的过程。
 
-## 5. External Validity (外部效度)
+## 5. External Validity /ɪkˈstɜːrnl vəˈlɪdəti/ (外部效度)
 **Definition:** The extent to which research findings can be generalized to other contexts.
 **Example:** "While the study has strong internal validity, its external validity is limited by the small sample size."
 **Chinese:** 外部效度是研究结论能被推广到其他情境的程度。`,
@@ -182,11 +182,11 @@ The benefits of strong, early action considerably outweigh the costs. The estima
 This asymmetry between the costs of action and the costs of inaction creates a compelling economic case for ambitious climate policy. The key lies in carbon pricing, technology policy, and removing barriers to behavioral change."
 
 **Key Vocabulary:**
-- Market failure: 市场失灵
-- Irreversible impacts: 不可逆影响
-- Business-as-usual: 一切照旧（情景）
-- Stabilization: 稳定化
-- Ambitious: 有雄心的
+- Market failure /ˈmɑːrkɪt ˈfeɪljər/: 市场失灵
+- Irreversible impacts /ˌɪrɪˈvɜːrsəbl ˈɪmpækts/: 不可逆影响
+- Business-as-usual /ˈbɪznəs əz ˈjuːʒuəl/: 一切照旧（情景）
+- Stabilization /ˌsteɪbɪlaɪˈzeɪʃən/: 稳定化
+- Ambitious /æmˈbɪʃəs/: 有雄心的
 
 **Discussion Questions:**
 1. Why does Stern describe climate change as a "market failure"?
@@ -205,11 +205,11 @@ However, challenges remain. These include: (1) the need for standardized definit
 China's experience offers valuable lessons for other emerging economies developing their green finance systems."
 
 **Key Vocabulary:**
-- Cumulative: 累计的
-- Green loan balance: 绿色贷款余额
-- Comprehensive policy framework: 综合政策框架
-- Transition risks: 转型风险
-- Carbon derivatives: 碳衍生品
+- Cumulative /ˈkjuːmjʊleɪtɪv/: 累计的
+- Green loan balance /ɡriːn loʊn ˈbæləns/: 绿色贷款余额
+- Comprehensive policy framework /ˌkɒmprɪˈhensɪv ˈpɒləsi ˈfreɪmwɜːrk/: 综合政策框架
+- Transition risks /trænˈzɪʃən rɪsks/: 转型风险
+- Carbon derivatives /ˈkɑːbən dɪˈrɪvətɪvz/: 碳衍生品
 
 **Discussion Questions:**
 1. What are the key components of China's green finance policy framework?

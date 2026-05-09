@@ -52,11 +52,12 @@ function parseVocabLines(text: string) {
     .split('\n')
     .filter((l) => l.trim().startsWith('-'))
     .map((l) => {
-      const match = l.match(/-\s*(.+?):\s*(.+)/)
-      if (match) return { term: match[1].trim(), definition: match[2].trim() }
+      // Matches: "- term /phonetic/: 中文" or "- term: 中文"
+      const match = l.match(/-\s*(.+?)\s*(?:\/(.+?)\/)?\s*:\s*(.+)/)
+      if (match) return { term: match[1].trim(), phonetic: match[2]?.trim() || '', definition: match[3].trim() }
       return null
     })
-    .filter((item): item is { term: string; definition: string } => item !== null)
+    .filter((item): item is { term: string; phonetic: string; definition: string } => item !== null)
 }
 
 // ── Conversation Knowledge Card ──
@@ -124,6 +125,9 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
                 className="rounded-xl bg-white/70 p-3.5 shadow-sm ring-1 ring-purple-200/50 dark:bg-zinc-800/70 dark:ring-purple-800/50"
               >
                 <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">{v.term}</p>
+                {v.phonetic && (
+                  <p className="mt-0.5 text-xs text-purple-500 dark:text-purple-400 font-mono">{v.phonetic}</p>
+                )}
                 <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">{v.definition}</p>
               </div>
             ))}
