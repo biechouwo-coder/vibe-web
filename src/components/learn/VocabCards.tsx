@@ -79,7 +79,7 @@ export default function VocabCards({ items }: VocabCardsProps) {
               opacity: { duration: 0.2 },
               scale: { duration: 0.25 },
             }}
-            className="absolute inset-0"
+            className="absolute inset-0 overflow-y-auto"
           >
             <div className="flex h-full flex-col rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 via-white to-purple-50/50 p-6 shadow-lg shadow-purple-200/20 dark:border-purple-800 dark:from-purple-950/30 dark:via-black dark:to-purple-950/20 dark:shadow-purple-950/30">
               {/* Card number badge */}
