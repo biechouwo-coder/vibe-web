@@ -66,7 +66,7 @@ export default function VocabCards({ items }: VocabCardsProps) {
 
       {/* Card area */}
       <div className="relative h-[360px] sm:h-[400px]">
-        <AnimatePresence mode="popLayout" custom={dir}>
+        <AnimatePresence mode="wait" custom={dir}>
           <motion.div
             key={current}
             custom={dir}
@@ -75,19 +75,20 @@ export default function VocabCards({ items }: VocabCardsProps) {
             animate="center"
             exit="exit"
             transition={{
-              x: { type: 'spring', stiffness: 300, damping: 28 },
+              x: { type: 'spring', stiffness: 260, damping: 24 },
               opacity: { duration: 0.2 },
-              scale: { duration: 0.3 },
-              rotateY: { duration: 0.3 },
+              scale: { duration: 0.25 },
             }}
             className="absolute inset-0"
-            style={{ perspective: 800 }}
           >
             <div className="flex h-full flex-col rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 via-white to-purple-50/50 p-6 shadow-lg shadow-purple-200/20 dark:border-purple-800 dark:from-purple-950/30 dark:via-black dark:to-purple-950/20 dark:shadow-purple-950/30">
               {/* Card number badge */}
-              <div className="mb-4 flex items-center gap-2">
-                <span className="inline-flex items-center justify-center rounded-lg bg-purple-100 px-2.5 py-1 text-xs font-semibold text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">
-                  #{current + 1}
+              <div className="mb-3 flex items-center gap-2">
+                <span className="inline-flex items-center gap-1 rounded-lg bg-purple-100 px-2.5 py-1 text-xs font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  {current + 1}
                 </span>
               </div>
 
