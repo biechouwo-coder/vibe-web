@@ -176,7 +176,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
 function parseVocabSections(text: string) {
   const sections = text.split(/(?=## \d+\.)/).filter(Boolean)
   return sections.map((section) => {
-    const termMatch = section.match(/## \d+\.\s*(.+?)\s*(?:\/(.+?)\/)?\s*(?:\((.+?)\))?/)
+    const termMatch = section.match(/## \d+\.\s*([^(\/]+)\s*(?:\/([^\/]+)\/)?\s*(?:\((.+)\))?/)
     const defMatch = section.match(/\*\*Definition:\*\*\s*(.+)/)
     const exampleMatch = section.match(/\*\*Example:\*\*\s*"(.+)"|\*\*Example:\*\*\s*(.+)/)
     const chineseMatch = section.match(/\*\*Chinese:\*\*\s*(.+)/)
