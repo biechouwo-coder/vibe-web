@@ -126,7 +126,9 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
               >
                 <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">{v.term}</p>
                 {v.phonetic && (
-                  <p className="mt-0.5 text-xs text-purple-500 dark:text-purple-400 font-mono">{v.phonetic}</p>
+                  <p className="mt-0.5 text-xs text-purple-500 dark:text-purple-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>
+                    [{v.phonetic}]
+                  </p>
                 )}
                 <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">{v.definition}</p>
               </div>
