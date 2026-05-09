@@ -50,9 +50,12 @@ export default async function PlansPage() {
       <section className="text-center">
         <a
           href="/plans/history"
-          className="text-sm font-medium text-zinc-400 hover:text-zinc-600 transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-medium text-zinc-600 transition-all hover:border-zinc-300 hover:shadow-sm dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600"
         >
-          View history & stats →
+          View history & stats
+          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
         </a>
       </section>
     </div>

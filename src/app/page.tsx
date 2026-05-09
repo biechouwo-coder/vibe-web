@@ -64,8 +64,11 @@ export default async function Home() {
           className="rounded-2xl border border-zinc-200 bg-white p-4 transition-colors hover:border-emerald-300 dark:border-zinc-800 dark:bg-black dark:hover:border-emerald-700"
         >
           <p className="text-xs font-medium uppercase tracking-wider text-zinc-400">Quick Action</p>
-          <p className="mt-1 text-sm font-medium text-emerald-600 dark:text-emerald-400">
-            Manage today&apos;s tasks →
+          <p className="mt-1 inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400">
+            Manage today&apos;s tasks
+            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
           </p>
         </Link>
       </section>
@@ -76,9 +79,12 @@ export default async function Home() {
           <h2 className="text-lg font-semibold">Today&apos;s Tasks</h2>
           <Link
             href="/plans"
-            className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-all hover:bg-emerald-100 hover:shadow-sm dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400 dark:hover:bg-emerald-950/50"
           >
-            Manage all →
+            Manage all
+            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
         <div className="rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-black">
@@ -92,9 +98,12 @@ export default async function Home() {
           <h2 className="text-lg font-semibold">Today&apos;s Learning</h2>
           <Link
             href="/learn"
-            className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-all hover:bg-emerald-100 hover:shadow-sm dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400 dark:hover:bg-emerald-950/50"
           >
-            View all →
+            View all
+            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-3">
