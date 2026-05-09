@@ -2,7 +2,7 @@
 
 > 专为 HKUST-GZ 碳中和与绿色金融硕士设计的个人网站，融合**每日英语学习**与**每日计划管理**。
 
-🌐 线上地址：https://vibe-web-production-1f28.up.railway.app
+🌐 线上地址：https://vibe-web-production-1f28.up.railway.app（建议手机电脑都收藏这个链接）
 
 ---
 
