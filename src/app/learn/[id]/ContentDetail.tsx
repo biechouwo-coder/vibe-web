@@ -2,6 +2,7 @@
 
 import VocabCards from '@/components/learn/VocabCards'
 import Link from 'next/link'
+import { formatStoredDate } from '@/lib/date'
 import type { DailyContentWithMeta } from '@/types'
 
 interface ContentDetailProps {
@@ -87,7 +88,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
         </span>
         <h1 className="mt-1 text-2xl font-bold tracking-tight">{content.title}</h1>
         <p className="mt-1 text-xs text-zinc-400">
-          {new Date(content.date).toLocaleDateString()}
+          {formatStoredDate(content.date)}
           {content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).join(' · ')}`}
         </p>
       </div>
@@ -220,7 +221,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
         </span>
         <h1 className="mt-1 text-2xl font-bold tracking-tight">{content.title}</h1>
         <p className="mt-1 text-xs text-zinc-400">
-          {new Date(content.date).toLocaleDateString()}
+          {formatStoredDate(content.date)}
           {content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).join(' · ')}`}
         </p>
       </div>
@@ -315,7 +316,7 @@ function DefaultDetail({ content, handlePush }: { content: DailyContentWithMeta;
         </span>
         <h1 className="mt-1 text-2xl font-bold tracking-tight">{content.title}</h1>
         <p className="mt-1 text-xs text-zinc-400">
-          {new Date(content.date).toLocaleDateString()}
+          {formatStoredDate(content.date)}
           {content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).join(' · ')}`}
         </p>
       </div>

@@ -72,8 +72,6 @@ export async function deleteTask(taskId: string) {
 
 export async function updateStreak() {
   const today = getToday()
-  const yesterday = new Date(today)
-  yesterday.setDate(yesterday.getDate() - 1)
 
   const streak = await prisma.streak.findFirst()
   if (!streak) {
@@ -89,15 +87,14 @@ export async function updateStreak() {
   if (!lastActive) {
     newStreak = 1
   } else {
-    const lastDate = new Date(lastActive)
-    lastDate.setHours(0, 0, 0, 0)
-
-    if (lastDate.getTime() === today.getTime()) {
+    // Both lastActive and today are midnight UTC (from getShanghaiDate()),
+    // so direct timestamp comparison is safe regardless of server timezone.
+    if (lastActive.getTime() === today.getTime()) {
       // Already counted today, no change
       return
     }
 
-    const diffDays = Math.floor((today.getTime() - lastDate.getTime()) / 86400000)
+    const diffDays = Math.round((today.getTime() - lastActive.getTime()) / 86400000)
     if (diffDays === 1) {
       newStreak += 1
     } else {

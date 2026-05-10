@@ -77,3 +77,16 @@ export function formatShanghaiDate(
 ): string {
   return new Intl.DateTimeFormat(locale, { timeZone: TZ, ...options }).format(new Date())
 }
+
+/**
+ * Formats a stored Date (from DB, already midnight UTC) in Shanghai timezone.
+ * The stored date is treated as a "calendar date" — we want the day label
+ * to match what the user saw when the content was created.
+ */
+export function formatStoredDate(
+  date: Date | string,
+  locale = 'en-US',
+  options?: Intl.DateTimeFormatOptions,
+): string {
+  return new Intl.DateTimeFormat(locale, { timeZone: TZ, ...options }).format(new Date(date))
+}

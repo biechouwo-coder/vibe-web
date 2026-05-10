@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { formatStoredDate } from '@/lib/date'
 import type { DailyContentWithMeta } from '@/types'
 
 interface ListClientProps {
@@ -48,7 +49,7 @@ export default function ListClient({ items }: ListClientProps) {
                   {item.type}
                 </span>
                 <span className="text-xs text-zinc-400">
-                  {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                  {formatStoredDate(item.date, 'en-US', { month: 'short', day: 'numeric' })}
                 </span>
                 {item.pushed && (
                   <span className="text-xs text-emerald-500">✅ Notion</span>
