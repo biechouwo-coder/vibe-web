@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import { getNotionConfig } from '@/actions/learn'
 import SettingsForm from './SettingsForm'
+import ThemeSelector from '@/components/theme/ThemeSelector'
 
 export default async function SettingsPage() {
   const config = await getNotionConfig()
@@ -13,6 +14,16 @@ export default async function SettingsPage() {
         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
           Configure integrations and preferences
         </p>
+      </section>
+
+      <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
+        <h2 className="text-lg font-semibold">🎨 Theme</h2>
+        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+          Choose your preferred appearance.
+        </p>
+        <div className="mt-4">
+          <ThemeSelector />
+        </div>
       </section>
 
       <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">

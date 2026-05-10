@@ -204,50 +204,57 @@ const vocabularyContent = [
 
 const passageContent = [
   {
-    title: 'The Economics of Climate Change',
-    content: `**Source:** Adapted from the Stern Review (2006) and recent IPCC reports
-
-"Climate change presents a unique challenge for economics: it is the greatest and widest-ranging market failure ever seen. The scientific evidence points to increasing risks of serious, irreversible impacts from climate change associated with business-as-usual paths.
-
-The benefits of strong, early action considerably outweigh the costs. The estimated annual cost of achieving stabilization at 550ppm CO₂e is around 1% of global GDP by 2050 — a significant but manageable figure. In contrast, the potential damages from unmitigated climate change could reach 5-20% of global GDP or more.
-
-This asymmetry between the costs of action and the costs of inaction creates a compelling economic case for ambitious climate policy. The key lies in carbon pricing, technology policy, and removing barriers to behavioral change."
-
-**Key Vocabulary:**
-- Market failure /ˈmɑːrkɪt ˈfeɪljər/: 市场失灵
-- Irreversible impacts /ˌɪrɪˈvɜːrsəbl ˈɪmpækts/: 不可逆影响
-- Business-as-usual /ˈbɪznəs əz ˈjuːʒuəl/: 一切照旧（情景）
-- Stabilization /ˌsteɪbɪlaɪˈzeɪʃən/: 稳定化
-- Ambitious /æmˈbɪʃəs/: 有雄心的
-
-**Discussion Questions:**
-1. Why does Stern describe climate change as a "market failure"?
-2. What is the cost-benefit ratio of early climate action according to the text?
-3. Do you agree that carbon pricing is the "key" solution? Why or why not?`,
-    tags: 'passage,economics,climate',
+    title: 'The Effectiveness of Carbon Pricing: A Meta-Analysis',
+    journal: 'Nature Communications',
+    year: 2024,
+    doi: '10.1038/s41467-024-48512-w',
+    content: '**Source:** Nature Communications, Vol. 15, Article 4147 (2024)\n**DOI:** https://doi.org/10.1038/s41467-024-48512-w\n\nCarbon pricing is widely regarded as a central instrument for achieving climate mitigation targets. This study presents a systematic review and meta-analysis covering 21 carbon pricing schemes worldwide.\n\nThe results show that carbon pricing has led to statistically significant emission reductions ranging from 5% to 21%. At least 17 of the 21 policies evaluated produced immediate and substantial emission reductions.\n\n**Key Vocabulary:**\n- Meta-analysis /ˈmetə əˈnæləsɪs/: 荟萃分析\n- Ex-post evaluation /eks poʊst ɪˌvæljuˈeɪʃən/: 事后评估\n- Publication bias /ˌpʌblɪˈkeɪʃən ˈbaɪəs/: 出版偏倚\n- Effect size /ɪˈfekt saɪz/: 效应量\n- Complementary policies /ˌkɒmplɪˈmentəri ˈpɒləsiz/: 补充政策\n\n**Discussion Questions:**\n1. Why is a meta-analysis more reliable than a single empirical study?\n2. How might publication bias affect the perceived effectiveness of carbon pricing?\n3. What policy implications follow from the finding that 17 of 21 schemes reduced emissions?',
+    tags: 'passage,journal,carbon-pricing,meta-analysis',
   },
   {
-    title: 'Green Finance in China',
-    content: `**Source:** Adapted from the People's Bank of China & NGFS reports
-
-"China has established the world's largest green finance market. By 2024, China's cumulative green bond issuance exceeded RMB 3 trillion, and the green loan balance reached over RMB 20 trillion. The country has developed a comprehensive policy framework that includes green credit guidelines, green bond standards, environmental information disclosure requirements, and a national carbon emissions trading market.
-
-However, challenges remain. These include: (1) the need for standardized definitions of 'green' across financial products, (2) improved transparency in ESG disclosure, (3) better management of transition risks as high-carbon industries restructure, and (4) the development of a more mature carbon derivatives market.
-
-China's experience offers valuable lessons for other emerging economies developing their green finance systems."
-
-**Key Vocabulary:**
-- Cumulative /ˈkjuːmjʊleɪtɪv/: 累计的
-- Green loan balance /ɡriːn loʊn ˈbæləns/: 绿色贷款余额
-- Comprehensive policy framework /ˌkɒmprɪˈhensɪv ˈpɒləsi ˈfreɪmwɜːrk/: 综合政策框架
-- Transition risks /trænˈzɪʃən rɪsks/: 转型风险
-- Carbon derivatives /ˈkɑːbən dɪˈrɪvətɪvz/: 碳衍生品
-
-**Discussion Questions:**
-1. What are the key components of China's green finance policy framework?
-2. Which of the four challenges do you think is most critical and why?
-3. How could China's experience apply to other emerging economies?`,
-    tags: 'passage,china,green-finance',
+    title: 'Does Pricing Carbon Mitigate Climate Change? Firm-Level Evidence from the EU ETS',
+    authors: 'Colmer, J., Martin, R., Muûls, M., Wagner, U.',
+    journal: 'The Review of Economic Studies',
+    year: 2024,
+    doi: '10.1093/restud/rdae055',
+    content: '**Source:** The Review of Economic Studies, Vol. 92, Issue 3, pp. 1625-1664 (2025)\n**DOI:** https://doi.org/10.1093/restud/rdae055\n\nThe EU ETS is the world\'s largest carbon market. This paper provides firm-level evidence that the EU ETS induced regulated firms to reduce CO₂ emissions by 14% to 16%, without detectable contractions in economic activity.\n\n**Key Vocabulary:**\n- Emissions Trading System /ɪˈmɪʃənz ˈtreɪdɪŋ ˈsɪstəm/: 碳排放交易体系\n- Carbon leakage /ˈkɑːbən ˈliːkɪdʒ/: 碳泄漏\n- Firm-level /fɜːrm ˈlevəl/: 企业层面\n\n**Discussion Questions:**\n1. Why is firm-level evidence important for evaluating carbon pricing?\n2. What does the absence of carbon leakage suggest about EU ETS design?',
+    tags: 'passage,journal,eu-ets,carbon-pricing',
+  },
+  {
+    title: 'Quasi-Experimental Evidence on Carbon Pricing',
+    authors: 'Vrolijk, K., Sato, M.',
+    journal: 'The World Bank Research Observer',
+    year: 2023,
+    doi: '10.1093/wbro/lkad001',
+    content: '**Source:** The World Bank Research Observer, Vol. 38, Issue 2, pp. 213-248 (2023)\n**DOI:** https://doi.org/10.1093/wbro/lkad001\n\nThis paper reviews quasi-experimental studies on carbon pricing effects. The evidence shows emission reductions across multiple contexts, while effects on economic outcomes remain ambiguous.\n\n**Key Vocabulary:**\n- Quasi-experimental /ˈkweɪzaɪ ɪkˌsperɪˈmentəl/: 准实验\n- Counterfactual /ˌkaʊntərˈfæktʃuəl/: 反事实\n- Competitiveness /kəmˈpetətɪvnəs/: 竞争力\n\n**Discussion Questions:**\n1. Why are quasi-experimental methods preferred for studying carbon pricing?\n2. How could researchers improve evidence for developing countries?',
+    tags: 'passage,journal,carbon-pricing,review',
+  },
+  {
+    title: 'Designing a Carbon-Linked Bond for Sustainable Investment',
+    authors: 'Dahlen, N., Fehrenkötter, R., Schreiter, M.',
+    journal: 'The Quarterly Review of Economics and Finance',
+    year: 2024,
+    doi: '10.1016/j.qref.2024.04.010',
+    content: '**Source:** The Quarterly Review of Economics and Finance, Vol. 95, pp. 316-325 (2024)\n**DOI:** https://doi.org/10.1016/j.qref.2024.04.010\n\nThis paper proposes a carbon-linked bond whose coupon payments are tied to the carbon price, creating a direct link between environmental performance and investment returns.\n\n**Key Vocabulary:**\n- Carbon-linked bond /ˈkɑːbən lɪŋkt bɒnd/: 碳联结债券\n- Coupon payment /ˈkuːpɒn ˈpeɪmənt/: 票息支付\n- Hedge /hedʒ/: 对冲\n\n**Discussion Questions:**\n1. How does a carbon-linked bond differ from a traditional green bond?\n2. What challenges might arise in implementation?',
+    tags: 'passage,journal,green-bond,carbon-finance',
+  },
+  {
+    title: 'ESG Differentiated Pricing as a Dynamic Transition Tool',
+    authors: 'Ozdemir, B.',
+    journal: 'Journal of Risk Management in Financial Institutions',
+    year: 2024,
+    doi: '10.69554/VWUD6703',
+    content: '**Source:** Journal of Risk Management in Financial Institutions, Vol. 18, No. 1, pp. 26-48 (2024)\n**DOI:** https://doi.org/10.69554/VWUD6703\n\nThis paper proposes a three-layer framework for integrating ESG scores into lending pricing, creating financial incentives for borrowers to improve environmental performance.\n\n**Key Vocabulary:**\n- ESG integration /iː es dʒiː ˌɪntɪˈɡreɪʃən/: ESG整合\n- Transition risk /trænˈzɪʃən rɪsk/: 转型风险\n- Credit risk assessment /ˈkredɪt rɪsk əˈsesmənt/: 信用风险评估\n\n**Discussion Questions:**\n1. How might ESG-differentiated pricing affect borrower behavior?\n2. What are drawbacks of linking loan pricing to ESG scores?',
+    tags: 'passage,journal,esg,banking',
+  },
+  {
+    title: 'Corporate Credit Risk under Carbon Pricing Uncertainty',
+    authors: 'Dominique, C.M.D., Tian, Y.',
+    journal: 'Sustainable Futures',
+    year: 2024,
+    doi: '10.1016/j.sftr.2024.100283',
+    content: '**Source:** Sustainable Futures, Vol. 8, Article 100283 (2024)\n**DOI:** https://doi.org/10.1016/j.sftr.2024.100283\n\nThis paper develops a credit risk model incorporating carbon pricing uncertainty. The impact is particularly pronounced for carbon-intensive industries.\n\n**Key Vocabulary:**\n- Knightian uncertainty /ˈnaɪtiən ʌnˈsɜːrtənti/: 奈特不确定性\n- Default probability /dɪˈfɔːlt ˌprɒbəˈbɪləti/: 违约概率\n- Carbon-intensive /ˈkɑːbən ɪnˈtensɪv/: 碳密集型\n\n**Discussion Questions:**\n1. How does carbon pricing uncertainty differ from other business risks?\n2. What role should financial regulators play?',
+    tags: 'passage,journal,credit-risk,carbon-pricing',
   },
 ]
 
