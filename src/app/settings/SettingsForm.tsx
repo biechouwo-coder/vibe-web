@@ -5,10 +5,10 @@ import { saveNotionConfig } from '@/actions/learn'
 
 interface SettingsFormProps {
   config: {
-    token: string | null
     dbEnglish: string | null
     dbPlans: string | null
     enabled: boolean
+    hasToken: boolean
   } | null
 }
 
@@ -31,11 +31,26 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           id="token"
           name="token"
           type="password"
-          defaultValue={config?.token ?? ''}
-          placeholder="ntn_xxxxxxxxxxxx"
+          placeholder={config?.hasToken ? '••••••••••••••••' : 'ntn_xxxxxxxxxxxx'}
           className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-emerald-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
         />
+        {config?.hasToken && (
+          <p className="mt-1 text-xs text-emerald-600 dark:text-emerald-400">
+            ✅ Token configured. Leave blank to keep the current token.
+          </p>
+        )}
       </div>
+
+      {config?.hasToken && (
+        <label className="flex items-center gap-2">
+          <input
+            name="clearToken"
+            type="checkbox"
+            className="h-4 w-4 rounded border-zinc-300 text-red-500 focus:ring-red-400"
+          />
+          <span className="text-sm text-red-600 dark:text-red-400">Clear saved token</span>
+        </label>
+      )}
 
       <div>
         <label htmlFor="dbEnglish" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">

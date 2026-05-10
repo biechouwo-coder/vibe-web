@@ -33,14 +33,33 @@ export async function getContentHistory(limit = 30) {
 
 export async function getNotionConfig() {
   const config = await prisma.notionConfig.findFirst()
-  return config ?? null
+  if (!config) return null
+  return {
+    dbEnglish: config.dbEnglish,
+    dbPlans: config.dbPlans,
+    enabled: config.enabled,
+    hasToken: Boolean(config.token),
+  }
 }
 
 export async function saveNotionConfig(formData: FormData) {
-  const token = formData.get('token') as string
+  const existing = await prisma.notionConfig.findFirst()
+
   const dbEnglish = formData.get('dbEnglish') as string
   const dbPlans = formData.get('dbPlans') as string
   const enabled = formData.get('enabled') === 'on'
+
+  const tokenInput = formData.get('token')?.toString().trim() ?? ''
+  const clearToken = formData.get('clearToken') === 'on'
+
+  let token: string | null
+  if (clearToken) {
+    token = null
+  } else if (tokenInput) {
+    token = tokenInput
+  } else {
+    token = existing?.token ?? null
+  }
 
   await prisma.notionConfig.upsert({
     where: { id: 'default' },
