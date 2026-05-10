@@ -204,56 +204,33 @@ const vocabularyContent = [
 
 const passageContent = [
   {
-    title: 'The Effectiveness of Carbon Pricing: A Meta-Analysis',
-    journal: 'Nature Communications',
-    year: 2024,
-    doi: '10.1038/s41467-024-48512-w',
-    content: '**Source:** Nature Communications, Vol. 15, Article 4147 (2024)\n**DOI:** https://doi.org/10.1038/s41467-024-48512-w\n\nCarbon pricing is widely regarded as a central instrument for achieving climate mitigation targets. This study presents a systematic review and meta-analysis covering 21 carbon pricing schemes worldwide.\n\nThe results show that carbon pricing has led to statistically significant emission reductions ranging from 5% to 21%. At least 17 of the 21 policies evaluated produced immediate and substantial emission reductions.\n\n**Key Vocabulary:**\n- Meta-analysis /ˈmetə əˈnæləsɪs/: 荟萃分析\n- Ex-post evaluation /eks poʊst ɪˌvæljuˈeɪʃən/: 事后评估\n- Publication bias /ˌpʌblɪˈkeɪʃən ˈbaɪəs/: 出版偏倚\n- Effect size /ɪˈfekt saɪz/: 效应量\n- Complementary policies /ˌkɒmplɪˈmentəri ˈpɒləsiz/: 补充政策\n\n**Discussion Questions:**\n1. Why is a meta-analysis more reliable than a single empirical study?\n2. How might publication bias affect the perceived effectiveness of carbon pricing?\n3. What policy implications follow from the finding that 17 of 21 schemes reduced emissions?',
+    title: 'Systematic review and meta-analysis of ex-post evaluations on the effectiveness of carbon pricing',
+    content: '**Paper:** Systematic review and meta-analysis of ex-post evaluations on the effectiveness of carbon pricing\n**Authors:** Döbbeling-Hildebrandt, N., Miersch, K., Khanna, T.M., Bachelet, M., Kalkuhl, M., Koch, N., Edenhofer, O., Steckel, J.C.\n**Journal:** Nature Communications\n**Year:** 2024\n**DOI:** https://doi.org/10.1038/s41467-024-48512-w\n\nCarbon pricing is widely regarded as a central instrument for achieving climate mitigation targets. This study presents a systematic review and meta-analysis of 483 effect sizes from 80 causal ex-post evaluations covering 21 carbon pricing schemes worldwide.\n\nThe results show that carbon pricing has led to statistically significant emission reductions ranging from 5% to 21%. After correcting for publication bias, the average reduction effect is estimated at 4% to 15%. At least 17 of the 21 policies evaluated produced immediate and substantial emission reductions.\n\n**Key Vocabulary:**\n- Meta-analysis /ˈmetə əˈnæləsɪs/: 荟萃分析\n- Ex-post evaluation /eks poʊst ɪˌvæljuˈeɪʃən/: 事后评估\n- Publication bias /ˌpʌblɪˈkeɪʃən ˈbaɪəs/: 出版偏倚\n- Effect size /ɪˈfekt saɪz/: 效应量\n- Complementary policies /ˌkɒmplɪˈmentəri ˈpɒləsiz/: 补充政策\n\n**Discussion Questions:**\n1. Why is a meta-analysis more reliable than a single empirical study?\n2. How might publication bias affect the perceived effectiveness of carbon pricing?\n3. What policy implications follow from the finding that 17 of 21 schemes reduced emissions?',
     tags: 'passage,journal,carbon-pricing,meta-analysis',
   },
   {
-    title: 'Does Pricing Carbon Mitigate Climate Change? Firm-Level Evidence from the EU ETS',
-    authors: 'Colmer, J., Martin, R., Muûls, M., Wagner, U.',
-    journal: 'The Review of Economic Studies',
-    year: 2024,
-    doi: '10.1093/restud/rdae055',
-    content: '**Source:** The Review of Economic Studies, Vol. 92, Issue 3, pp. 1625-1664 (2025)\n**DOI:** https://doi.org/10.1093/restud/rdae055\n\nThe EU ETS is the world\'s largest carbon market. This paper provides firm-level evidence that the EU ETS induced regulated firms to reduce CO₂ emissions by 14% to 16%, without detectable contractions in economic activity.\n\n**Key Vocabulary:**\n- Emissions Trading System /ɪˈmɪʃənz ˈtreɪdɪŋ ˈsɪstəm/: 碳排放交易体系\n- Carbon leakage /ˈkɑːbən ˈliːkɪdʒ/: 碳泄漏\n- Firm-level /fɜːrm ˈlevəl/: 企业层面\n\n**Discussion Questions:**\n1. Why is firm-level evidence important for evaluating carbon pricing?\n2. What does the absence of carbon leakage suggest about EU ETS design?',
+    title: 'Does Pricing Carbon Mitigate Climate Change? Firm-Level Evidence from the European Union Emissions Trading System',
+    content: '**Paper:** Does Pricing Carbon Mitigate Climate Change? Firm-Level Evidence from the European Union Emissions Trading System\n**Authors:** Colmer, J., Martin, R., Muûls, M., Wagner, U.\n**Journal:** The Review of Economic Studies\n**Year:** 2024\n**DOI:** https://doi.org/10.1093/restud/rdae055\n\nThe European Union Emissions Trading System (EU ETS) is the world\'s largest carbon market. This paper provides rigorous firm-level evidence that the EU ETS induced regulated manufacturing firms to reduce CO₂ emissions by 14% to 16% relative to unregulated firms, without detectable contractions in economic activity.\n\n**Key Vocabulary:**\n- Emissions Trading System /ɪˈmɪʃənz ˈtreɪdɪŋ ˈsɪstəm/: 碳排放交易体系\n- Carbon leakage /ˈkɑːbən ˈliːkɪdʒ/: 碳泄漏\n- Firm-level /fɜːrm ˈlevəl/: 企业层面\n- Administrative data /ədˈmɪnɪstrətɪv ˈdeɪtə/: 行政数据\n\n**Discussion Questions:**\n1. Why is firm-level evidence important for evaluating carbon pricing?\n2. What does the absence of carbon leakage suggest about EU ETS design?\n3. How might carbon pricing affect firms in developing economies differently?',
     tags: 'passage,journal,eu-ets,carbon-pricing',
   },
   {
     title: 'Quasi-Experimental Evidence on Carbon Pricing',
-    authors: 'Vrolijk, K., Sato, M.',
-    journal: 'The World Bank Research Observer',
-    year: 2023,
-    doi: '10.1093/wbro/lkad001',
-    content: '**Source:** The World Bank Research Observer, Vol. 38, Issue 2, pp. 213-248 (2023)\n**DOI:** https://doi.org/10.1093/wbro/lkad001\n\nThis paper reviews quasi-experimental studies on carbon pricing effects. The evidence shows emission reductions across multiple contexts, while effects on economic outcomes remain ambiguous.\n\n**Key Vocabulary:**\n- Quasi-experimental /ˈkweɪzaɪ ɪkˌsperɪˈmentəl/: 准实验\n- Counterfactual /ˌkaʊntərˈfæktʃuəl/: 反事实\n- Competitiveness /kəmˈpetətɪvnəs/: 竞争力\n\n**Discussion Questions:**\n1. Why are quasi-experimental methods preferred for studying carbon pricing?\n2. How could researchers improve evidence for developing countries?',
+    content: '**Paper:** Quasi-Experimental Evidence on Carbon Pricing\n**Authors:** Vrolijk, K., Sato, M.\n**Journal:** The World Bank Research Observer\n**Year:** 2023\n**DOI:** https://doi.org/10.1093/wbro/lkad001\n\nCarbon pricing has been implemented in an increasing number of countries. This paper provides a comprehensive review of quasi-experimental studies examining the causal effects of carbon pricing on emissions and economic outcomes.\n\nThe review documents a growing body of evidence showing emission reductions across multiple contexts. The most robust evidence comes from studies of the EU ETS, British Columbia\'s carbon tax, and several Nordic carbon tax schemes. Effects on economic outcomes remain ambiguous.\n\n**Key Vocabulary:**\n- Quasi-experimental /ˈkweɪzaɪ ɪkˌsperɪˈmentəl/: 准实验\n- Counterfactual /ˌkaʊntərˈfæktʃuəl/: 反事实\n- Competitiveness /kəmˈpetətɪvnəs/: 竞争力\n- Causal effect /ˈkɔːzəl ɪˈfekt/: 因果效应\n\n**Discussion Questions:**\n1. Why are quasi-experimental methods preferred over correlations?\n2. What explains the ambiguous findings on economic outcomes?\n3. How could researchers improve evidence for developing countries?',
     tags: 'passage,journal,carbon-pricing,review',
   },
   {
-    title: 'Designing a Carbon-Linked Bond for Sustainable Investment',
-    authors: 'Dahlen, N., Fehrenkötter, R., Schreiter, M.',
-    journal: 'The Quarterly Review of Economics and Finance',
-    year: 2024,
-    doi: '10.1016/j.qref.2024.04.010',
-    content: '**Source:** The Quarterly Review of Economics and Finance, Vol. 95, pp. 316-325 (2024)\n**DOI:** https://doi.org/10.1016/j.qref.2024.04.010\n\nThis paper proposes a carbon-linked bond whose coupon payments are tied to the carbon price, creating a direct link between environmental performance and investment returns.\n\n**Key Vocabulary:**\n- Carbon-linked bond /ˈkɑːbən lɪŋkt bɒnd/: 碳联结债券\n- Coupon payment /ˈkuːpɒn ˈpeɪmənt/: 票息支付\n- Hedge /hedʒ/: 对冲\n\n**Discussion Questions:**\n1. How does a carbon-linked bond differ from a traditional green bond?\n2. What challenges might arise in implementation?',
+    title: 'The new bond on the block — Designing a carbon-linked bond for sustainable investment projects',
+    content: '**Paper:** The new bond on the block — Designing a carbon-linked bond for sustainable investment projects\n**Authors:** Dahlen, N., Fehrenkötter, R., Schreiter, M.\n**Journal:** The Quarterly Review of Economics and Finance\n**Year:** 2024\n**DOI:** https://doi.org/10.1016/j.qref.2024.04.010\n\nGreen bonds have emerged as a key financial instrument for funding climate projects. This paper proposes a novel instrument: the carbon-linked bond, whose coupon payments are tied to the carbon price, creating a direct financial link between environmental performance and investment returns.\n\nThe authors demonstrate how the coupon structure can be calibrated to reflect carbon price developments, providing a natural hedge for investors while creating stronger incentives for emitters to invest in emission-reducing technologies.\n\n**Key Vocabulary:**\n- Carbon-linked bond /ˈkɑːbən lɪŋkt bɒnd/: 碳联结债券\n- Coupon payment /ˈkuːpɒn ˈpeɪmənt/: 票息支付\n- Hedge /hedʒ/: 对冲\n- Calibration /ˌkælɪˈbreɪʃən/: 校准\n\n**Discussion Questions:**\n1. How does a carbon-linked bond differ from a traditional green bond?\n2. What advantage does linking coupons to carbon prices offer investors?\n3. What challenges might arise in implementing these bonds?',
     tags: 'passage,journal,green-bond,carbon-finance',
   },
   {
-    title: 'ESG Differentiated Pricing as a Dynamic Transition Tool',
-    authors: 'Ozdemir, B.',
-    journal: 'Journal of Risk Management in Financial Institutions',
-    year: 2024,
-    doi: '10.69554/VWUD6703',
-    content: '**Source:** Journal of Risk Management in Financial Institutions, Vol. 18, No. 1, pp. 26-48 (2024)\n**DOI:** https://doi.org/10.69554/VWUD6703\n\nThis paper proposes a three-layer framework for integrating ESG scores into lending pricing, creating financial incentives for borrowers to improve environmental performance.\n\n**Key Vocabulary:**\n- ESG integration /iː es dʒiː ˌɪntɪˈɡreɪʃən/: ESG整合\n- Transition risk /trænˈzɪʃən rɪsk/: 转型风险\n- Credit risk assessment /ˈkredɪt rɪsk əˈsesmənt/: 信用风险评估\n\n**Discussion Questions:**\n1. How might ESG-differentiated pricing affect borrower behavior?\n2. What are drawbacks of linking loan pricing to ESG scores?',
+    title: 'Transitioning to a low-GHG economy: ESG differentiated pricing as a dynamic transition tool and its calibration',
+    content: '**Paper:** Transitioning to a low-GHG economy: ESG differentiated pricing as a dynamic transition tool and its calibration\n**Authors:** Ozdemir, B.\n**Journal:** Journal of Risk Management in Financial Institutions\n**Year:** 2024\n**DOI:** https://doi.org/10.69554/CIES4502\n\nThis paper proposes a comprehensive three-layer framework for integrating ESG scores into lending pricing as a dynamic tool for steering portfolios toward a low-carbon economy. The framework incorporates borrower-level ESG scores, sector-level transition risk exposure, and a dynamic calibration mechanism.\n\n**Key Vocabulary:**\n- ESG integration /iː es dʒiː ˌɪntɪˈɡreɪʃən/: ESG整合\n- Transition risk /trænˈzɪʃən rɪsk/: 转型风险\n- Credit risk assessment /ˈkredɪt rɪsk əˈsesmənt/: 信用风险评估\n- Dynamic calibration /daɪˈnæmɪk ˌkælɪˈbreɪʃən/: 动态校准\n\n**Discussion Questions:**\n1. How might ESG-differentiated lending affect borrower behavior?\n2. What are potential drawbacks of linking loan pricing to ESG scores?\n3. How could regulators ensure fair and transparent ESG pricing?',
     tags: 'passage,journal,esg,banking',
   },
   {
-    title: 'Corporate Credit Risk under Carbon Pricing Uncertainty',
-    authors: 'Dominique, C.M.D., Tian, Y.',
-    journal: 'Sustainable Futures',
-    year: 2024,
-    doi: '10.1016/j.sftr.2024.100283',
-    content: '**Source:** Sustainable Futures, Vol. 8, Article 100283 (2024)\n**DOI:** https://doi.org/10.1016/j.sftr.2024.100283\n\nThis paper develops a credit risk model incorporating carbon pricing uncertainty. The impact is particularly pronounced for carbon-intensive industries.\n\n**Key Vocabulary:**\n- Knightian uncertainty /ˈnaɪtiən ʌnˈsɜːrtənti/: 奈特不确定性\n- Default probability /dɪˈfɔːlt ˌprɒbəˈbɪləti/: 违约概率\n- Carbon-intensive /ˈkɑːbən ɪnˈtensɪv/: 碳密集型\n\n**Discussion Questions:**\n1. How does carbon pricing uncertainty differ from other business risks?\n2. What role should financial regulators play?',
+    title: 'Corporate credit risk modeling under carbon pricing uncertainty: A Knightian uncertainty approach',
+    content: '**Paper:** Corporate credit risk modeling under carbon pricing uncertainty: A Knightian uncertainty approach\n**Authors:** Dominique, C.M.D., Tian, Y.\n**Journal:** Sustainable Futures\n**Year:** 2024\n**DOI:** https://doi.org/10.1016/j.sftr.2024.100283\n\nAs carbon pricing expands globally, firms face increasing uncertainty about future carbon costs. This paper develops a dynamic behavioral credit risk model incorporating carbon pricing uncertainty under Knightian uncertainty. The impact is particularly pronounced for carbon-intensive industries and firms with limited ability to pass through carbon costs.\n\n**Key Vocabulary:**\n- Knightian uncertainty /ˈnaɪtiən ʌnˈsɜːrtənti/: 奈特不确定性\n- Default probability /dɪˈfɔːlt ˌprɒbəˈbɪləti/: 违约概率\n- Carbon-intensive /ˈkɑːbən ɪnˈtensɪv/: 碳密集型\n- Systemic risk /sɪˈstemɪk rɪsk/: 系统性风险\n\n**Discussion Questions:**\n1. How does carbon pricing uncertainty differ from other business risks?\n2. Why might traditional credit risk models underestimate carbon pricing impacts?\n3. What role should financial regulators play?',
     tags: 'passage,journal,credit-risk,carbon-pricing',
   },
 ]
@@ -270,7 +247,7 @@ async function upsertDailyContent(
 ) {
   return prisma.dailyContent.upsert({
     where: { date_type: { date, type } },
-    update: {}, // no-op: content is static, keep what's already stored
+    update: { title: data.title, content: data.content, tags: data.tags },
     create: { date, type, ...data },
   })
 }
