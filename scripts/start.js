@@ -1,6 +1,8 @@
 // Startup script: run DB migration then start Next.js
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { execSync, spawn } = require('child_process')
 const path = require('path')
+/* eslint-enable @typescript-eslint/no-require-imports */
 
 const dbUrl = process.env.DATABASE_URL || 'file:./dev.db'
 

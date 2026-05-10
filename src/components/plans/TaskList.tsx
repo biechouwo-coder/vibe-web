@@ -14,11 +14,6 @@ export default function TaskList({ tasks }: TaskListProps) {
   const [showConfetti, setShowConfetti] = useState(false)
 
   const handleToggle = useCallback(() => {
-    const completedCount = tasks.filter((t) => t.completed).length
-    const totalCount = tasks.length
-
-    // Count completed tasks AFTER this toggle
-    // Since this runs after the toggle, we check if all will be done
     const remainingIncomplete = tasks.filter((t) => !t.completed).length
     if (remainingIncomplete === 1) {
       // This was the last one to complete

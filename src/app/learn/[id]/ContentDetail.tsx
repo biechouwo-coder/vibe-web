@@ -1,7 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import VocabCards from '@/components/learn/VocabCards'
+import Link from 'next/link'
 import type { DailyContentWithMeta } from '@/types'
 
 interface ContentDetailProps {
@@ -70,7 +70,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <a
+      <Link
         href="/learn"
         className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-600 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-800 hover:shadow-md dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
       >
@@ -78,7 +78,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
         Back
-      </a>
+      </Link>
 
       {/* Header */}
       <div>
@@ -204,7 +204,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
 
   return (
     <div className="mx-auto max-w-2xl">
-      <a
+      <Link
         href="/learn"
         className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-600 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-800 hover:shadow-md dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
       >
@@ -212,7 +212,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
         Back
-      </a>
+      </Link>
 
       <div className="mt-4 mb-6">
         <span className="text-sm font-medium uppercase tracking-wider text-purple-600 dark:text-purple-400">
@@ -302,9 +302,12 @@ function DefaultDetail({ content, handlePush }: { content: DailyContentWithMeta;
 
   return (
     <div className="mx-auto max-w-2xl">
-      <a href="/learn" className="mb-6 inline-flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-600">
-        ← Back
-      </a>
+      <Link href="/learn" className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-600 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-800 hover:shadow-md dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200">
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back
+      </Link>
 
       <div className="mt-2">
         <span className={`text-sm font-medium uppercase tracking-wider ${cfg.color}`}>
