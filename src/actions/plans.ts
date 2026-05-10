@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { getShanghaiDate } from '@/lib/date'
+import { pushTaskToNotion } from '@/lib/notion'
 
 function getToday(): Date {
   return getShanghaiDate()
@@ -28,7 +29,7 @@ export async function createTask(formData: FormData) {
     orderBy: { sortOrder: 'desc' },
   })
 
-  await prisma.task.create({
+  const task = await prisma.task.create({
     data: {
       date,
       title: title.trim(),
@@ -36,6 +37,9 @@ export async function createTask(formData: FormData) {
       sortOrder: (lastTask?.sortOrder ?? -1) + 1,
     },
   })
+
+  // Fire-and-forget Notion push; failure must not block user
+  pushTaskToNotion(task.id).catch(() => {})
 
   revalidatePath('/plans')
   revalidatePath('/')
@@ -59,6 +63,9 @@ export async function toggleTask(taskId: string) {
   if (!task.completed) {
     await updateStreak()
   }
+
+  // Fire-and-forget Notion push on toggle
+  pushTaskToNotion(taskId).catch(() => {})
 
   revalidatePath('/plans')
   revalidatePath('/')
@@ -87,13 +94,9 @@ export async function updateStreak() {
   if (!lastActive) {
     newStreak = 1
   } else {
-    // Both lastActive and today are midnight UTC (from getShanghaiDate()),
-    // so direct timestamp comparison is safe regardless of server timezone.
     if (lastActive.getTime() === today.getTime()) {
-      // Already counted today, no change
       return
     }
-
     const diffDays = Math.round((today.getTime() - lastActive.getTime()) / 86400000)
     if (diffDays === 1) {
       newStreak += 1
