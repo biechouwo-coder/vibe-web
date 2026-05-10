@@ -38,19 +38,36 @@ function getVocabularyPreview(content: string): string {
 
 // ── Passage preview ──
 
-const PASSAGE_META_KEYS = new Set(['**paper:**', '**authors:**', '**journal:**', '**year:**', '**doi:**'])
+/** Extract the value after `**key:**` in content. */
+function getMetaValue(content: string, key: string): string | null {
+  const prefix = `**${key}:**`
+  for (const line of content.split('\n')) {
+    const trimmed = line.trim()
+    if (trimmed.startsWith(prefix)) {
+      return trimmed.slice(prefix.length).trim()
+    }
+  }
+  return null
+}
 
 function getPassageMeta(content: string): string | null {
-  let journal = ''
-  let year = ''
-  for (const line of content.split('\n')) {
-    const lower = line.trim().toLowerCase()
-    if (lower.startsWith('**journal:**')) journal = line.split('**:')[1]?.trim() ?? ''
-    if (lower.startsWith('**year:**')) year = line.split('**:')[1]?.trim() ?? ''
-  }
+  const journal = getMetaValue(content, 'Journal')
+  const year = getMetaValue(content, 'Year')
   if (journal && year) return `${journal} · ${year}`
   if (journal) return journal
   return null
+}
+
+/** Check if a trimmed line is a metadata header (Paper/Authors/Journal/Year/DOI). */
+function isMetaLine(trimmed: string): boolean {
+  const lower = trimmed.toLowerCase()
+  return (
+    lower.startsWith('**paper:**') ||
+    lower.startsWith('**authors:**') ||
+    lower.startsWith('**journal:**') ||
+    lower.startsWith('**year:**') ||
+    lower.startsWith('**doi:**')
+  )
 }
 
 function getPassagePreview(content: string): string {
@@ -61,7 +78,7 @@ function getPassagePreview(content: string): string {
     const trimmed = line.trim()
     if (trimmed.startsWith('**Key Vocabulary:**')) break
     if (!trimmed) continue
-    if (PASSAGE_META_KEYS.has(trimmed.toLowerCase())) continue
+    if (isMetaLine(trimmed)) continue
     if (/^["\s]+$/.test(trimmed)) continue
     previewLines.push(trimmed)
     if (previewLines.length >= 3) break
