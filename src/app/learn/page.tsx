@@ -4,6 +4,7 @@ import { fetchTodaysContent } from '@/actions/learn'
 import { getContentHistory } from '@/actions/learn'
 import DailyCard from '@/components/learn/DailyCard'
 import ListClient from './ListClient'
+import { formatShanghaiDate } from '@/lib/date'
 
 const typeMeta = {
   conversation: { emoji: '💬', label: 'Daily Conversation', color: 'blue', desc: 'Practice real-life dialogue' },
@@ -39,7 +40,7 @@ export default async function LearnPage() {
         <div className="absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-emerald-200/20 blur-3xl dark:bg-emerald-800/20" />
         <div className="relative">
           <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+            {formatShanghaiDate('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
           </p>
           <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">
             Study plan for today

@@ -1,4 +1,10 @@
 import { prisma } from './prisma'
+import {
+  getShanghaiDate,
+  getShanghaiDateSeed,
+  getShanghaiWeekOfYear,
+  getShanghaiDayOfYear,
+} from '@/lib/date'
 
 // Static content library for business & green finance English
 const conversationContent = [
@@ -245,29 +251,18 @@ China's experience offers valuable lessons for other emerging economies developi
   },
 ]
 
-function getDailySeed(): number {
-  const today = new Date()
-  return today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
-}
-
 function pickBySeed<T>(arr: T[], seed: number): T {
   return arr[seed % arr.length]
 }
 
-function getDateOnly(): Date {
-  const d = new Date()
-  d.setHours(0, 0, 0, 0)
-  return d
-}
-
 export async function getDailyConversation() {
-  const date = getDateOnly()
+  const date = getShanghaiDate()
   const existing = await prisma.dailyContent.findFirst({
     where: { date, type: 'conversation' },
   })
   if (existing) return existing
 
-  const seed = getDailySeed()
+  const seed = getShanghaiDateSeed()
   const item = pickBySeed(conversationContent, seed)
 
   return prisma.dailyContent.create({
@@ -282,14 +277,13 @@ export async function getDailyConversation() {
 }
 
 export async function getDailyVocabulary() {
-  const date = getDateOnly()
+  const date = getShanghaiDate()
   const existing = await prisma.dailyContent.findFirst({
     where: { date, type: 'vocabulary' },
   })
   if (existing) return existing
 
-  const weekOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / (7 * 86400000))
-  const item = pickBySeed(vocabularyContent, weekOfYear)
+  const item = pickBySeed(vocabularyContent, getShanghaiWeekOfYear())
 
   return prisma.dailyContent.create({
     data: {
@@ -303,15 +297,14 @@ export async function getDailyVocabulary() {
 }
 
 export async function getDailyPassage() {
-  const date = getDateOnly()
+  const date = getShanghaiDate()
   const existing = await prisma.dailyContent.findFirst({
     where: { date, type: 'passage' },
   })
   if (existing) return existing
 
   // New passage every 3 days
-  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000)
-  const passageIndex = Math.floor(dayOfYear / 3)
+  const passageIndex = Math.floor(getShanghaiDayOfYear() / 3)
   const item = pickBySeed(passageContent, passageIndex)
 
   return prisma.dailyContent.create({
@@ -341,7 +334,7 @@ async function ensureLearningTasks(
   vocabulary: { id: string; title: string },
   passage: { id: string; title: string }
 ) {
-  const date = getDateOnly()
+  const date = getShanghaiDate()
   const taskDefs = [
     { title: `💬 ${conversation.title}`, contentId: conversation.id },
     { title: `📝 ${vocabulary.title}`, contentId: vocabulary.id },

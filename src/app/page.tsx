@@ -7,9 +7,10 @@ import ProgressBar from '@/components/layout/ProgressBar'
 import DailyCard from '@/components/learn/DailyCard'
 import HomeTaskList from '@/components/plans/HomeTaskList'
 import Link from 'next/link'
+import { formatShanghaiDate } from '@/lib/date'
 
 function formatDate(): string {
-  return new Date().toLocaleDateString('en-US', {
+  return formatShanghaiDate('en-US', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',

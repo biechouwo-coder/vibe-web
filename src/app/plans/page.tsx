@@ -5,6 +5,7 @@ import AddTaskForm from '@/components/plans/AddTaskForm'
 import TaskList from '@/components/plans/TaskList'
 import ProgressBar from '@/components/layout/ProgressBar'
 import StreakBadge from '@/components/ui/StreakBadge'
+import { formatShanghaiDate } from '@/lib/date'
 
 export default async function PlansPage() {
   const tasks = await getTodaysTasks()
@@ -13,7 +14,7 @@ export default async function PlansPage() {
   const completedTasks = tasks.filter((t) => t.completed).length
   const completionRate = tasks.length > 0 ? Math.round((completedTasks / tasks.length) * 100) : 0
 
-  const today = new Date().toLocaleDateString('en-US', {
+  const today = formatShanghaiDate('en-US', {
     weekday: 'long',
     month: 'long',
     day: 'numeric',

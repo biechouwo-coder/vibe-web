@@ -2,11 +2,10 @@
 
 import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
+import { getShanghaiDate } from '@/lib/date'
 
 function getToday(): Date {
-  const d = new Date()
-  d.setHours(0, 0, 0, 0)
-  return d
+  return getShanghaiDate()
 }
 
 export async function getTodaysTasks() {
