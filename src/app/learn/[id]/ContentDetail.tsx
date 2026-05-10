@@ -1,7 +1,7 @@
 'use client'
 
 import VocabCards from '@/components/learn/VocabCards'
-import Link from 'next/link'
+import BackLink from '@/components/ui/BackLink'
 import { formatStoredDate } from '@/lib/date'
 import type { DailyContentWithMeta } from '@/types'
 
@@ -71,15 +71,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <Link
-        href="/learn"
-        className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-600 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-800 hover:shadow-md dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-        Back
-      </Link>
+      <BackLink href="/learn" />
 
       {/* Header */}
       <div>
@@ -205,15 +197,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
 
   return (
     <div className="mx-auto max-w-2xl">
-      <Link
-        href="/learn"
-        className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-600 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-800 hover:shadow-md dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-        Back
-      </Link>
+      <BackLink href="/learn" />
 
       <div className="mt-4 mb-6">
         <span className="text-sm font-medium uppercase tracking-wider text-purple-600 dark:text-purple-400">
@@ -303,12 +287,7 @@ function DefaultDetail({ content, handlePush }: { content: DailyContentWithMeta;
 
   return (
     <div className="mx-auto max-w-2xl">
-      <Link href="/learn" className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-600 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-800 hover:shadow-md dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200">
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-        Back
-      </Link>
+      <BackLink href="/learn" />
 
       <div className="mt-2">
         <span className={`text-sm font-medium uppercase tracking-wider ${cfg.color}`}>
