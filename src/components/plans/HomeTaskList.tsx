@@ -88,7 +88,7 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 6 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       className={`group flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
         task.completed

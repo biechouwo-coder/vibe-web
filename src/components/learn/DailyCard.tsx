@@ -34,7 +34,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white p-5 dark:border-blue-800 dark:from-blue-950/20 dark:to-black"
     >
@@ -102,7 +102,7 @@ function DefaultCard({ title, type, content, tags, pushed, onPush, detailHref }:
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       className={`rounded-2xl border ${cfg.border} ${cfg.color} p-5`}
     >
