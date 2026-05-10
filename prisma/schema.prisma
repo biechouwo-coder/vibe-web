@@ -31,6 +31,8 @@ model Task {
   completedAt DateTime?
   sortOrder   Int       @default(0)
   createdAt   DateTime  @default(now())
+
+  @@unique([date, contentId])
 }
 
 model Streak {

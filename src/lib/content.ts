@@ -323,24 +323,18 @@ async function ensureLearningTasks(
     { title: `📄 ${passage.title}`, contentId: passage.id },
   ]
 
-  const existingTasks = await prisma.task.findMany({
-    where: { date, contentId: { not: null } },
-    select: { contentId: true },
-  })
-  const existingContentIds = new Set(existingTasks.map((t) => t.contentId))
-
-  const newTasks = taskDefs
-    .filter((t) => !existingContentIds.has(t.contentId))
-    .map((t, i) => ({
-      date,
-      title: t.title,
-      contentId: t.contentId,
-      description: 'Daily learning task',
-      sortOrder: i,
-      completed: false,
-    }))
-
-  if (newTasks.length > 0) {
-    await prisma.task.createMany({ data: newTasks })
+  for (const [i, t] of taskDefs.entries()) {
+    await prisma.task.upsert({
+      where: { date_contentId: { date, contentId: t.contentId } },
+      update: {},
+      create: {
+        date,
+        title: t.title,
+        contentId: t.contentId,
+        description: 'Daily learning task',
+        sortOrder: i,
+        completed: false,
+      },
+    })
   }
 }
