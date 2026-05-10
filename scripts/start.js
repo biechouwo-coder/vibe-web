@@ -4,11 +4,14 @@ const { execSync, spawn } = require('child_process')
 const path = require('path')
 /* eslint-enable @typescript-eslint/no-require-imports */
 
+const isWindows = process.platform === 'win32'
+const npxCmd = isWindows ? 'npx.cmd' : 'npx'
+
 const dbUrl = process.env.DATABASE_URL || 'file:./dev.db'
 
 try {
   console.log('[startup] Running prisma db push...')
-  execSync('npx prisma db push --accept-data-loss', {
+  execSync(npxCmd + ' prisma db push --accept-data-loss', {
     stdio: 'inherit',
     env: { ...process.env, DATABASE_URL: dbUrl },
     cwd: path.resolve(__dirname, '..'),
@@ -19,11 +22,18 @@ try {
 }
 
 console.log('[startup] Starting Next.js on port', process.env.PORT || 3000)
-const child = spawn('npx', ['next', 'start'], {
-  stdio: 'inherit',
-  env: { ...process.env, DATABASE_URL: dbUrl },
-  cwd: path.resolve(__dirname, '..'),
-})
+
+const child = isWindows
+  ? spawn('cmd', ['/c', npxCmd, 'next', 'start'], {
+      stdio: 'inherit',
+      env: { ...process.env, DATABASE_URL: dbUrl },
+      cwd: path.resolve(__dirname, '..'),
+    })
+  : spawn(npxCmd, ['next', 'start'], {
+      stdio: 'inherit',
+      env: { ...process.env, DATABASE_URL: dbUrl },
+      cwd: path.resolve(__dirname, '..'),
+    })
 
 child.on('exit', (code) => {
   console.log('[startup] Next.js exited with code', code)
