@@ -52,7 +52,7 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 按优先级从上到下：
 1. **Stats** — 任务进度 / Streak / 快捷入口
 2. **Today's Tasks** — 今日任务清单（可勾选完成）
-3. **Today's Learning** — 三个学习卡片
+3. **Today's Learning** — 三个学习卡片（类型标签在顶部）
 
 ### 💬 对话知识卡片
 点 **Read full →** 进入详情页后可看到：
@@ -60,8 +60,18 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 - **词汇卡片** — 带 IPA 国际音标 + 中英释义双列展示
 - **全文翻译** — 对照阅读区域
 
+### 🃏 词汇卡片切换
+词汇详情页采用**卡片式浏览**：
+- 每张卡片显示一个词汇（术语 → [音标] → 定义 → Example → 中文）
+- ◀ ▶ 按钮 + 圆点进度指示器切换
+- 🌀 弹性弹簧切换动画
+
 ### 📝 词汇音标
 所有词汇内容（对话/词汇专题/文献）均标注 **IPA 国际音标**，方便发音学习。
+
+### 📚 专业词汇覆盖
+基于港科广 CNGF 硕士课程定制的 5 套词汇专题：
+`Carbon Pricing & Trading` · `Carbon Accounting` · `ESG Investing` · `Climate Science & Policy` · `Energy Economics`
 
 ### ⚙️ Settings — 设置
 - 配置 Notion 集成（Token + 数据库 ID）
