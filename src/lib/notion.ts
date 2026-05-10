@@ -9,6 +9,66 @@ export async function getNotionClient() {
   return new Client({ auth: config.token })
 }
 
+// ── Content-to-Notion-blocks parser ──
+
+interface RichTextSegment {
+  type: 'text'
+  text: { content: string }
+  annotations?: { bold?: boolean; italic?: boolean }
+}
+
+/** Split a line into rich-text segments, handling **bold** patterns. */
+function parseRichText(line: string): RichTextSegment[] {
+  const segments: RichTextSegment[] = []
+  const parts = line.split(/(\*\*.+?\*\*)/)
+  for (const part of parts) {
+    if (!part) continue
+    const boldMatch = part.match(/^\*\*(.+)\*\*$/)
+    if (boldMatch) {
+      segments.push({ type: 'text', text: { content: boldMatch[1] }, annotations: { bold: true } })
+    } else {
+      segments.push({ type: 'text', text: { content: part } })
+    }
+  }
+  return segments.length > 0 ? segments : [{ type: 'text', text: { content: ' ' } }]
+}
+
+/** Parse markdown-like lines into Notion block objects. */
+function parseContentToBlocks(text: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const blocks: any[] = []
+  const lines = text.split('\n')
+
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (!trimmed) continue
+
+    if (trimmed.startsWith('## ')) {
+      blocks.push({
+        object: 'block',
+        type: 'heading_2',
+        heading_2: { rich_text: parseRichText(trimmed.replace(/^##\s+/, '')) },
+      })
+    } else if (trimmed.startsWith('- ')) {
+      blocks.push({
+        object: 'block',
+        type: 'bulleted_list_item',
+        bulleted_list_item: { rich_text: parseRichText(trimmed.replace(/^-\s+/, '')) },
+      })
+    } else {
+      blocks.push({
+        object: 'block',
+        type: 'paragraph',
+        paragraph: { rich_text: parseRichText(trimmed) },
+      })
+    }
+  }
+
+  return blocks
+}
+
+// ── Push functions ──
+
 export async function pushEnglishContent(contentId: string) {
   const config = await prisma.notionConfig.findFirst()
   if (!config?.enabled || !config.dbEnglish) {
@@ -38,6 +98,8 @@ export async function pushEnglishContent(contentId: string) {
     properties.Tags = { multi_select: content.tags.split(',').map((t) => ({ name: t.trim() })) }
   }
 
+  const contentBlocks = parseContentToBlocks(content.content)
+
   await notion.pages.create({
     parent: { database_id: config.dbEnglish },
     properties,
@@ -49,18 +111,8 @@ export async function pushEnglishContent(contentId: string) {
           rich_text: [{ text: { content: `${typeEmoji[content.type] ?? '📝'} ${content.title}` } }],
         },
       },
-      {
-        object: 'block',
-        type: 'divider',
-        divider: {},
-      },
-      ...content.content.split('\n').map((line) => ({
-        object: 'block' as const,
-        type: 'paragraph' as const,
-        paragraph: {
-          rich_text: [{ text: { content: line || ' ' } }],
-        },
-      })),
+      { object: 'block', type: 'divider', divider: {} },
+      ...contentBlocks,
     ],
   })
 
