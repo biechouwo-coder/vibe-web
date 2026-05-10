@@ -17,6 +17,8 @@ model DailyContent {
   tags      String?  // comma-separated
   pushed    Boolean  @default(false)
   createdAt DateTime @default(now())
+
+  @@unique([date, type])
 }
 
 model Task {
@@ -24,6 +26,7 @@ model Task {
   date        DateTime
   title       String
   description String?
+  contentId   String?   // links auto-generated tasks to DailyContent
   completed   Boolean   @default(false)
   completedAt DateTime?
   sortOrder   Int       @default(0)

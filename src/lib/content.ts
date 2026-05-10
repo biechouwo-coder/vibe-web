@@ -255,66 +255,48 @@ function pickBySeed<T>(arr: T[], seed: number): T {
   return arr[seed % arr.length]
 }
 
+/** Upsert daily content by date+type (unique constraint ensures no duplicates). */
+async function upsertDailyContent(
+  date: Date,
+  type: string,
+  data: { title: string; content: string; tags: string },
+) {
+  return prisma.dailyContent.upsert({
+    where: { date_type: { date, type } },
+    update: {}, // no-op: content is static, keep what's already stored
+    create: { date, type, ...data },
+  })
+}
+
 export async function getDailyConversation() {
   const date = getShanghaiDate()
-  const existing = await prisma.dailyContent.findFirst({
-    where: { date, type: 'conversation' },
-  })
-  if (existing) return existing
-
   const seed = getShanghaiDateSeed()
   const item = pickBySeed(conversationContent, seed)
-
-  return prisma.dailyContent.create({
-    data: {
-      date,
-      type: 'conversation',
-      title: item.title,
-      content: item.content,
-      tags: item.tags,
-    },
+  return upsertDailyContent(date, 'conversation', {
+    title: item.title,
+    content: item.content,
+    tags: item.tags,
   })
 }
 
 export async function getDailyVocabulary() {
   const date = getShanghaiDate()
-  const existing = await prisma.dailyContent.findFirst({
-    where: { date, type: 'vocabulary' },
-  })
-  if (existing) return existing
-
   const item = pickBySeed(vocabularyContent, getShanghaiWeekOfYear())
-
-  return prisma.dailyContent.create({
-    data: {
-      date,
-      type: 'vocabulary',
-      title: item.title,
-      content: item.content,
-      tags: item.tags,
-    },
+  return upsertDailyContent(date, 'vocabulary', {
+    title: item.title,
+    content: item.content,
+    tags: item.tags,
   })
 }
 
 export async function getDailyPassage() {
   const date = getShanghaiDate()
-  const existing = await prisma.dailyContent.findFirst({
-    where: { date, type: 'passage' },
-  })
-  if (existing) return existing
-
-  // New passage every 3 days
   const passageIndex = Math.floor(getShanghaiDayOfYear() / 3)
   const item = pickBySeed(passageContent, passageIndex)
-
-  return prisma.dailyContent.create({
-    data: {
-      date,
-      type: 'passage',
-      title: item.title,
-      content: item.content,
-      tags: item.tags,
-    },
+  return upsertDailyContent(date, 'passage', {
+    title: item.title,
+    content: item.content,
+    tags: item.tags,
   })
 }
 
@@ -342,16 +324,17 @@ async function ensureLearningTasks(
   ]
 
   const existingTasks = await prisma.task.findMany({
-    where: { date },
-    select: { title: true },
+    where: { date, contentId: { not: null } },
+    select: { contentId: true },
   })
-  const existingTitles = new Set(existingTasks.map((t) => t.title))
+  const existingContentIds = new Set(existingTasks.map((t) => t.contentId))
 
   const newTasks = taskDefs
-    .filter((t) => !existingTitles.has(t.title))
+    .filter((t) => !existingContentIds.has(t.contentId))
     .map((t, i) => ({
       date,
       title: t.title,
+      contentId: t.contentId,
       description: 'Daily learning task',
       sortOrder: i,
       completed: false,
