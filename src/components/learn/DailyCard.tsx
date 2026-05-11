@@ -108,7 +108,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
       initial={false}
       animate={{ opacity: 1, y: 0 }}
       className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
-      <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Speaking Practice</span>
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Speaking Practice</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {summary && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-2">{summary}</p>}
       {keywords.length > 0 && (
@@ -142,7 +142,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
       initial={false}
       animate={{ opacity: 1, y: 0 }}
       className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
-      <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Vocabulary</span>
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Vocabulary</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500">{preview}</p>}
       {keywords.length > 0 && (
@@ -177,7 +177,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
       initial={false}
       animate={{ opacity: 1, y: 0 }}
       className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
-      <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Reading</span>
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Reading</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {meta && <p className="mt-1 text-[10px] text-stone-400">{meta}</p>}
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-3">{preview}</p>}

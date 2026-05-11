@@ -87,7 +87,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
     <div className="mx-auto max-w-2xl space-y-5">
       <BackLink href="/learn" />
       <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Speaking Practice</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">Speaking Practice</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
         {topic && <p className="mt-1 text-xs text-stone-500">{topic}</p>}
         <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
@@ -206,7 +206,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
     <div className="mx-auto max-w-2xl">
       <BackLink href="/learn" />
       <div className="mt-4 mb-6">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Vocabulary</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">Vocabulary</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
         <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
       </div>
@@ -268,7 +268,7 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
     <div className="mx-auto max-w-2xl space-y-6">
       <BackLink href="/learn" />
       <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Journal Article</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">Journal Article</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
       </div>
       {metaLines.length > 0 && <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{metaLines.map(line => renderMetaLine(line))}</div>}

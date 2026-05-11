@@ -39,7 +39,7 @@ export default function ListClient({ items }: ListClientProps) {
               transition={{ delay: i * 0.015 }}
               className="group flex items-center gap-3 rounded-lg border border-stone-200 bg-white px-4 py-3 transition-colors hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-900 dark:hover:bg-stone-800"
             >
-              <span className="shrink-0 rounded border border-stone-200 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-widest text-[var(--academic-navy)] dark:border-stone-700 dark:text-stone-400">
+              <span className="shrink-0 rounded border border-stone-200 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-widest text-stone-500 dark:border-stone-700 dark:text-stone-400">
                 {label}
               </span>
 

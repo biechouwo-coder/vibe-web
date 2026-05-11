@@ -35,7 +35,7 @@ export default async function PlansPage() {
           <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
             {completedTasks}/{tasks.length} tasks completed
           </p>
-          <p className="text-sm font-bold text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">{completionRate}%</p>
+          <p className="text-sm font-bold text-stone-500 dark:text-stone-400">{completionRate}%</p>
         </div>
         <ProgressBar value={completionRate} />
       </section>
