@@ -16,7 +16,7 @@ interface DailyCardProps {
 const NAV_LINK_CLASS =
   'inline-flex items-center gap-1.5 rounded-md border border-stone-200 bg-white px-2.5 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
 
-// ── Conversation helpers ──
+// ── Helpers ──
 
 function getConversationTopicKeywords(title: string, tags: string | null): string[] {
   const t = title.toLowerCase()
@@ -28,7 +28,6 @@ function getConversationTopicKeywords(title: string, tags: string | null): strin
   if (t.includes('networking') || t.includes('chatting') || t.includes('conference')) return ['Networking']
   if (t.includes('register') || t.includes('campus') || t.includes('admin')) return ['Campus Life']
   if (t.includes('career') || t.includes('internship')) return ['Career']
-
   if (tags) {
     const ignore = new Set(['daily', 'conversation', 'speaking', 'vocabulary', 'passage', 'journal', 'core', 'cnf', 'academic'])
     const topic = tags.split(',').map(t => t.trim().toLowerCase()).find(t => !ignore.has(t))
@@ -45,23 +44,16 @@ function parseConversationContent(content: string): string {
   return first ? first.replace(/^["']|["']$/g, '').replace(/^.*?:\s*/, '').trim() : ''
 }
 
-// ── Vocabulary preview ──
-
 function getVocabularyPreview(content: string): string {
   const sections = content.split(/(?=## \d+\.)/)
   const terms: string[] = []
   for (const section of sections) {
     const match = section.match(/## \d+\.\s*([^(\/]+)/)
-    if (match) {
-      terms.push(match[1].trim())
-      if (terms.length >= 3) break
-    }
+    if (match) { terms.push(match[1].trim()); if (terms.length >= 3) break }
   }
   const prefix = "Key terms from today's article"
   return terms.length > 0 ? prefix + ': ' + terms.join(' · ') : prefix
 }
-
-// ── Passage preview ──
 
 function getMetaValue(content: string, key: string): string | null {
   const prefix = `**${key}:**`
@@ -104,22 +96,17 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
   const keywords = getConversationTopicKeywords(title, tags)
 
   return (
-    <motion.div
-      initial={false}
-      animate={{ opacity: 1, y: 0 }}
-      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Speaking Practice</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {summary && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-2">{summary}</p>}
       {keywords.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1">
-          {keywords.map((kw) => (
-            <span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>
-          ))}
+          {keywords.map((kw) => (<span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>))}
         </div>
       )}
       <div className="mt-3 flex items-center gap-2">
-        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read note</a>}
+        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Practice</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
             className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
@@ -138,22 +125,17 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
   const keywords = getAcademicKeywords(title, tags)
 
   return (
-    <motion.div
-      initial={false}
-      animate={{ opacity: 1, y: 0 }}
-      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Vocabulary</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500">{preview}</p>}
       {keywords.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1">
-          {keywords.map((kw) => (
-            <span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>
-          ))}
+          {keywords.map((kw) => (<span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>))}
         </div>
       )}
       <div className="mt-3 flex items-center gap-2">
-        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read note</a>}
+        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Review terms</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
             className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
@@ -173,23 +155,18 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
   const keywords = getAcademicKeywords(title, tags)
 
   return (
-    <motion.div
-      initial={false}
-      animate={{ opacity: 1, y: 0 }}
-      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Reading</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {meta && <p className="mt-1 text-[10px] text-stone-400">{meta}</p>}
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-3">{preview}</p>}
       {keywords.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1">
-          {keywords.map((kw) => (
-            <span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>
-          ))}
+          {keywords.map((kw) => (<span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>))}
         </div>
       )}
       <div className="mt-3 flex items-center gap-2">
-        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read full</a>}
+        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read excerpt</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
             className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
