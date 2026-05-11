@@ -17,72 +17,70 @@ const NAV_LINK_CLASS =
 
 // ── Academic keyword helpers ──
 
-/** Tags that are purely structural and meaningless to end users. */
 const STRUCTURAL_TAGS = new Set([
-  'daily', 'journal',
+  'daily', 'conversation', 'vocabulary', 'passage', 'journal',
   'core', 'cnf', 'academic',
 ])
 
-/** "carbon-pricing" → "Carbon Pricing" */
 function formatTagLabel(tag: string): string {
-  // Preserve common acronyms
   if (tag === 'eu-ets') return 'EU ETS'
   if (tag === 'esg') return 'ESG'
-  return tag
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
+  return tag.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
 }
 
-/**
- * Derive 1-3 academic-relevant keywords for a card.
- * Priority: filtered tags → title-derived topic.
- */
-function getAcademicKeywords(title: string, tags: string | null): string[] {
-  // Try tags first
-  if (tags) {
-    const filtered = tags
-      .split(',')
-      .map((t) => t.trim().toLowerCase())
-      .filter((t) => !STRUCTURAL_TAGS.has(t))
-      .map(formatTagLabel)
-    if (filtered.length > 0) return filtered.slice(0, 3)
-  }
-
-  // Fallback: extract from title
-  const cleaned = title
-    .replace(/ 101$/, '')
-    .replace(/ (Fundamentals|Essentials|Terms)$/i, '')
-    .replace(/^The /i, '')
-    .replace(/ —.*$/, '')
-
-  // Conversation titles → short scenario keywords
+/** Extract topic keywords from the card title. */
+function deriveTitleKeywords(title: string): string[] {
+  // Conversation
   if (title.includes('Introducing Yourself')) return ['Introduction']
   if (title.includes('Group Project')) return ['Group Project']
   if (title.includes('Presenting Data')) return ['Presentation']
 
-  // Vocabulary titles → topic keywords
+  // Vocabulary (check before passage fallbacks)
+  if (title.includes('Carbon Pricing & Trading')) return ['Carbon Pricing', 'Carbon Trading']
   if (title.includes('Carbon Market')) return ['Carbon Markets']
-  if (title.includes('Carbon Pricing')) return ['Carbon Pricing', 'Carbon Trading']
   if (title.includes('Carbon Accounting')) return ['Carbon Accounting']
-  if (title.includes('ESG')) return ['ESG Investing']
+  if (title.includes('ESG & Sustainable')) return ['ESG Investing']
   if (title.includes('Climate Science')) return ['Climate Policy']
   if (title.includes('Energy Economics')) return ['Energy Economics']
   if (title.includes('Green Finance')) return ['Green Finance']
   if (title.includes('Academic Research')) return ['Research Methods']
 
-  // Passage / paper titles → research topic
-  if (title.includes('carbon pricing') || title.includes('Carbon Pricing')) return ['Carbon Pricing']
+  // Passage / paper
   if (title.includes('meta-analysis') || title.includes('Meta-Analysis') || title.includes('Meta Analysis')) return ['Meta Analysis']
   if (title.includes('EU ETS') || title.includes('Emissions Trading')) return ['EU ETS']
-  if (title.includes('Green Bond') || title.includes('carbon-linked')) return ['Green Bond', 'Carbon Finance']
-  if (title.includes('ESG') || title.includes('esg')) return ['ESG']
+  if (title.includes('Green Bond') || title.includes('carbon-linked bond')) return ['Green Bond', 'Carbon Finance']
   if (title.includes('Credit Risk') || title.includes('credit risk')) return ['Credit Risk']
   if (title.includes('Quasi-Experimental')) return ['Carbon Pricing', 'Empirical']
+  if (title.includes('carbon pricing') || title.includes('Carbon Pricing')) return ['Carbon Pricing']
 
-  // Generic: take first 1-2 meaningful words
-  const words = cleaned.split(/[\s,]+/).filter((w) => w.length > 2).slice(0, 2)
-  return words.length > 0 ? words : [cleaned]
+  return []
+}
+
+/**
+ * Derive 1-3 academic keywords for a card.
+ * Merges title-derived topics with meaningful tags, deduplicates.
+ */
+function getAcademicKeywords(title: string, tags: string | null): string[] {
+  const result: string[] = []
+
+  // 1. Title-derived keywords (preferred — they are complete academic phrases)
+  for (const k of deriveTitleKeywords(title)) {
+    if (!result.includes(k)) result.push(k)
+  }
+
+  // 2. Supplement from tags (for additional context the title didn't cover)
+  if (tags) {
+    const fromTags = tags
+      .split(',')
+      .map((t) => t.trim().toLowerCase())
+      .filter((t) => !STRUCTURAL_TAGS.has(t))
+      .map(formatTagLabel)
+    for (const k of fromTags) {
+      if (!result.includes(k)) result.push(k)
+    }
+  }
+
+  return result.slice(0, 3)
 }
 
 // ── Vocabulary preview ──
@@ -160,8 +158,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
     <motion.div
       initial={false}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
-    >
+      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Conversation</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {summary && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-2">{summary}</p>}
@@ -197,8 +194,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
     <motion.div
       initial={false}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
-    >
+      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Vocabulary</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500">{preview}</p>}
@@ -235,8 +231,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
     <motion.div
       initial={false}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
-    >
+      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Reading</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {meta && <p className="mt-1 text-[10px] text-stone-400">{meta}</p>}
