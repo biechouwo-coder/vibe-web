@@ -7,87 +7,139 @@ import {
 // Static content library for business & green finance English
 const conversationContent = [
   {
-    title: 'Introducing Yourself in Class',
-    content: `**Dialogue:**
-
-Professor: "Good morning, everyone. Let's go around and introduce yourselves. Tell us your name, your background, and what brought you to this program."
-
-You: "Good morning. My name is [Name], and I graduated with a degree in Environmental Science. I'm particularly interested in how carbon markets can be designed to achieve both economic efficiency and real emission reductions. I chose this program because it bridges finance and sustainability."
-
-Classmate: "That's fascinating! Do you think carbon pricing alone is sufficient?"
-
-You: "That's a great question. Carbon pricing is essential but not sufficient on its own. We also need regulatory frameworks, green investment incentives, and technological innovation to make the transition work."
-
-**Key Vocabulary:**
-- Carbon pricing /ˈkɑːbən ˈpraɪsɪŋ/: 碳定价
-- Regulatory framework /ˈreɡjələtɔːri ˈfreɪmwɜːrk/: 监管框架
-- Green investment /ɡriːn ɪnˈvestmənt/: 绿色投资
-- Emission reduction /ɪˈmɪʃən rɪˈdʌkʃən/: 减排
-
-**Translation:**
-教授："大家早上好。我们来轮流做一下自我介绍。告诉我们你的名字、背景以及你为什么选择这个项目。"
-你："早上好。我叫[名字]，本科毕业于环境科学专业。我对碳市场如何设计才能兼顾经济效率和实际减排效果特别感兴趣。我选择这个项目是因为它连接了金融和可持续发展。"
-同学："太有意思了！你认为单靠碳定价就足够了吗？"
-你："好问题。碳定价很关键，但单靠它还不够。我们还需要监管框架、绿色投资激励和技术创新来推动转型。"`,
-    tags: 'daily,conversation,introduction',
+    title: 'Introducing Your Research Interest',
+    topic: 'Self Introduction & Background',
+    scenario: 'First day of class. Students introduce themselves and explain why they chose the CNGF program.',
+    dialogue: [
+      { speaker: 'Professor', text: 'Welcome. Let us go around — share your name, background, and what brought you here.' },
+      { speaker: 'You', text: 'Good morning. I studied Economics and became interested in how financial instruments can support climate goals. I chose this programme because it bridges policy analysis with financial decision-making.' },
+      { speaker: 'Classmate', text: 'Do you think carbon pricing alone can drive the transition?' },
+      { speaker: 'You', text: 'Not alone. Carbon pricing works best alongside investment incentives, regulation, and technology policy.' },
+    ],
+    usefulExpressions: ['I studied ... as an undergraduate', 'I became interested in how ...', 'Not alone — ... works best alongside ...'],
+    toneNote: 'Polite and enthusiastic.',
+    practicePrompt: 'Introduce yourself in 3 sentences: background, interests, goals.',
+    translation: '教授：欢迎。我们轮流介绍一下。\n你：早上好。我本科学习经济学，后来对金融工具如何支持气候目标产生了兴趣。\n同学：你认为单靠碳定价就能推动转型吗？\n你：不能。碳定价需要配合投资激励、监管和技术政策。',
+    tags: 'conversation,introduction,self-intro',
   },
   {
-    title: 'Discussing a Group Project',
-    content: `**Dialogue:**
-
-Team Member: "For our sustainable finance project, should we analyze Tesla's green bond issuance or look at China's green finance pilot zones?"
-
-You: "I think the green finance pilot zones would be more unique. There's rich data from the five provinces, and we could compare the effectiveness of different policy approaches."
-
-Team Member: "Good point. Let's split the work — I'll gather data on carbon emission trends, you handle the policy analysis?"
-
-You: "Sounds good. I'll also prepare a comparative framework so we can evaluate the pilot zones consistently. Let's set a checkpoint for Friday."
-
-**Key Vocabulary:**
-- Green bond /ɡriːn bɒnd/: 绿色债券
-- Pilot zone /ˈpaɪlət zoʊn/: 试点区域
-- Policy analysis /ˈpɒləsi əˈnæləsɪs/: 政策分析
-- Comparative framework /kəmˈpærətɪv ˈfreɪmwɜːrk/: 比较框架
-
-**Translation:**
-队友："我们的可持续金融项目，应该分析特斯拉的绿色债券发行，还是研究中国绿色金融试点区？"
-你："我觉得绿色金融试点区更有独特性。五个省份有丰富的数据，我们可以比较不同政策路径的效果。"
-队友："说得好。我们分工吧——我收集碳排放趋势数据，你负责政策分析？"
-你："没问题。我还会准备一个比较框架，这样我们能一致地评估各试点区。周五我们碰个头对一下进度。"`,
-    tags: 'daily,conversation,academic',
+    title: 'Asking a Question in Class',
+    topic: 'Classroom Participation',
+    scenario: 'During a lecture on carbon accounting you ask a clarifying question.',
+    dialogue: [
+      { speaker: 'Professor', text: 'Scope 3 emissions often represent the largest share of a carbon footprint but are hardest to measure. Questions?' },
+      { speaker: 'You', text: 'Yes — when companies report Scope 3, do they use estimated data or actual supplier data? And how do auditors verify?' },
+      { speaker: 'Professor', text: 'Most use industry averages. The CSRD is pushing toward supplier-specific data. Verification remains a challenge.' },
+      { speaker: 'You', text: 'Thank you. Would more granular data also affect how we model transition risk?' },
+    ],
+    usefulExpressions: ['Yes — when companies report ..., do they use ... or ...?', 'Thank you. Would ... also affect how we model ...?'],
+    toneNote: 'Curious and respectful.',
+    practicePrompt: 'Ask a clarifying question about carbon accounting starting with "When companies report..."',
+    translation: '教授：Scope 3排放最难测量。有问题吗？\n你：公司报告使用估算数据还是实际数据？\n教授：多数用行业平均值。CSRD在推动供应商特定数据。\n你：谢谢。更细粒度的数据会影响转型风险建模吗？',
+    tags: 'conversation,classroom,participation',
   },
   {
-    title: 'Presenting Data in Class',
-    content: `**Dialogue:**
-
-You: "Today I'd like to present my analysis of the correlation between ESG scores and corporate bond yields in the Asian market."
-
-Professor: "Please go ahead."
-
-You: "Using a sample of 500 corporate bonds from 2019 to 2024, I found that companies with high ESG scores tend to have 15-20 basis points lower borrowing costs. This suggests that the market is already pricing in sustainability performance."
-
-Professor: "Interesting. Did you control for credit ratings?"
-
-You: "Yes, I controlled for credit ratings, industry sector, and bond maturity. The ESG premium remained statistically significant at the 5% level."
-
-**Key Vocabulary:**
-- ESG scores /iː es dʒiː skɔːrz/: ESG评分
-- Corporate bond yields /ˈkɔːrpərət bɒnd jiːldz/: 公司债券收益率
-- Basis points (bps) /ˈbeɪsɪs pɔɪnts/: 基点
-- Borrowing costs /ˈbɒroʊɪŋ kɒsts/: 借贷成本
-- Statistically significant /stəˈtɪstɪkli sɪɡˈnɪfɪkənt/: 统计显著性
-
-**Translation:**
-你："今天我向大家展示我对亚洲市场ESG评分与公司债收益率相关性的分析。"
-教授："请开始。"
-你："基于2019年至2024年500只公司债券的样本，我发现ESG评分高的公司其借贷成本低15-20个基点。这表明市场已经在为可持续发展表现定价。"
-教授："有意思。你控制了信用评级变量吗？"
-你："是的，我控制了信用评级、行业板块和债券期限。ESG溢价在5%水平上仍具统计显著性。"`,
-    tags: 'daily,conversation,academic,presentation',
+    title: 'Dividing a Group Project',
+    topic: 'Group Project Communication',
+    scenario: 'Your group divides tasks for comparing carbon pricing mechanisms in China and the EU.',
+    dialogue: [
+      { speaker: 'Team Member', text: 'We need to cover EU ETS, China\'s ETS, and sectoral analysis. How should we split this?' },
+      { speaker: 'You', text: 'I can take the EU ETS section. Maybe you could cover China\'s policy timeline?' },
+      { speaker: 'Team Member', text: 'Sure. How about using "how do design features affect reductions" as our research question?' },
+      { speaker: 'You', text: 'That works. Let\'s share a reading list by tomorrow and set a checkpoint for Friday.' },
+    ],
+    usefulExpressions: ['I can take the ... section.', 'Maybe you could cover ... ?', 'Let\'s share a reading list by ...'],
+    toneNote: 'Collaborative and organised.',
+    practicePrompt: 'Propose a task division for a group project on ESG investing.',
+    translation: '队友：我们需要覆盖EU ETS和中国碳市场。怎么分工？\n你：我可以做EU ETS部分。\n队友：好的。我们用"设计特征如何影响减排"作为研究问题？\n你：可以。明天前共享阅读清单。',
+    tags: 'conversation,group-project,collaboration',
+  },
+  {
+    title: 'Handling Q&A After a Presentation',
+    topic: 'Presentation & Q&A',
+    scenario: 'You just presented your analysis of green bond yields. The professor and classmates ask questions.',
+    dialogue: [
+      { speaker: 'You', text: 'I found that green bonds in Asia offer a yield premium of 10-15 basis points after controlling for credit rating and maturity.' },
+      { speaker: 'Professor', text: 'Did you control for currency risk? Some bonds are denominated in different currencies.' },
+      { speaker: 'You', text: 'I restricted the sample to USD-denominated bonds. I could expand using currency-hedged returns.' },
+      { speaker: 'Classmate', text: 'Does the premium reflect genuine demand or a temporary trend?' },
+      { speaker: 'You', text: 'The premium appears persistent across market cycles from 2019 to 2024, suggesting structural demand.' },
+    ],
+    usefulExpressions: ['To summarise, I found that ...', 'That\'s a good point. I controlled for ... by ...', 'Based on data from ..., the ... appears persistent across ...'],
+    toneNote: 'Confident but open to feedback.',
+    practicePrompt: 'Answer a Q&A question: acknowledge the point, explain your approach, suggest improvement.',
+    translation: '你：我发现亚洲绿色债券有10-15个基点的溢价。\n教授：你控制了汇率风险吗？\n你：我限制在美元计价债券。\n同学：溢价反映真实需求还是暂时趋势？\n你：2019-2024年间溢价持续存在，表明结构性需求。',
+    tags: 'conversation,presentation,qa',
+  },
+  {
+    title: 'Requesting Feedback During Office Hours',
+    topic: 'Office Hour / Professor Meeting',
+    scenario: 'You visit office hours to get feedback on your research proposal about carbon pricing and credit risk.',
+    dialogue: [
+      { speaker: 'You', text: 'Thank you for seeing me. I wanted feedback on my research proposal before the deadline.' },
+      { speaker: 'Professor', text: 'Walk me through your key argument.' },
+      { speaker: 'You', text: 'Standard credit risk models underestimate default probabilities for carbon-intensive firms because they ignore Knightian uncertainty about future carbon prices.' },
+      { speaker: 'Professor', text: 'Compelling angle. Make sure your methodology explains how you operationalise Knightian uncertainty.' },
+      { speaker: 'You', text: 'That\'s helpful. I\'ll strengthen that section. Would you recommend a specific modelling approach?' },
+    ],
+    usefulExpressions: ['Thank you for seeing me. I wanted feedback on ...', 'I\'m arguing that ... because ...', 'Would you recommend a specific ...?'],
+    toneNote: 'Respectful of the professor\'s time. Come prepared.',
+    practicePrompt: 'Summarise your research argument in 2 sentences for office hours.',
+    translation: '你：谢谢您见我。想请您给我的研究提案提意见。\n教授：说说你的核心论点。\n你：标准模型低估了碳密集型企业的违约概率。\n教授：有说服力的角度。\n你：您推荐特定的建模方法吗？',
+    tags: 'conversation,office-hour,academic',
+  },
+  {
+    title: 'Chatting at a Conference Reception',
+    topic: 'Networking & Small Talk',
+    scenario: 'At a university networking event you meet a PhD student from another programme.',
+    dialogue: [
+      { speaker: 'You', text: 'Hi, I\'m Raye — CNGF master\'s. Your talk on climate transition risk was really insightful.' },
+      { speaker: 'Other Student', text: 'Thank you! Glad it resonated. Are you working on anything related?' },
+      { speaker: 'You', text: 'I\'m exploring how carbon pricing uncertainty affects credit risk modelling.' },
+      { speaker: 'Other Student', text: 'I use CDS spreads and NGFS scenarios. Happy to share the dataset.' },
+      { speaker: 'You', text: 'That would be incredibly helpful. I\'ll follow up by email.' },
+    ],
+    usefulExpressions: ['Your talk on ... was really insightful.', 'I\'m exploring how ... affects ...', 'I\'ll follow up by email.'],
+    toneNote: 'Friendly and genuine. Show interest in their work first.',
+    practicePrompt: 'Introduce yourself at a networking event in 2 sentences.',
+    translation: '你：嗨，CNGF硕士的Raye。你关于气候转型风险的演讲很有见地。\n其他学生：谢谢！你在做相关研究吗？\n你：我在探索碳定价不确定性如何影响信用风险建模。\n其他学生：我用CDS利差和NGFS情景。\n你：太好了。我发邮件跟进。',
+    tags: 'conversation,networking,conference',
+  },
+  {
+    title: 'Registering for Courses',
+    topic: 'Academic Admin & Campus Life',
+    scenario: 'At the academic affairs office sorting out course registration.',
+    dialogue: [
+      { speaker: 'Staff', text: 'How can I help you today?' },
+      { speaker: 'You', text: 'I\'d like to confirm my enrolment in Carbon Accounting. The system shows me as waitlisted but I have the lecturer\'s approval.' },
+      { speaker: 'Staff', text: 'Let me check. I can see the approval email. Updating your status now.' },
+      { speaker: 'You', text: 'Thank you. Also, is there a deadline for dropping electives without a fee?' },
+      { speaker: 'Staff', text: 'The add-drop period ends next Friday.' },
+    ],
+    usefulExpressions: ['I\'d like to confirm my enrolment in ...', 'Also, is there a deadline for ... ?'],
+    toneNote: 'Clear and polite.',
+    practicePrompt: 'Ask an admin staff to confirm course registration and inquire about deadlines.',
+    translation: '工作人员：有什么可以帮你？\n你：我想确认碳核算课程的注册。\n工作人员：我看到了批准邮件。\n你：谢谢。退课有截止日期吗？\n工作人员：加退选到下周结束。',
+    tags: 'conversation,campus,admin',
+  },
+  {
+    title: 'Applying for a Green Finance Internship',
+    topic: 'Career / Internship Conversation',
+    scenario: 'Talking to a career advisor about green finance internship opportunities.',
+    dialogue: [
+      { speaker: 'Advisor', text: 'What kind of role interests you most?' },
+      { speaker: 'You', text: 'Something with carbon market data — analysis or sustainability reporting.' },
+      { speaker: 'Advisor', text: 'There\'s a green tech consultancy role focusing on carbon footprint verification for supply chains.' },
+      { speaker: 'You', text: 'Definitely. What\'s the application process and timeline?' },
+      { speaker: 'Advisor', text: 'Submit CV and cover letter by next Friday. I can review a draft.' },
+    ],
+    usefulExpressions: ['I\'d like something where I can work with ...', 'What\'s the application process and timeline?'],
+    toneNote: 'Professional and proactive.',
+    practicePrompt: 'Tell a career advisor what kind of green finance internship you\'re looking for in 2-3 sentences.',
+    translation: '顾问：你对哪种角色最感兴趣？\n你：我想做碳市场数据相关的工作。\n顾问：有一个绿色科技咨询职位。\n你：申请流程和时间线是怎样的？\n顾问：下周五前提交简历和求职信。',
+    tags: 'conversation,career,internship',
   },
 ]
-
-
 
 function pickBySeed<T>(arr: T[], seed: number): T {
   return arr[seed % arr.length]
@@ -106,13 +158,36 @@ async function upsertDailyContent(
   })
 }
 
-export async function getDailyConversation() {
+
+function formatConversationContent(item: typeof conversationContent[0]): string {
+  const lines: string[] = []
+  lines.push(`**Dialogue:**`)
+  for (const d of item.dialogue) {
+    lines.push(`
+${d.speaker}: "${d.text}"`)
+  }
+  lines.push(`
+**Useful Expressions:**`)
+  for (const e of item.usefulExpressions) {
+    lines.push(`
+- ${e}`)
+  }
+  lines.push(`
+**Tone:** ${item.toneNote}`)
+  lines.push(`
+**Translation:**
+${item.translation}`)
+  return lines.join("")
+}
+
+export async function getDailyConversation()
+ {
   const date = getShanghaiDate()
   const seed = getShanghaiDateSeed()
   const item = pickBySeed(conversationContent, seed)
   return upsertDailyContent(date, 'conversation', {
     title: item.title,
-    content: item.content,
+    content: formatConversationContent(item),
     tags: item.tags,
   })
 }
