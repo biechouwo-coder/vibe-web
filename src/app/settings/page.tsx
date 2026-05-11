@@ -16,14 +16,14 @@ export default async function SettingsPage() {
         </p>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+      <section className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
         <h2 className="font-serif text-lg font-semibold">Theme</h2>
         <div className="mt-3">
           <ThemeSelector />
         </div>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+      <section className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
         <h2 className="font-serif text-lg font-semibold">Notion Integration</h2>
         <p className="mt-1 text-sm text-stone-500">
           Push learning materials and tasks to your Notion databases.

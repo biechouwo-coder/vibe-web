@@ -94,14 +94,14 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
       </div>
 
       {scenario && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-stone-400">Scenario</p>
           <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-400">{scenario}</p>
         </div>
       )}
 
       {(dialogueLines.length > 0 || legacyDialog.length > 0) && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Dialogue</p>
           <div className="space-y-2.5">
             {(dialogueLines.length > 0 ? dialogueLines : legacyDialog).map((dl, i) => (
@@ -117,7 +117,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
       )}
 
       {usefulExpressions.length > 0 && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Useful Expressions</p>
           <div className="space-y-3">
             {usefulExpressions.map((ue, i) => (
@@ -131,7 +131,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
       )}
 
       {!isNewFormat && !!legacyVocab && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Key Vocabulary</p>
           <div className="space-y-2">
             {legacyVocab.split('\n').filter(l => l.trim()).map((line, i) => {
@@ -150,21 +150,21 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
       )}
 
       {toneNote && (
-        <div className="rounded-lg border border-stone-200 bg-stone-50 p-4 dark:border-stone-800 dark:bg-stone-800/30">
+        <div className="rounded-xl border border-stone-200 bg-stone-50 p-4 dark:border-stone-800 dark:bg-stone-800/30">
           <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-500">Tone</p>
           <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-400">{toneNote}</p>
         </div>
       )}
 
       {practicePrompt && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-stone-400">Practice</p>
           <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-400">{practicePrompt}</p>
         </div>
       )}
 
       {(!!translation || !!legacyTrans) && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-stone-400">Translation</p>
           <div className="whitespace-pre-line text-sm leading-relaxed text-stone-600 dark:text-stone-400">{translation || legacyTrans}</div>
         </div>
@@ -210,7 +210,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
         <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
       </div>
-      {items.length > 0 ? <VocabCards items={items} /> : <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{fallbackBody(content.content)}</div>}
+      {items.length > 0 ? <VocabCards items={items} /> : <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">{fallbackBody(content.content)}</div>}
       <div className="mt-8 flex items-center gap-3 pb-6">
         <button onClick={handlePush} disabled={content.pushed}
           className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
@@ -271,21 +271,21 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
         <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">Journal Article</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
       </div>
-      {metaLines.length > 0 && <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{metaLines.map(line => renderMetaLine(line))}</div>}
+      {metaLines.length > 0 && <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">{metaLines.map(line => renderMetaLine(line))}</div>}
       {excerptBody.length > 0 && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Excerpt</p>
           <div className="space-y-3 font-serif text-base leading-relaxed text-stone-800 dark:text-stone-200">{excerptBody.map((para, i) => <p key={i}>{para}</p>)}</div>
         </div>
       )}
       {writingFocus.length > 0 && (
-        <div className="rounded-lg border border-stone-200 bg-stone-50 p-4 dark:border-stone-800 dark:bg-stone-800/30">
+        <div className="rounded-xl border border-stone-200 bg-stone-50 p-4 dark:border-stone-800 dark:bg-stone-800/30">
           <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-500">Writing Focus</p>
           <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-400">{writingFocus.join(' ')}</p>
         </div>
       )}
       {vocabLines.length > 0 && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Key Vocabulary</p>
           <div className="space-y-2">
             {vocabLines.map((line, i) => {
@@ -303,7 +303,7 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
         </div>
       )}
       {discussionLines.length > 0 && (
-        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Discussion Questions</p>
           <div className="space-y-2">
             {discussionLines.map((line, i) => (

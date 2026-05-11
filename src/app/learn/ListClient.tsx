@@ -19,7 +19,7 @@ const typeLabel: Record<string, string> = {
 export default function ListClient({ items }: ListClientProps) {
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-stone-200 py-12 dark:border-stone-800">
+      <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed border-stone-200 py-12 dark:border-stone-800">
         <p className="text-sm text-stone-400">No readings archived yet.</p>
       </div>
     )
@@ -37,7 +37,7 @@ export default function ListClient({ items }: ListClientProps) {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.015 }}
-              className="group flex items-center gap-3 rounded-lg border border-stone-200 bg-white px-4 py-3 transition-colors hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-900 dark:hover:bg-stone-800"
+              className="group flex items-center gap-3 rounded-xl border border-stone-200 bg-white px-4 py-3 shadow-sm shadow-stone-200/40 transition-colors hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-900 dark:hover:bg-stone-800"
             >
               <span className="shrink-0 rounded border border-stone-200 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-widest text-stone-500 dark:border-stone-700 dark:text-stone-400">
                 {label}
