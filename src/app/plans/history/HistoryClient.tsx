@@ -13,7 +13,7 @@ interface HistoryClientProps {
 }
 
 function getIntensity(rate: number): string {
-  if (rate === 0) return 'bg-zinc-100 dark:bg-zinc-900'
+  if (rate === 0) return 'bg-stone-100 dark:bg-stone-900'
   if (rate < 25) return 'bg-blue-200 dark:bg-blue-950'
   if (rate < 50) return 'bg-blue-300 dark:bg-blue-900'
   if (rate < 75) return 'bg-blue-400 dark:bg-blue-700'
@@ -54,13 +54,13 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
   })
 
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-black">
+    <div className="rounded-2xl border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
       <div className="flex gap-1">
         <div className="flex flex-col gap-1 pt-5">
           {monthLabels.map((m) => (
             <span
               key={m.label}
-              className="text-xs text-zinc-400"
+              className="text-xs text-stone-400"
               style={{ marginTop: m.index === 0 ? '0' : undefined }}
             >
               {m.label}
@@ -85,9 +85,9 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
         </div>
       </div>
 
-      <div className="mt-3 flex items-center gap-2 text-xs text-zinc-400">
+      <div className="mt-3 flex items-center gap-2 text-xs text-stone-400">
         <span>Less</span>
-        <div className="h-3 w-3 rounded-sm bg-zinc-100 dark:bg-zinc-900" />
+        <div className="h-3 w-3 rounded-sm bg-stone-100 dark:bg-stone-900" />
         <div className="h-3 w-3 rounded-sm bg-blue-200 dark:bg-blue-950" />
         <div className="h-3 w-3 rounded-sm bg-blue-300 dark:bg-blue-900" />
         <div className="h-3 w-3 rounded-sm bg-blue-400 dark:bg-blue-700" />
