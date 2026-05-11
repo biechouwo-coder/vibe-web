@@ -24,7 +24,7 @@ export default async function PlansPage() {
     <div className="space-y-8">
       <section className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Daily Plans</h1>
+          <h1 className="font-serif text-2xl font-semibold tracking-tight">Daily Plans</h1>
           <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{today}</p>
         </div>
         <StreakBadge current={streak.currentStreak} />

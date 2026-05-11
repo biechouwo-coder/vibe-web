@@ -42,7 +42,7 @@ export default async function HistoryPage() {
     <div className="space-y-8">
       <section className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">History & Stats</h1>
+          <h1 className="font-serif text-2xl font-semibold tracking-tight">History <h1 className="text-2xl font-bold tracking-tight">History & Stats</h1> Stats</h1>
           <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Your progress over time</p>
         </div>
         <StreakBadge current={streak.currentStreak} />
