@@ -51,7 +51,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
       <div>
         <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Conversation</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
-        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).filter(t => !['daily','conversation','vocabulary','passage','journal'].includes(t)).join(' · ')}`}</p>
+        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).filter(t => !['daily','conversation','vocabulary','passage','journal','core','cnf','academic','finance','carbon','economics','china'].includes(t)).join(' · ')}`}</p>
       </div>
 
       <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
@@ -139,7 +139,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
       <div className="mt-4 mb-6">
         <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Vocabulary</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
-        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).filter(t => !['daily','conversation','vocabulary','passage','journal'].includes(t)).join(' · ')}`}</p>
+        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).filter(t => !['daily','conversation','vocabulary','passage','journal','core','cnf','academic','finance','carbon','economics','china'].includes(t)).join(' · ')}`}</p>
       </div>
 
       {items.length > 0 ? <VocabCards items={items} /> : <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{renderFallback(content.content)}</div>}
@@ -164,8 +164,9 @@ function renderFallback(text: string) {
 }
 
 function renderMetaLine(line: string) {
-  const key = line.split('**:')[0].replace('**', '').trim()
-  const val = line.split('**:').slice(1).join('**:').trim()
+  const match = line.match(/^\*\*(.+?):\*\*\s*(.*)$/)
+  const key = match?.[1]?.trim() ?? ''
+  const val = match?.[2]?.trim() ?? ''
   if (!key || !val) return null
   if (key.toLowerCase() === 'doi') {
     return (

@@ -10,29 +10,26 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-8">
       <section>
-        <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
-        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight">Settings</h1>
+        <p className="mt-1 text-sm text-stone-500">
           Configure integrations and preferences
         </p>
       </section>
 
-      <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
-        <h2 className="text-lg font-semibold">🎨 Theme</h2>
-        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-          Choose your preferred appearance.
-        </p>
-        <div className="mt-4">
+      <section className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <h2 className="font-serif text-lg font-semibold">Theme</h2>
+        <div className="mt-3">
           <ThemeSelector />
         </div>
       </section>
 
-      <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
-        <h2 className="text-lg font-semibold">🔗 Notion Integration</h2>
-        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+      <section className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <h2 className="font-serif text-lg font-semibold">Notion Integration</h2>
+        <p className="mt-1 text-sm text-stone-500">
           Push learning materials and tasks to your Notion databases.
         </p>
 
-        <div className="mt-4 rounded-xl bg-blue-50 p-4 text-sm text-blue-700 dark:bg-blue-950/30 dark:text-blue-400">
+        <div className="mt-4 rounded-lg border border-stone-200 bg-stone-50 p-4 text-sm text-stone-700 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">
           <p className="font-medium">How to set up:</p>
           <ol className="mt-2 list-inside list-decimal space-y-1 text-xs">
             <li>Go to{' '}
@@ -65,12 +62,12 @@ export default async function SettingsPage() {
         <SettingsForm config={config} />
       </section>
 
-      <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
-        <h2 className="text-lg font-semibold">📖 About This Site</h2>
-        <div className="mt-3 space-y-2 text-sm text-zinc-500 dark:text-zinc-400">
+      <section className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <h2 className="font-serif text-lg font-semibold">About</h2>
+        <div className="mt-3 space-y-2 text-sm text-stone-500">
           <p>
             This is a personal productivity and English learning tool designed for
-            HKUST-GZ&apos;s Carbon Neutrality & Green Finance program.
+            HKUST-GZ&apos;s Carbon Neutrality &amp; Green Finance program.
           </p>
           <p>
             <strong>Daily English</strong> covers conversations, vocabulary, and

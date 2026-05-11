@@ -18,11 +18,29 @@ const NAV_LINK_CLASS =
 
 // ── Tag helpers ──
 
-const STRUCTURAL_TAGS = new Set(['daily', 'conversation', 'vocabulary', 'passage', 'journal'])
+/** Internal / structural tags that should never appear on card UI. */
+const STRUCTURAL_TAGS = new Set([
+  'daily', 'conversation', 'vocabulary', 'passage', 'journal',
+  'core', 'cnf', 'academic', 'finance', 'carbon', 'economics', 'china',
+])
 
+/** "carbon-pricing" → "Carbon Pricing" */
+function formatTagLabel(tag: string): string {
+  return tag
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
+/** Returns up to 3 filtered, formatted academic keywords for a card. */
 function getDisplayTags(tags: string | null): string[] {
   if (!tags) return []
-  return tags.split(',').map((t) => t.trim()).filter((t) => !STRUCTURAL_TAGS.has(t))
+  return tags
+    .split(',')
+    .map((t) => t.trim().toLowerCase())
+    .filter((t) => !STRUCTURAL_TAGS.has(t))
+    .map(formatTagLabel)
+    .slice(0, 3)
 }
 
 // ── Vocabulary preview ──
