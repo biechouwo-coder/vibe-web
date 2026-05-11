@@ -350,7 +350,60 @@ interface ReadingContentItem {
   tags: string
 }
 
-const readingContent: ReadingContentItem[] = [
+
+/**
+ * Format a reading item into passage-style markdown content.
+ * Compatible with the existing passage detail page rendering.
+ */
+export function formatReadingContent(item: ReadingContentItem): string {
+  const lines: string[] = []
+  lines.push('**Paper:** ' + item.paperTitle)
+  lines.push('**Authors:** ' + item.authors)
+  lines.push('**Journal:** ' + item.journal)
+  lines.push('**Year:** ' + String(item.year))
+  lines.push('**DOI:** https://doi.org/' + item.doi)
+  lines.push('')
+  lines.push(item.excerpt)
+  lines.push('')
+  lines.push('**Writing Focus:**')
+  lines.push(item.writingFocus)
+  lines.push('')
+  lines.push('**Key Vocabulary:**')
+  for (const v of item.vocabulary) {
+    const phonetic = v.phonetic ? '/' + v.phonetic + '/' : ''
+    lines.push('- ' + v.term + (phonetic ? ' ' + phonetic : '') + ': ' + v.chinese)
+  }
+  lines.push('')
+  lines.push('**Discussion Questions:**')
+  item.discussionQuestions.forEach((q, i) => {
+    lines.push(String(i + 1) + '. ' + q)
+  })
+  return lines.join('\n')
+}
+
+/**
+ * Format a reading item's vocabulary into vocabulary-style markdown.
+ * Each term becomes a heading-2 entry compatible with parseVocabSections().
+ * Format: ## N. Term /phonetic/ (Chinese)
+ *         **Definition:** ...
+ *         **Example:** ...
+ *         **Chinese:** ...
+ */
+export function formatVocabularyFromReading(item: ReadingContentItem): string {
+  return item.vocabulary.map((v, i) => {
+    const parts: string[] = []
+    const num = i + 1
+    const phonetic = v.phonetic ? ' /' + v.phonetic + '/' : ''
+    parts.push('## ' + String(num) + '. ' + v.term + phonetic + ' (' + v.chinese + ')')
+    parts.push('**Definition:** ' + v.definition)
+    parts.push('**Example:** "' + v.example + '"')
+    parts.push('**Chinese:** ' + v.chinese)
+    return parts.join('\n')
+  }).join('\n')
+}
+
+
+export const readingContent: ReadingContentItem[] = [
   {
     title: 'Carbon Pricing Meta-Analysis',
     paperTitle: 'Systematic review and meta-analysis of ex-post evaluations on the effectiveness of carbon pricing',
