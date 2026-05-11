@@ -18,7 +18,7 @@ interface VocabCardsProps {
 export default function VocabCards({ items }: VocabCardsProps) {
   const [[current, dir], setPage] = useState([0, 0])
   const reduced = useReducedMotion()
-  const moveX = reduced ? 0 : 16
+  const moveX = reduced ? 0 : 40
 
   const cardVariants = {
     enter: (d: number) => ({ opacity: 0, x: d > 0 ? moveX : -moveX }),
@@ -59,7 +59,7 @@ export default function VocabCards({ items }: VocabCardsProps) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ opacity: { duration: 0.15 }, x: { duration: 0.2 } }}
+            transition={{ opacity: { duration: 0.2 }, x: { duration: 0.28 } }}
             className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900"
           >
             <h2 className="font-serif text-xl font-semibold tracking-tight text-stone-900 dark:text-stone-100">
