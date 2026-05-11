@@ -263,8 +263,25 @@ export async function getDailyConversation() {
   })
 }
 
-export async function getDailyVocabulary() {
+/**
+ * Select today's reading item from readingContent.
+ * Uses the same date seed as conversations for consistent pairing.
+ */
+function getDailyReadingItem(): ReadingContentItem {
+  const seed = getShanghaiDateSeed()
+  return pickBySeed(readingContent, seed)
+}
+
+export async function getDailyVocabulary(reading?: ReadingContentItem) {
   const date = getShanghaiDate()
+  if (reading) {
+    return upsertDailyContent(date, 'vocabulary', {
+      title: 'Key Terms: ' + reading.title,
+      content: formatVocabularyFromReading(reading),
+      tags: 'vocabulary,from-reading,' + reading.tags,
+    })
+  }
+  // Fallback (kept for safety, not normally reached after migration)
   const item = pickBySeed(vocabularyContent, getShanghaiWeekOfYear())
   return upsertDailyContent(date, 'vocabulary', {
     title: item.title,
@@ -273,8 +290,16 @@ export async function getDailyVocabulary() {
   })
 }
 
-export async function getDailyPassage() {
+export async function getDailyPassage(reading?: ReadingContentItem) {
   const date = getShanghaiDate()
+  if (reading) {
+    return upsertDailyContent(date, 'passage', {
+      title: reading.title,
+      content: formatReadingContent(reading),
+      tags: reading.tags,
+    })
+  }
+  // Fallback (kept for safety, not normally reached after migration)
   const passageIndex = Math.floor(getShanghaiDayOfYear() / 3)
   const item = pickBySeed(passageContent, passageIndex)
   return upsertDailyContent(date, 'passage', {
@@ -285,11 +310,11 @@ export async function getDailyPassage() {
 }
 
 export async function getAllTodaysContent() {
+  const reading = getDailyReadingItem()
   const conversation = await getDailyConversation()
-  const vocabulary = await getDailyVocabulary()
-  const passage = await getDailyPassage()
+  const vocabulary = await getDailyVocabulary(reading)
+  const passage = await getDailyPassage(reading)
 
-  // Auto-create tasks for today's learning content
   await ensureLearningTasks(conversation, vocabulary, passage)
 
   return { conversation, vocabulary, passage }
