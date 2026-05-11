@@ -96,7 +96,8 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
   const keywords = getConversationTopicKeywords(title, tags)
 
   return (
-    <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Speaking Practice</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {summary && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-2">{summary}</p>}
@@ -125,7 +126,8 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
   const keywords = getAcademicKeywords(title, tags)
 
   return (
-    <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Vocabulary</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500">{preview}</p>}
@@ -155,7 +157,8 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
   const keywords = getAcademicKeywords(title, tags)
 
   return (
-    <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+    <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Reading</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {meta && <p className="mt-1 text-[10px] text-stone-400">{meta}</p>}
