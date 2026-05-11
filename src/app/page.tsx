@@ -28,51 +28,38 @@ export default async function Home() {
 
   return (
     <div className="space-y-8">
-      {/* Study desk header */}
+      {/* Header */}
       <section>
-        <p className="text-xs font-medium uppercase tracking-widest text-stone-500">{formatDate()}</p>
-        <h1 className="mt-2 font-serif text-2xl font-semibold tracking-tight sm:text-3xl">
-          Study Desk
-        </h1>
-        <p className="mt-1.5 text-sm text-stone-500">
-          BSc Economics · HKUST-GZ Carbon Neutrality &amp; Green Finance
-        </p>
+        <p className="text-xs font-medium uppercase tracking-widest text-stone-400">{formatDate()}</p>
+        <h1 className="mt-2 font-serif text-2xl font-semibold tracking-tight sm:text-3xl">Study Desk</h1>
+        <p className="mt-1 text-sm text-stone-500">BSc Economics · HKUST-GZ Carbon Neutrality &amp; Green Finance</p>
       </section>
 
-      {/* Stats row */}
-      <section className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
-          <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Tasks Today</p>
-          <p className="mt-1 text-2xl font-semibold">
-            {stats.completedTasks}
-            <span className="text-sm font-normal text-stone-400">/{stats.totalTasks}</span>
-          </p>
-          <div className="mt-2">
-            <ProgressBar value={stats.completionRate} />
-          </div>
-          <p className="mt-1 text-xs text-stone-400">{stats.completionRate}% complete</p>
-        </div>
+      {/* Today's focus */}
+      <section className="border-l-2 border-stone-300 pl-3 dark:border-stone-700">
+        <p className="text-xs font-medium uppercase tracking-widest text-stone-400">Today&rsquo;s Focus</p>
+        <p className="mt-0.5 text-sm text-stone-700 dark:text-stone-300">{content.passage.title}</p>
+      </section>
 
-        <div className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
-          <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Streak</p>
-          <div className="mt-1">
+      {/* Stats summary */}
+      <div className="flex items-stretch gap-3">
+        <div className="flex-1 rounded-lg border border-stone-200 bg-white p-3 dark:border-stone-800 dark:bg-stone-900">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">Tasks Today</p>
+          <p className="mt-0.5 font-semibold text-stone-800 dark:text-stone-200">
+            {stats.completedTasks}<span className="text-sm font-normal text-stone-400">/{stats.totalTasks}</span>
+          </p>
+          <div className="mt-1.5"><ProgressBar value={stats.completionRate} /></div>
+        </div>
+        <div className="flex-1 rounded-lg border border-stone-200 bg-white p-3 dark:border-stone-800 dark:bg-stone-900">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">Streak</p>
+          <p className="mt-0.5 font-semibold text-stone-800 dark:text-stone-200">
             <StreakBadge current={stats.streak.currentStreak} />
-          </div>
-          <p className="mt-1 text-xs text-stone-400">
-            Best: {stats.streak.longestStreak} days
           </p>
         </div>
-
-        <Link
-          href="/plans"
-          className="rounded-lg border border-stone-200 bg-white p-4 transition-colors hover:border-stone-300 hover:bg-stone-100 dark:border-stone-800 dark:bg-stone-900 dark:hover:border-stone-700 dark:hover:bg-stone-800"
-        >
-          <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Quick Action</p>
-          <p className="mt-1 inline-flex items-center gap-1.5 rounded-md border border-stone-200 bg-stone-50 px-2.5 py-1.5 text-xs font-medium text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-400">
-            Open task planner
-          </p>
+        <Link href="/plans" className="flex flex-1 items-center justify-center rounded-lg border border-stone-200 bg-white p-3 transition-colors hover:border-stone-300 hover:bg-stone-100 dark:border-stone-800 dark:bg-stone-900 dark:hover:border-stone-700 dark:hover:bg-stone-800">
+          <span className="text-xs font-medium text-stone-600 dark:text-stone-400">Open planner</span>
         </Link>
-      </section>
+      </div>
 
       {/* Today's Tasks */}
       <section>
@@ -90,7 +77,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Today's reading materials */}
+      {/* Today's Readings */}
       <section>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-serif text-lg font-semibold">Today&apos;s Readings</h2>
