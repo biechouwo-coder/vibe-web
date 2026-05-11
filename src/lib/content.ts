@@ -161,7 +161,10 @@ async function upsertDailyContent(
 
 function formatConversationContent(item: typeof conversationContent[0]): string {
   const lines: string[] = []
-  lines.push(`**Dialogue:**`)
+  lines.push(`**Topic:** ${item.topic}`)
+  lines.push(`**Scenario:** ${item.scenario}`)
+  lines.push(`
+**Dialogue:**`)
   for (const d of item.dialogue) {
     lines.push(`
 ${d.speaker}: "${d.text}"`)
@@ -173,10 +176,12 @@ ${d.speaker}: "${d.text}"`)
 - ${e}`)
   }
   lines.push(`
-**Tone:** ${item.toneNote}`)
+**Tone Note:** ${item.toneNote}`)
   lines.push(`
-**Translation:**
-${item.translation}`)
+**Practice Prompt:** ${item.practicePrompt}`)
+  lines.push(`
+**Translation:**`)
+  lines.push(item.translation)
   return lines.join("")
 }
 
