@@ -177,7 +177,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
       initial={false}
       animate={{ opacity: 1, y: 0 }}
       className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
-      <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Reading</span>
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Reading</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {meta && <p className="mt-1 text-[10px] text-stone-400">{meta}</p>}
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-3">{preview}</p>}

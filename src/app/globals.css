@@ -8,6 +8,8 @@
   --muted: #78716c;
   --border: #e7e5e4;
   --surface: #ffffff;
+  --academic-navy: #013E75;
+  --academic-red: #A42423;
   color-scheme: light;
 }
 
@@ -18,6 +20,8 @@
   --muted: #78716c;
   --border: #292524;
   --surface: #131210;
+  --academic-navy: #7fb3df;
+  --academic-red: #e08a88;
   color-scheme: dark;
 }
 

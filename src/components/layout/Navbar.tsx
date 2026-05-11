@@ -37,7 +37,7 @@ export default function Navbar() {
                 {isActive && (
                   <motion.span
                     layoutId="nav-underline"
-                    className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-stone-900 dark:bg-stone-100"
+                    className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[var(--academic-navy)]"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
