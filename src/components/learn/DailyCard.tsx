@@ -12,6 +12,10 @@ interface DailyCardProps {
   detailHref?: string
 }
 
+// Shared neutral nav link style
+const NAV_LINK_CLASS =
+  'inline-flex items-center gap-1.5 rounded-md border border-stone-200 bg-white px-2.5 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
+
 // ── Tag helpers ──
 
 const STRUCTURAL_TAGS = new Set(['daily', 'conversation', 'vocabulary', 'passage', 'journal'])
@@ -38,14 +42,11 @@ function getVocabularyPreview(content: string): string {
 
 // ── Passage preview ──
 
-/** Extract the value after `**key:**` in content. */
 function getMetaValue(content: string, key: string): string | null {
   const prefix = `**${key}:**`
   for (const line of content.split('\n')) {
     const trimmed = line.trim()
-    if (trimmed.startsWith(prefix)) {
-      return trimmed.slice(prefix.length).trim()
-    }
+    if (trimmed.startsWith(prefix)) return trimmed.slice(prefix.length).trim()
   }
   return null
 }
@@ -58,40 +59,33 @@ function getPassageMeta(content: string): string | null {
   return null
 }
 
-/** Check if a trimmed line is a metadata header (Paper/Authors/Journal/Year/DOI). */
 function isMetaLine(trimmed: string): boolean {
   const lower = trimmed.toLowerCase()
   return (
-    lower.startsWith('**paper:**') ||
-    lower.startsWith('**authors:**') ||
-    lower.startsWith('**journal:**') ||
-    lower.startsWith('**year:**') ||
-    lower.startsWith('**doi:**')
+    lower.startsWith('**paper:**') || lower.startsWith('**authors:**') ||
+    lower.startsWith('**journal:**') || lower.startsWith('**year:**') || lower.startsWith('**doi:**')
   )
 }
 
 function getPassagePreview(content: string): string {
   const lines = content.split('\n')
   const previewLines: string[] = []
-
   for (const line of lines) {
     const trimmed = line.trim()
     if (trimmed.startsWith('**Key Vocabulary:**')) break
     if (!trimmed) continue
     if (isMetaLine(trimmed)) continue
-    if (/^["\s]+$/.test(trimmed)) continue
     previewLines.push(trimmed)
     if (previewLines.length >= 3) break
   }
-
   return previewLines.join(' ')
 }
 
 // ── Conversation card ──
 
 function parseConversationDialogue(content: string) {
-  const dialogueMatch = content.match(/\*\*Dialogue:\*\*([\s\S]*?)(?=\*\*Key Vocabulary:\*\*|\*\*Translation:\*\*|$)/)
-  return dialogueMatch ? dialogueMatch[1].trim() : ''
+  const match = content.match(/\*\*Dialogue:\*\*([\s\S]*?)(?=\*\*Key Vocabulary:\*\*|\*\*Translation:\*\*|$)/)
+  return match ? match[1].trim() : ''
 }
 
 function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: Omit<DailyCardProps, 'type'>) {
@@ -106,35 +100,28 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
     <motion.div
       initial={false}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white p-5 dark:border-blue-800 dark:from-blue-950/20 dark:to-black"
+      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
     >
-      <span className="inline-flex items-center gap-1 rounded-lg bg-blue-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
-        💬 Daily Conversation
-      </span>
-      <h3 className="mt-3 font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Conversation</span>
+      <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {summary && (
-        <p className="mt-3 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 line-clamp-2">{summary}</p>
+        <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-2">{summary}</p>
       )}
       {displayTags.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap gap-1">
           {displayTags.map((tag) => (
-            <span key={tag} className="rounded-full bg-blue-100/50 px-2.5 py-0.5 text-xs text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">{tag}</span>
+            <span key={tag} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{tag}</span>
           ))}
         </div>
       )}
       <div className="mt-3 flex items-center gap-2">
-        {detailHref && (
-          <a href={detailHref} className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-all hover:bg-emerald-100 hover:shadow-sm dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400 dark:hover:bg-emerald-950/50">
-            Read full
-            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        )}
+        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read note</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-full px-3 py-1 text-xs font-medium transition-colors ${pushed ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800' : 'bg-white text-zinc-700 hover:bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'}`}>
-            {pushed ? '✅ Pushed to Notion' : '📤 Push to Notion'}
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+              pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
+            }`}>
+            {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
       </div>
@@ -152,35 +139,26 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
     <motion.div
       initial={false}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white p-5 dark:border-purple-800 dark:from-purple-950/20 dark:to-black"
+      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
     >
-      <span className="inline-flex items-center gap-1 rounded-lg bg-purple-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">
-        📚 Vocabulary
-      </span>
-      <h3 className="mt-3 font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
-      {preview && (
-        <p className="mt-3 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{preview}</p>
-      )}
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Vocabulary</span>
+      <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
+      {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500">{preview}</p>}
       {displayTags.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap gap-1">
           {displayTags.map((tag) => (
-            <span key={tag} className="rounded-full bg-white/60 px-2.5 py-0.5 text-xs text-zinc-500 dark:bg-black/30 dark:text-zinc-400">{tag}</span>
+            <span key={tag} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{tag}</span>
           ))}
         </div>
       )}
       <div className="mt-3 flex items-center gap-2">
-        {detailHref && (
-          <a href={detailHref} className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-all hover:bg-emerald-100 hover:shadow-sm dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400 dark:hover:bg-emerald-950/50">
-            Read full
-            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        )}
+        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read note</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-full px-3 py-1 text-xs font-medium transition-colors ${pushed ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800' : 'bg-white text-zinc-700 hover:bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'}`}>
-            {pushed ? '✅ Pushed to Notion' : '📤 Push to Notion'}
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+              pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
+            }`}>
+            {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
       </div>
@@ -199,36 +177,27 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
     <motion.div
       initial={false}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-white p-5 dark:border-amber-800 dark:from-amber-950/20 dark:to-black"
+      className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900"
     >
-      <span className="inline-flex items-center gap-1 rounded-lg bg-amber-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
-        📖 Reading Passage
-      </span>
-      <h3 className="mt-3 font-semibold text-zinc-800 dark:text-zinc-200">{title}</h3>
-      {meta && <p className="mt-2 text-xs text-zinc-400 dark:text-zinc-500">{meta}</p>}
-      {preview && (
-        <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-3">{preview}</p>
-      )}
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Reading</span>
+      <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
+      {meta && <p className="mt-1 text-[10px] text-stone-400">{meta}</p>}
+      {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-3">{preview}</p>}
       {displayTags.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap gap-1">
           {displayTags.map((tag) => (
-            <span key={tag} className="rounded-full bg-white/60 px-2.5 py-0.5 text-xs text-zinc-500 dark:bg-black/30 dark:text-zinc-400">{tag}</span>
+            <span key={tag} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{tag}</span>
           ))}
         </div>
       )}
       <div className="mt-3 flex items-center gap-2">
-        {detailHref && (
-          <a href={detailHref} className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-all hover:bg-emerald-100 hover:shadow-sm dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400 dark:hover:bg-emerald-950/50">
-            Read full
-            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        )}
+        {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read full</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-full px-3 py-1 text-xs font-medium transition-colors ${pushed ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800' : 'bg-white text-zinc-700 hover:bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'}`}>
-            {pushed ? '✅ Pushed to Notion' : '📤 Push to Notion'}
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+              pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
+            }`}>
+            {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
       </div>

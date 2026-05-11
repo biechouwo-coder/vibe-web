@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Noto_Sans } from 'next/font/google'
+import { Geist, Geist_Mono, Noto_Sans, Noto_Serif } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import ThemeProvider from '@/components/theme/ThemeProvider'
@@ -21,9 +21,15 @@ const notoSans = Noto_Sans({
   weight: ['400', '500', '600'],
 })
 
+const notoSerif = Noto_Serif({
+  variable: '--font-noto-serif',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+})
+
 export const metadata: Metadata = {
-  title: 'vibe.web — Learn & Plan',
-  description: 'Daily English learning & task planner for HKUST-GZ Carbon Neutrality & Green Finance',
+  title: 'vibe.web — Academic Research Desk',
+  description: 'Daily English reading & study planner for HKUST-GZ Carbon Neutrality & Green Finance',
 }
 
 export default function RootLayout({
@@ -32,11 +38,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${notoSans.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${notoSans.variable} ${notoSerif.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <ThemeScript />
       </head>
-      <body className="min-h-full bg-zinc-50 font-sans text-zinc-900 dark:bg-black dark:text-zinc-100">
+      <body className="min-h-full bg-stone-50 font-sans text-stone-900 dark:bg-stone-950 dark:text-stone-200">
         <ThemeProvider>
           <Navbar />
           <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10">{children}</main>

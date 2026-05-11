@@ -16,7 +16,6 @@ export default function TaskList({ tasks }: TaskListProps) {
   const handleToggle = useCallback(() => {
     const remainingIncomplete = tasks.filter((t) => !t.completed).length
     if (remainingIncomplete === 1) {
-      // This was the last one to complete
       setShowConfetti(true)
       setTimeout(() => setShowConfetti(false), 3000)
     }
@@ -25,9 +24,8 @@ export default function TaskList({ tasks }: TaskListProps) {
   if (tasks.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2 py-12 text-center">
-        <span className="text-3xl">🎯</span>
-        <p className="text-sm text-zinc-400">No tasks for today yet</p>
-        <p className="text-xs text-zinc-300 dark:text-zinc-600">Add one above to get started</p>
+        <p className="text-sm text-stone-400">No tasks for today yet</p>
+        <p className="text-xs text-stone-300 dark:text-stone-600">Add one above to get started</p>
       </div>
     )
   }
@@ -46,9 +44,9 @@ export default function TaskList({ tasks }: TaskListProps) {
       </div>
 
       {completedTasks.length > 0 && completedTasks.length === tasks.length && (
-        <div className="mt-6 rounded-xl bg-emerald-50 p-4 text-center dark:bg-emerald-950/30">
-          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
-            🎉 All tasks completed! Great job today!
+        <div className="mt-6 rounded-lg border border-stone-200 bg-stone-50 p-4 text-center dark:border-stone-800 dark:bg-stone-800/30">
+          <p className="text-sm font-medium text-stone-700 dark:text-stone-300">
+            All tasks completed today.
           </p>
         </div>
       )}

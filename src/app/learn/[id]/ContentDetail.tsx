@@ -10,19 +10,12 @@ interface ContentDetailProps {
   pushAction: (id: string) => Promise<{ ok: boolean; message: string }>
 }
 
-const typeConfig: Record<string, { emoji: string; label: string; color: string }> = {
-  conversation: { emoji: '💬', label: 'Daily Conversation', color: 'text-blue-600 dark:text-blue-400' },
-  vocabulary: { emoji: '📚', label: 'Vocabulary', color: 'text-purple-600 dark:text-purple-400' },
-  passage: { emoji: '📖', label: 'Reading Passage', color: 'text-amber-600 dark:text-amber-400' },
-}
-
-// ── Conversation content parsers ──
+// ── Conversation ──
 
 function parseConversation(content: string) {
   const dialogueMatch = content.match(/\*\*Dialogue:\*\*([\s\S]*?)(?=\*\*Key Vocabulary:\*\*|\*\*Translation:\*\*|$)/)
   const vocabMatch = content.match(/\*\*Key Vocabulary:\*\*([\s\S]*?)(?=\*\*Translation:\*\*|$)/)
   const transMatch = content.match(/\*\*Translation:\*\*([\s\S]*?)$/)
-
   return {
     dialogue: dialogueMatch ? dialogueMatch[1].trim() : '',
     vocabulary: vocabMatch ? vocabMatch[1].trim() : '',
@@ -33,7 +26,6 @@ function parseConversation(content: string) {
 function parseDialogueLines(text: string) {
   const lines = text.split('\n').filter(Boolean)
   const speakers = ['Professor', 'You', 'Classmate', 'Team Member']
-
   return lines
     .map((line) => {
       const speaker = speakers.find((s) => line.startsWith(`${s}:`))
@@ -49,62 +41,30 @@ function parseDialogueLines(text: string) {
     .filter((item): item is NonNullable<typeof item> => item !== null)
 }
 
-function parseVocabLines(text: string) {
-  return text
-    .split('\n')
-    .filter((l) => l.trim().startsWith('-'))
-    .map((l) => {
-      // Matches: "- term /phonetic/: 中文" or "- term: 中文"
-      const match = l.match(/-\s*(.+?)\s*(?:\/(.+?)\/)?\s*:\s*(.+)/)
-      if (match) return { term: match[1].trim(), phonetic: match[2]?.trim() || '', definition: match[3].trim() }
-      return null
-    })
-    .filter((item): item is { term: string; phonetic: string; definition: string } => item !== null)
-}
-
-// ── Conversation Knowledge Card ──
-
 function ConversationDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
   const { dialogue, vocabulary, translation } = parseConversation(content.content)
   const dialogueLines = parseDialogueLines(dialogue)
-  const vocabList = parseVocabLines(vocabulary)
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <BackLink href="/learn" />
-
-      {/* Header */}
       <div>
-        <span className="text-sm font-medium uppercase tracking-wider text-blue-600 dark:text-blue-400">
-          💬 Daily Conversation
-        </span>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight">{content.title}</h1>
-        <p className="mt-1 text-xs text-zinc-400">
-          {formatStoredDate(content.date)}
-          {content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).join(' · ')}`}
-        </p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Conversation</p>
+        <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
+        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).filter(t => !['daily','conversation','vocabulary','passage','journal'].includes(t)).join(' · ')}`}</p>
       </div>
 
-      {/* Dialogue Chat */}
-      <div className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white p-6 dark:border-blue-800 dark:from-blue-950/20 dark:to-black">
-        <h2 className="mb-5 text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
-          💬 Dialogue
-        </h2>
-        <div className="space-y-3">
+      <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Dialogue</p>
+        <div className="space-y-2.5">
           {dialogueLines.map((dl, i) => (
             <div key={i} className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                  dl.isYou
-                    ? 'rounded-tr-md bg-emerald-500 text-white'
-                    : 'rounded-tl-md bg-white text-zinc-700 shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-zinc-700'
-                }`}
-              >
-                {!dl.isYou && (
-                  <span className="mb-1 block text-xs font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400">
-                    {dl.speaker}
-                  </span>
-                )}
+              <div className={`max-w-[85%] rounded-lg px-3.5 py-2.5 text-sm leading-relaxed ${
+                dl.isYou
+                  ? 'bg-emerald-800 text-white dark:bg-emerald-700'
+                  : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'
+              }`}>
+                {!dl.isYou && <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-stone-500">{dl.speaker}</span>}
                 <span>{dl.message}</span>
               </div>
             </div>
@@ -112,59 +72,40 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
         </div>
       </div>
 
-      {/* Key Vocabulary */}
-      {vocabList.length > 0 && (
-        <div className="rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white p-6 dark:border-purple-800 dark:from-purple-950/20 dark:to-black">
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400">
-            📝 Key Vocabulary
-          </h2>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {vocabList.map((v, i) => (
-              <div
-                key={i}
-                className="rounded-xl bg-white/70 p-3.5 shadow-sm ring-1 ring-purple-200/50 dark:bg-zinc-800/70 dark:ring-purple-800/50"
-              >
-                <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">{v.term}</p>
-                {v.phonetic && (
-                  <p className="mt-0.5 text-xs text-purple-500 dark:text-purple-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>
-                    [{v.phonetic}]
-                  </p>
-                )}
-                <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">{v.definition}</p>
-              </div>
-            ))}
+      {vocabulary && (
+        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Key Vocabulary</p>
+          <div className="space-y-2">
+            {vocabulary.split('\n').filter(l => l.trim()).map((line, i) => {
+              const m = line.match(/-\s*([^/]+?)\s*(?:\/(.+?)\/)?\s*:\s*(.+)/)
+              if (!m) return null
+              return (
+                <div key={i} className="flex items-baseline gap-2 text-sm">
+                  <span className="font-medium text-stone-800 dark:text-stone-200">{m[1].trim()}</span>
+                  {m[2] && <span className="text-xs text-stone-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>[{m[2].trim()}]</span>}
+                  <span className="text-xs text-stone-500">— {m[3].trim()}</span>
+                </div>
+              )
+            })}
           </div>
         </div>
       )}
 
-      {/* Translation */}
       {translation && (
-        <div className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-400">
-            🌐 Translation
-          </h2>
-          <div className="whitespace-pre-line text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-            {translation}
-          </div>
+        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-stone-400">Translation</p>
+          <div className="whitespace-pre-line text-sm leading-relaxed text-stone-600 dark:text-stone-400">{translation}</div>
         </div>
       )}
 
-      {/* Push button */}
-      <div className="flex items-center gap-3">
-        <button
-          onClick={handlePush}
-          disabled={content.pushed}
-          className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-colors ${
-            content.pushed
-              ? 'bg-zinc-100 text-zinc-400 dark:bg-zinc-900'
-              : 'bg-emerald-500 text-white hover:bg-emerald-600'
-          }`}
-        >
-          {content.pushed ? '✅ Already pushed to Notion' : '📤 Push to Notion'}
+      <div className="flex items-center gap-3 pb-6">
+        <button onClick={handlePush} disabled={content.pushed}
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+            content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
+          }`}>
+          {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
-        {content.source && (
-          <span className="text-xs text-zinc-400">Source: {content.source}</span>
-        )}
+        {content.source && <span className="text-xs text-stone-400">Source: {content.source}</span>}
       </div>
     </div>
   )
@@ -179,7 +120,6 @@ function parseVocabSections(text: string) {
     const defMatch = section.match(/\*\*Definition:\*\*\s*(.+)/)
     const exampleMatch = section.match(/\*\*Example:\*\*\s*"(.+)"|\*\*Example:\*\*\s*(.+)/)
     const chineseMatch = section.match(/\*\*Chinese:\*\*\s*(.+)/)
-
     return {
       term: termMatch?.[1]?.trim() || '',
       phonetic: termMatch?.[2]?.trim() || '',
@@ -190,159 +130,150 @@ function parseVocabSections(text: string) {
   }).filter((v) => v.term)
 }
 
-// ── Vocabulary Card Detail ──
-
 function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
   const items = parseVocabSections(content.content)
 
   return (
     <div className="mx-auto max-w-2xl">
       <BackLink href="/learn" />
-
       <div className="mt-4 mb-6">
-        <span className="text-sm font-medium uppercase tracking-wider text-purple-600 dark:text-purple-400">
-          📚 Vocabulary
-        </span>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight">{content.title}</h1>
-        <p className="mt-1 text-xs text-zinc-400">
-          {formatStoredDate(content.date)}
-          {content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).join(' · ')}`}
-        </p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Vocabulary</p>
+        <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
+        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).filter(t => !['daily','conversation','vocabulary','passage','journal'].includes(t)).join(' · ')}`}</p>
       </div>
 
-      {items.length > 0 ? (
-        <VocabCards items={items} />
-      ) : (
-        <div className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
-          {renderMarkdown(content.content)}
-        </div>
-      )}
+      {items.length > 0 ? <VocabCards items={items} /> : <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{renderFallback(content.content)}</div>}
 
-      <div className="mt-8 flex items-center gap-3">
-        <button
-          onClick={handlePush}
-          disabled={content.pushed}
-          className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-colors ${
-            content.pushed
-              ? 'bg-zinc-100 text-zinc-400 dark:bg-zinc-900'
-              : 'bg-emerald-500 text-white hover:bg-emerald-600'
-          }`}
-        >
-          {content.pushed ? '✅ Already pushed to Notion' : '📤 Push to Notion'}
+      <div className="mt-8 flex items-center gap-3 pb-6">
+        <button onClick={handlePush} disabled={content.pushed}
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+            content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
+          }`}>
+          {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
-        {content.source && (
-          <span className="text-xs text-zinc-400">Source: {content.source}</span>
-        )}
+        {content.source && <span className="text-xs text-stone-400">Source: {content.source}</span>}
       </div>
     </div>
   )
 }
 
-// ── Default content renderer (passage / fallback) ──
+// ── Passage ──
 
-function renderMarkdown(text: string) {
-  const lines = text.split('\n')
-  return lines.map((line, i) => {
-    if (line.startsWith('## ')) {
-      return (
-        <h2 key={i} className="mt-6 mb-2 text-lg font-semibold text-zinc-800 dark:text-zinc-200">
-          {line.slice(3)}
-        </h2>
-      )
-    }
-    if (line.startsWith('**') && line.endsWith('**')) {
-      return (
-        <p key={i} className="mt-4 mb-1 text-sm font-bold text-zinc-700 dark:text-zinc-300">
-          {line.slice(2, -2)}
-        </p>
-      )
-    }
-    if (line.startsWith('**')) {
-      const match = line.match(/^\*\*(.+?)\*\*(.*)/)
-      if (match) {
-        return (
-          <p key={i} className="mt-2 text-sm">
-            <strong className="text-zinc-700 dark:text-zinc-300">{match[1]}</strong>
-            <span className="text-zinc-600 dark:text-zinc-400">{match[2]}</span>
-          </p>
-        )
-      }
-    }
-    if (line.trim() === '---') {
-      return <hr key={i} className="my-4 border-zinc-200 dark:border-zinc-800" />
-    }
-    if (line.trim() === '') {
-      return <div key={i} className="h-2" />
-    }
+function renderFallback(text: string) {
+  return <div className="whitespace-pre-line text-sm leading-relaxed text-stone-600 dark:text-stone-400">{text}</div>
+}
+
+function renderMetaLine(line: string) {
+  const key = line.split('**:')[0].replace('**', '').trim()
+  const val = line.split('**:').slice(1).join('**:').trim()
+  if (!key || !val) return null
+  if (key.toLowerCase() === 'doi') {
     return (
-      <p key={i} className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-        {line}
+      <p key={line} className="text-sm text-stone-600 dark:text-stone-400">
+        <span className="font-medium text-stone-500">DOI:</span>{' '}
+        <span className="break-all text-stone-500">{val}</span>
       </p>
     )
-  })
+  }
+  return (
+    <p key={line} className="text-sm text-stone-600 dark:text-stone-400">
+      <span className="font-medium text-stone-500">{key}:</span> {val}
+    </p>
+  )
 }
 
-function DefaultDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
-  const cfg = typeConfig[content.type] ?? { emoji: '📝', label: content.type, color: 'text-zinc-600' }
+function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
+  const source = getMetaValue(content.content, 'Source') || ''
+
+  const lines = content.content.split('\n')
+  const metaLines: string[] = []
+  const bodyLines: string[] = []
+  let inMeta = true
+
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (inMeta && (trimmed.startsWith('**') || !trimmed)) {
+      if (trimmed.startsWith('**') && !trimmed.startsWith('**Source:**')) {
+        metaLines.push(trimmed)
+      } else if (!trimmed) {
+        inMeta = false
+      }
+    } else {
+      bodyLines.push(line)
+    }
+  }
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-2xl space-y-6">
       <BackLink href="/learn" />
-
-      <div className="mt-2">
-        <span className={`text-sm font-medium uppercase tracking-wider ${cfg.color}`}>
-          {cfg.emoji} {cfg.label}
-        </span>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight">{content.title}</h1>
-        <p className="mt-1 text-xs text-zinc-400">
-          {formatStoredDate(content.date)}
-          {content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).join(' · ')}`}
-        </p>
+      {source && <p className="text-xs text-stone-400">{source.replace('**Source:** ', '')}</p>}
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Journal Article</p>
+        <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
       </div>
 
-      <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-black">
-        {renderMarkdown(content.content)}
+      <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        {metaLines.map((line) => renderMetaLine(line))}
       </div>
 
-      <div className="mt-6 flex items-center gap-3">
-        <button
-          onClick={handlePush}
-          disabled={content.pushed}
-          className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-colors ${
-            content.pushed
-              ? 'bg-zinc-100 text-zinc-400 dark:bg-zinc-900'
-              : 'bg-emerald-500 text-white hover:bg-emerald-600'
-          }`}
-        >
-          {content.pushed ? '✅ Already pushed to Notion' : '📤 Push to Notion'}
+      <div className="rounded-lg border border-stone-200 bg-white p-5 leading-relaxed dark:border-stone-800 dark:bg-stone-900">
+        <div className="whitespace-pre-line text-sm text-stone-700 dark:text-stone-300">
+          {bodyLines.map((line, i) => {
+            const trimmed = line.trim()
+            if (!trimmed) return <br key={i} />
+            if (trimmed.startsWith('**Key Vocabulary:**')) {
+              return <p key={i} className="mt-4 mb-2 text-xs font-semibold uppercase tracking-widest text-stone-500">{trimmed.replace(/\*\*/g, '')}</p>
+            }
+            if (trimmed.startsWith('**Discussion Questions:**')) {
+              return <p key={i} className="mt-4 mb-2 text-xs font-semibold uppercase tracking-widest text-stone-500">{trimmed.replace(/\*\*/g, '')}</p>
+            }
+            if (trimmed.startsWith('- ')) {
+              const text = trimmed.replace(/^-\s+/, '')
+              const parts = text.split(': ')
+              if (parts.length >= 2) {
+                return <p key={i} className="ml-3 text-sm text-stone-600 dark:text-stone-400">· <strong>{parts[0]}</strong>: {parts.slice(1).join(': ')}</p>
+              }
+              return <p key={i} className="ml-3 text-sm text-stone-600 dark:text-stone-400">· {text}</p>
+            }
+            if (/^\d+\./.test(trimmed)) {
+              return <p key={i} className="mt-1.5 text-sm text-stone-600 dark:text-stone-400">{trimmed}</p>
+            }
+            return <p key={i} className="text-sm text-stone-700 dark:text-stone-300">{trimmed}</p>
+          })}
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3 pb-6">
+        <button onClick={handlePush} disabled={content.pushed}
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+            content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
+          }`}>
+          {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
-        {content.source && (
-          <span className="text-xs text-zinc-400">Source: {content.source}</span>
-        )}
       </div>
     </div>
   )
 }
 
-// ── Main component ──
+function getMetaValue(content: string, key: string): string | null {
+  const prefix = `**${key}:**`
+  for (const line of content.split('\n')) {
+    const trimmed = line.trim()
+    if (trimmed.startsWith(prefix)) return trimmed.slice(prefix.length).trim()
+  }
+  return null
+}
+
+// ── Main ──
 
 export default function ContentDetail({ content, pushAction }: ContentDetailProps) {
   const handlePush = async () => {
     const result = await pushAction(content.id)
-    if (result.ok) {
-      window.location.reload()
-    } else {
-      alert(result.message)
-    }
+    if (result.ok) window.location.reload()
+    else alert(result.message)
   }
 
-  if (content.type === 'conversation') {
-    return <ConversationDetail content={content} handlePush={handlePush} />
-  }
-
-  if (content.type === 'vocabulary') {
-    return <VocabularyDetail content={content} handlePush={handlePush} />
-  }
-
-  return <DefaultDetail content={content} handlePush={handlePush} />
+  if (content.type === 'conversation') return <ConversationDetail content={content} handlePush={handlePush} />
+  if (content.type === 'vocabulary') return <VocabularyDetail content={content} handlePush={handlePush} />
+  return <PassageDetail content={content} handlePush={handlePush} />
 }
