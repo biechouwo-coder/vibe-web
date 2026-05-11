@@ -17,22 +17,16 @@ interface VocabCardsProps {
 
 const cardVariants = {
   enter: (dir: number) => ({
-    x: dir > 0 ? 300 : -300,
     opacity: 0,
-    scale: 0.85,
-    rotateY: dir > 0 ? 15 : -15,
+    x: dir > 0 ? 16 : -16,
   }),
   center: {
-    x: 0,
     opacity: 1,
-    scale: 1,
-    rotateY: 0,
+    x: 0,
   },
   exit: (dir: number) => ({
-    x: dir > 0 ? -300 : 300,
     opacity: 0,
-    scale: 0.85,
-    rotateY: dir > 0 ? -15 : 15,
+    x: dir > 0 ? -16 : 16,
   }),
 }
 
@@ -50,22 +44,22 @@ export default function VocabCards({ items }: VocabCardsProps) {
 
   return (
     <div className="mx-auto max-w-lg">
-      {/* Progress bar */}
-      <div className="mb-4 flex items-center gap-2">
-        <div className="flex-1 h-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+      {/* Progress header */}
+      <div className="mb-3 flex items-center gap-3">
+        <span className="text-xs font-medium text-stone-500 tabular-nums">
+          Term {current + 1} of {items.length}
+        </span>
+        <div className="flex-1 h-1 rounded-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-purple-500 to-violet-500"
+            className="h-full rounded-full bg-emerald-800 dark:bg-emerald-600"
             animate={{ width: `${((current + 1) / items.length) * 100}%` }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
           />
         </div>
-        <span className="text-xs text-zinc-400 font-medium tabular-nums shrink-0">
-          {current + 1} / {items.length}
-        </span>
       </div>
 
-      {/* Card area */}
-      <div className="relative h-[360px] sm:h-[400px]">
+      {/* Card */}
+      <div className="relative min-h-[280px]">
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div
             key={current}
@@ -74,98 +68,70 @@ export default function VocabCards({ items }: VocabCardsProps) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{
-              x: { type: 'spring', stiffness: 260, damping: 24 },
-              opacity: { duration: 0.2 },
-              scale: { duration: 0.25 },
-            }}
-            className="absolute inset-0 overflow-y-auto"
+            transition={{ opacity: { duration: 0.15 }, x: { duration: 0.2 } }}
+            className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900"
           >
-            <div className="flex h-full flex-col rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 via-white to-purple-50/50 p-6 shadow-lg shadow-purple-200/20 dark:border-purple-800 dark:from-purple-950/30 dark:via-black dark:to-purple-950/20 dark:shadow-purple-950/30">
-              {/* Card number badge */}
-              <div className="mb-3 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-lg bg-purple-100 px-2.5 py-1 text-xs font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                  {current + 1}
-                </span>
-              </div>
+            {/* Term */}
+            <h2 className="font-serif text-xl font-semibold tracking-tight text-stone-900 dark:text-stone-100">
+              {item.term}
+            </h2>
 
-              {/* Term */}
-              <h2 className="text-xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                {item.term}
-              </h2>
-
-              {/* Phonetic */}
-              {item.phonetic && (
-                <p className="mt-1 text-sm text-purple-500 dark:text-purple-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>
-                  [{item.phonetic}]
-                </p>
-              )}
-
-              {/* Divider */}
-              <div className="my-4 border-t border-purple-200/50 dark:border-purple-800/50" />
-
-              {/* Definition */}
-              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                {item.definition}
+            {/* Phonetic */}
+            {item.phonetic && (
+              <p className="mt-1 text-xs text-stone-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>
+                [{item.phonetic}]
               </p>
+            )}
 
-              {/* Example */}
-              {item.example && (
-                <div className="mt-3 rounded-xl bg-purple-100/40 p-3 dark:bg-purple-950/30">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-purple-500">Example</p>
-                  <p className="mt-1 text-sm italic text-zinc-600 dark:text-zinc-400">
-                    &ldquo;{item.example}&rdquo;
-                  </p>
-                </div>
-              )}
+            {/* Definition */}
+            <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
+              {item.definition}
+            </p>
 
-              {/* Chinese */}
-              {item.chinese && (
-                <p className="mt-auto pt-4 text-xs text-zinc-400 dark:text-zinc-500">
-                  {item.chinese}
+            {/* Example */}
+            {item.example && (
+              <div className="mt-3 border-l-2 border-stone-200 pl-3 dark:border-stone-700">
+                <p className="text-xs font-medium text-stone-400">Usage</p>
+                <p className="mt-0.5 text-sm italic text-stone-500 dark:text-stone-400">
+                  &ldquo;{item.example}&rdquo;
                 </p>
-              )}
-            </div>
+              </div>
+            )}
+
+            {/* Chinese */}
+            {item.chinese && (
+              <p className="mt-3 pt-3 border-t border-stone-100 text-xs text-stone-400 dark:border-stone-800 dark:text-stone-500">
+                {item.chinese}
+              </p>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
 
       {/* Navigation */}
-      <div className="mt-6 flex items-center justify-center gap-4">
+      <div className="mt-5 flex items-center justify-between">
         <button
           onClick={goPrev}
           disabled={current === 0}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition-all hover:border-purple-300 hover:text-purple-600 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-30 dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-purple-600 dark:hover:text-purple-400"
+          className="inline-flex items-center gap-1 rounded-md border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:bg-stone-800"
         >
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
+          Previous
         </button>
 
-        {/* Dots */}
-        <div className="flex items-center gap-1.5">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setPage([i, i > current ? 1 : -1])}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === current
-                  ? 'w-6 bg-purple-500 dark:bg-purple-400'
-                  : 'w-2 bg-zinc-300 hover:bg-zinc-400 dark:bg-zinc-700 dark:hover:bg-zinc-600'
-              }`}
-            />
-          ))}
-        </div>
+        <span className="text-xs text-stone-400 tabular-nums">
+          {current + 1} / {items.length}
+        </span>
 
         <button
           onClick={goNext}
           disabled={current === items.length - 1}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-sm transition-all hover:border-purple-300 hover:text-purple-600 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-30 dark:border-zinc-700 dark:bg-black dark:text-zinc-400 dark:hover:border-purple-600 dark:hover:text-purple-400"
+          className="inline-flex items-center gap-1 rounded-md border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:bg-stone-800"
         >
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          Next
+          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </button>

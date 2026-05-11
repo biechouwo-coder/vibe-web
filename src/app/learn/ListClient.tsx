@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { getAcademicKeywords } from '@/lib/academic-keywords'
 import { formatStoredDate } from '@/lib/date'
 import type { DailyContentWithMeta } from '@/types'
 
@@ -9,59 +10,52 @@ interface ListClientProps {
   items: DailyContentWithMeta[]
 }
 
-const typeConfig: Record<string, { emoji: string; color: string; badge: string }> = {
-  conversation: { emoji: '💬', color: 'border-l-blue-400 hover:border-l-blue-500', badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' },
-  vocabulary: { emoji: '📚', color: 'border-l-purple-400 hover:border-l-purple-500', badge: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300' },
-  passage: { emoji: '📖', color: 'border-l-amber-400 hover:border-l-amber-500', badge: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300' },
+const typeLabel: Record<string, string> = {
+  conversation: 'Conversation',
+  vocabulary: 'Vocabulary',
+  passage: 'Article',
 }
 
 export default function ListClient({ items }: ListClientProps) {
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-zinc-200 py-12 dark:border-zinc-800">
-        <span className="text-3xl">📭</span>
-        <p className="text-sm text-zinc-400">No content yet</p>
+      <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-stone-200 py-12 dark:border-stone-800">
+        <p className="text-sm text-stone-400">No readings archived yet.</p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       {items.map((item, i) => {
-        const cfg = typeConfig[item.type] ?? { emoji: '📝', color: 'border-l-zinc-400', badge: 'bg-zinc-100 text-zinc-700' }
+        const label = typeLabel[item.type] ?? item.type
+        const keywords = getAcademicKeywords(item.title, item.tags)
+
         return (
-          <Link
-            key={item.id}
-            href={`/learn/${item.id}`}
-            className="block"
-          >
+          <Link key={item.id} href={`/learn/${item.id}`} className="block">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.02 }}
-              className={`group flex items-center gap-4 rounded-xl border border-zinc-200 border-l-4 bg-white p-4 transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-black ${cfg.color}`}
+              transition={{ delay: i * 0.015 }}
+              className="group flex items-center gap-3 rounded-lg border border-stone-200 bg-white px-4 py-3 transition-colors hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-900 dark:hover:bg-stone-800"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-50 text-lg ring-1 ring-zinc-200 dark:bg-zinc-900 dark:ring-zinc-800">
-                {cfg.emoji}
+              <span className="shrink-0 rounded border border-stone-200 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-widest text-stone-500 dark:border-stone-700 dark:text-stone-400">
+                {label}
               </span>
+
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                <p className="text-sm font-medium text-stone-800 transition-colors group-hover:text-stone-950 dark:text-stone-200 dark:group-hover:text-white truncate">
                   {item.title}
                 </p>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${cfg.badge}`}>
-                    {item.type}
-                  </span>
-                  <span className="text-xs text-zinc-400">
-                    {formatStoredDate(item.date, 'en-US', { month: 'short', day: 'numeric' })}
-                  </span>
-                  {item.pushed && (
-                    <span className="text-xs text-emerald-500">✅ Notion</span>
-                  )}
+                <div className="mt-0.5 flex items-center gap-2 text-xs text-stone-400">
+                  <span>{formatStoredDate(item.date, 'en-US', { month: 'short', day: 'numeric' })}</span>
+                  {keywords.length > 0 && <span>{keywords.join(' · ')}</span>}
+                  {item.pushed && <span>Saved</span>}
                 </div>
               </div>
-              <span className="flex h-8 w-8 items-center justify-center rounded-full text-sm text-zinc-300 transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-500 dark:group-hover:bg-emerald-950/30">
-                →
+
+              <span className="shrink-0 text-xs text-stone-400 transition-colors group-hover:text-stone-600 dark:group-hover:text-stone-300">
+                Open
               </span>
             </motion.div>
           </Link>
