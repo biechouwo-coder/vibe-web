@@ -2,6 +2,7 @@
 
 import VocabCards from '@/components/learn/VocabCards'
 import BackLink from '@/components/ui/BackLink'
+import { getAcademicKeywords } from '@/lib/academic-keywords'
 import { formatStoredDate } from '@/lib/date'
 import type { DailyContentWithMeta } from '@/types'
 
@@ -51,7 +52,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
       <div>
         <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Conversation</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
-        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).filter(t => !['daily','conversation','vocabulary','passage','journal','core','cnf','academic'].includes(t)).join(' · ')}`}</p>
+        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
       </div>
 
       <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
@@ -139,7 +140,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
       <div className="mt-4 mb-6">
         <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Vocabulary</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
-        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{content.tags && ` · ${content.tags.split(',').map((t) => t.trim()).filter(t => !['daily','conversation','vocabulary','passage','journal','core','cnf','academic'].includes(t)).join(' · ')}`}</p>
+        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
       </div>
 
       {items.length > 0 ? <VocabCards items={items} /> : <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{renderFallback(content.content)}</div>}
@@ -263,6 +264,12 @@ function getMetaValue(content: string, key: string): string | null {
     if (trimmed.startsWith(prefix)) return trimmed.slice(prefix.length).trim()
   }
   return null
+}
+
+
+function formatTags(title: string, tags: string | null): string {
+  const keywords = getAcademicKeywords(title, tags)
+  return keywords.length > 0 ? ' · ' + keywords.join(' · ') : ''
 }
 
 // ── Main ──
