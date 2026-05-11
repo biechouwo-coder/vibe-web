@@ -122,7 +122,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read note</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
@@ -156,7 +156,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read note</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
@@ -192,7 +192,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read full</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}

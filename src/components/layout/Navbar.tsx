@@ -18,7 +18,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 border-b border-stone-200 bg-stone-50/90 backdrop-blur-sm dark:border-stone-800 dark:bg-stone-950/90">
       <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3 sm:px-6">
         <Link href="/" className="font-serif text-lg font-semibold tracking-tight text-stone-900 dark:text-stone-100">
-          vibe<span className="text-emerald-700 dark:text-emerald-500">.</span>web
+          vibe<span className="text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">.</span>web
         </Link>
         <div className="flex items-center gap-0.5">
           {navItems.map((item) => {

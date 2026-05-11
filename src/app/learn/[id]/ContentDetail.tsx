@@ -106,7 +106,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
           <div className="space-y-2.5">
             {(dialogueLines.length > 0 ? dialogueLines : legacyDialog).map((dl, i) => (
               <div key={i} className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] rounded-lg px-3.5 py-2.5 text-sm leading-relaxed ${dl.isYou ? 'bg-emerald-800 text-white dark:bg-emerald-700' : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'}`}>
+                <div className={`max-w-[85%] rounded-lg px-3.5 py-2.5 text-sm leading-relaxed ${dl.isYou ? 'bg-[var(--academic-navy)] text-white dark:bg-[var(--academic-navy)]' : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'}`}>
                   {!dl.isYou && <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-stone-500">{dl.speaker}</span>}
                   <span>{dl.message}</span>
                 </div>
@@ -172,7 +172,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
 
       <div className="flex items-center gap-3 pb-6">
         <button onClick={handlePush} disabled={content.pushed}
-          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
           {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
         {content.source && <span className="text-xs text-stone-400">Source: {content.source}</span>}
@@ -213,7 +213,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
       {items.length > 0 ? <VocabCards items={items} /> : <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{fallbackBody(content.content)}</div>}
       <div className="mt-8 flex items-center gap-3 pb-6">
         <button onClick={handlePush} disabled={content.pushed}
-          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
           {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
         {content.source && <span className="text-xs text-stone-400">Source: {content.source}</span>}
@@ -317,7 +317,7 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
       )}
       <div className="flex items-center gap-3 pb-6">
         <button onClick={handlePush} disabled={content.pushed}
-          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
           {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
       </div>

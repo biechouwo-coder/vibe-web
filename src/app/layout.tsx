@@ -28,7 +28,7 @@ const notoSerif = Noto_Serif({
 })
 
 export const metadata: Metadata = {
-  title: 'vibe.web — Academic Research Desk',
+  title: 'vibe.web - Academic Research Desk',
   description: 'Daily English reading & study planner for HKUST-GZ Carbon Neutrality & Green Finance',
 }
 

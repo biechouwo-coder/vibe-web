@@ -32,10 +32,10 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           name="token"
           type="password"
           placeholder={config?.hasToken ? '••••••••••••••••' : 'ntn_xxxxxxxxxxxx'}
-          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-emerald-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
         />
         {config?.hasToken && (
-          <p className="mt-1 text-xs text-emerald-600 dark:text-emerald-400">
+          <p className="mt-1 text-xs text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">
             ✅ Token configured. Leave blank to keep the current token.
           </p>
         )}
@@ -62,7 +62,7 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           type="text"
           defaultValue={config?.dbEnglish ?? ''}
           placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-emerald-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
         />
       </div>
 
@@ -76,7 +76,7 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           type="text"
           defaultValue={config?.dbPlans ?? ''}
           placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-emerald-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
         />
       </div>
 
@@ -85,14 +85,14 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           name="enabled"
           type="checkbox"
           defaultChecked={config?.enabled ?? false}
-          className="h-4 w-4 rounded border-zinc-300 text-emerald-500 focus:ring-emerald-400"
+          className="h-4 w-4 rounded border-zinc-300 text-[var(--academic-navy)] focus:ring-[var(--academic-navy)]"
         />
         <span className="text-sm text-zinc-700 dark:text-zinc-300">Enable Notion push</span>
       </label>
 
       <button
         type="submit"
-        className="rounded-xl bg-emerald-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-600"
+        className="rounded-xl bg-[var(--academic-navy)] px-5 py-2 text-sm font-medium text-white transition-colors hover:brightness-110"
       >
         Save Settings
       </button>

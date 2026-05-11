@@ -31,7 +31,7 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
         onClick={handleToggle}
         className={`mt-0.5 flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded border transition-colors ${
           task.completed
-            ? 'border-emerald-700 bg-emerald-700 dark:border-emerald-600 dark:bg-emerald-600'
+            ? 'border-[var(--academic-navy)] bg-[var(--academic-navy)] dark:border-[var(--academic-navy)] dark:bg-[var(--academic-navy)]'
             : 'border-stone-300 hover:border-stone-500 dark:border-stone-600 dark:hover:border-stone-400'
         }`}
       >

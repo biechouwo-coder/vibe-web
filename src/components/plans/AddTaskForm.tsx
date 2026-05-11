@@ -30,7 +30,7 @@ export default function AddTaskForm() {
       </div>
       <button
         type="submit"
-        className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-600 active:bg-emerald-700"
+        className="rounded-xl bg-[var(--academic-navy)] px-4 py-2 text-sm font-medium text-white transition-colors hover:brightness-110 active:brightness-90"
       >
         Add
       </button>

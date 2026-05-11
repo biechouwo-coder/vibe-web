@@ -43,7 +43,7 @@ export default function VocabCards({ items }: VocabCardsProps) {
         </span>
         <div className="flex-1 h-1 rounded-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
           <motion.div
-            className="h-full rounded-full bg-emerald-800 dark:bg-emerald-600"
+            className="h-full rounded-full bg-[var(--academic-navy)] dark:bg-[var(--academic-navy)]"
             animate={{ width: `${((current + 1) / items.length) * 100}%` }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           />

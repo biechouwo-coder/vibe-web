@@ -53,7 +53,7 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
       <div className="mb-2 flex items-center gap-2">
         <div className="flex-1 h-1 rounded-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
           <motion.div
-            className="h-full rounded-full bg-emerald-700 dark:bg-emerald-600"
+            className="h-full rounded-full bg-[var(--academic-navy)] dark:bg-[var(--academic-navy)]"
             initial={false}
             animate={{ width: `${tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0}%` }}
             transition={{ duration: 0.3 }}
@@ -88,7 +88,7 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
         onClick={() => onToggle(task.id)}
         className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
           task.completed
-            ? 'border-emerald-700 bg-emerald-700 dark:border-emerald-600 dark:bg-emerald-600'
+            ? 'border-[var(--academic-navy)] bg-[var(--academic-navy)] dark:border-[var(--academic-navy)] dark:bg-[var(--academic-navy)]'
             : 'border-stone-300 hover:border-stone-500 dark:border-stone-600 dark:hover:border-stone-400'
         }`}
       >

@@ -4,7 +4,7 @@
 :root {
   --background: #fafaf9;
   --foreground: #1c1917;
-  --accent: #065f46;
+  --accent: #013E75;
   --muted: #78716c;
   --border: #e7e5e4;
   --surface: #ffffff;
@@ -16,7 +16,7 @@
 .dark {
   --background: #0c0a09;
   --foreground: #e7e5e4;
-  --accent: #34d399;
+  --accent: #7fb3df;
   --muted: #78716c;
   --border: #292524;
   --surface: #131210;
@@ -69,6 +69,6 @@ html {
 }
 
 ::selection {
-  background-color: #065f46;
+  background-color: #013E75;
   color: white;
 }
