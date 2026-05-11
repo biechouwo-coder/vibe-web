@@ -87,7 +87,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
     <div className="mx-auto max-w-2xl space-y-5">
       <BackLink href="/learn" />
       <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Speaking Practice</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Speaking Practice</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
         {topic && <p className="mt-1 text-xs text-stone-500">{topic}</p>}
         <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
@@ -206,7 +206,7 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
     <div className="mx-auto max-w-2xl">
       <BackLink href="/learn" />
       <div className="mt-4 mb-6">
-        <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Vocabulary</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--academic-navy)]">Vocabulary</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
         <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
       </div>
