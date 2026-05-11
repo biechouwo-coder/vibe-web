@@ -187,8 +187,7 @@ async function ensureLearningTasks(
 
 // ── Unified Reading content (vocabulary + excerpt from journal articles) ──
 // Each reading item provides an academic excerpt plus curated vocabulary.
-// In a future step, getDailyReading() will replace getDailyVocabulary()
-// and getDailyPassage().
+// Vocabulary and passage now come from readingContent via getDailyReadingItem().
 
 interface ReadingVocabularyItem {
   term: string
@@ -225,6 +224,7 @@ export function formatReadingContent(item: ReadingContentItem): string {
   lines.push('**Year:** ' + String(item.year))
   lines.push('**DOI:** https://doi.org/' + item.doi)
   lines.push('')
+  lines.push("**Excerpt:**")
   lines.push(item.excerpt)
   lines.push('')
   lines.push('**Writing Focus:**')
