@@ -15,37 +15,45 @@ export default function Navbar() {
   const pathname = usePathname()
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-stone-200 bg-stone-50/90 backdrop-blur-sm dark:border-stone-800 dark:bg-stone-950/90">
-      <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3 sm:px-6">
-        <Link href="/" className="font-serif text-lg font-semibold tracking-tight text-stone-900 dark:text-stone-100">
-          vibe<span className="text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">.</span>web
+    <>
+      {/* Desktop sidebar */}
+      <aside className="hidden sm:flex sm:flex-col sm:w-16 md:w-20 lg:w-24 sm:h-screen sm:sticky sm:top-0 sm:items-center sm:pt-8 sm:gap-8">
+        <Link href="/" className="font-serif text-lg font-semibold tracking-tight text-stone-800 dark:text-stone-200">
+          v<span className="text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">.</span>w
         </Link>
-        <div className="flex items-center gap-0.5">
+        <nav className="flex flex-col items-center gap-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative px-3 py-1.5 text-sm transition-colors ${
-                  isActive
-                    ? 'font-medium text-stone-900 dark:text-stone-100'
-                    : 'text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200'
-                }`}
-              >
-                {item.label}
+              <Link key={item.href} href={item.href} className="relative flex flex-col items-center gap-0.5 px-2 py-2">
+                <span className={`text-[10px] font-medium transition-colors ${isActive ? 'font-semibold text-stone-900 dark:text-stone-100' : 'text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200'}`}>
+                  {item.label === 'Study Desk' ? 'Desk' : item.label}
+                </span>
                 {isActive && (
-                  <motion.span
-                    layoutId="nav-underline"
-                    className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[var(--academic-navy)]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
+                  <motion.span layoutId="nav-underline" className="h-0.5 w-4 rounded-full bg-[var(--academic-navy)]" transition={{ type: 'spring', stiffness: 380, damping: 30 }} />
                 )}
               </Link>
             )
           })}
+        </nav>
+      </aside>
+
+      {/* Mobile top bar */}
+      <nav className="sticky top-0 z-50 flex items-center justify-between border-b border-stone-200 bg-stone-50/90 px-4 py-2.5 backdrop-blur-sm sm:hidden dark:border-stone-800 dark:bg-stone-950/90">
+        <Link href="/" className="font-serif text-base font-semibold tracking-tight text-stone-900 dark:text-stone-100">
+          v<span className="text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">.</span>w
+        </Link>
+        <div className="flex items-center gap-1">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
+            return (
+              <Link key={item.href} href={item.href} className={`px-2.5 py-1.5 text-xs font-medium transition-colors ${isActive ? 'text-stone-900 dark:text-stone-100' : 'text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200'}`}>
+                {item.label === 'Study Desk' ? 'Desk' : item.label}
+              </Link>
+            )
+          })}
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   )
 }

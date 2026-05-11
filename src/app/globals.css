@@ -34,39 +34,25 @@
 }
 
 body {
-  background: var(--background);
+  background: #d6d3d1;
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.dark body {
+  background: #1c1917;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 3px;
-  background: #d6d3d1;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a29e;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #44403c;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #57534e;
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { border-radius: 3px; background: #d6d3d1; }
+::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+.dark ::-webkit-scrollbar-thumb { background: #44403c; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #57534e; }
 
 ::selection {
   background-color: #013E75;
