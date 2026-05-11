@@ -24,7 +24,9 @@ export const useTheme = () => useContext(ThemeContext)
 
 function getStored(): Theme {
   if (typeof window === 'undefined') return 'system'
-  return (localStorage.getItem(STORAGE_KEY) as Theme) ?? 'system'
+  const v = localStorage.getItem(STORAGE_KEY) as Theme | null
+  if (v === 'light' || v === 'dark' || v === 'system') return v
+  return 'system'
 }
 
 function resolveTheme(theme: Theme): 'light' | 'dark' {
@@ -35,14 +37,15 @@ function resolveTheme(theme: Theme): 'light' | 'dark' {
 }
 
 function apply(resolved: 'light' | 'dark') {
-  document.documentElement.classList.toggle('dark', resolved === 'dark')
+  const isDark = resolved === 'dark'
+  document.documentElement.classList.toggle('dark', isDark)
+  document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('system')
   const [resolved, setResolved] = useState<'light' | 'dark'>('light')
 
-  // Hydrate from localStorage on mount (fire once)
   useEffect(() => {
     const stored = getStored()
     setThemeState(stored)
@@ -59,7 +62,6 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     apply(r)
   }, [])
 
-  // Listen for system preference changes
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     const handler = () => {
