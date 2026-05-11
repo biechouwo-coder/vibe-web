@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 interface VocabItem {
   term: string
@@ -15,23 +15,16 @@ interface VocabCardsProps {
   items: VocabItem[]
 }
 
-const cardVariants = {
-  enter: (dir: number) => ({
-    opacity: 0,
-    x: dir > 0 ? 16 : -16,
-  }),
-  center: {
-    opacity: 1,
-    x: 0,
-  },
-  exit: (dir: number) => ({
-    opacity: 0,
-    x: dir > 0 ? -16 : 16,
-  }),
-}
-
 export default function VocabCards({ items }: VocabCardsProps) {
   const [[current, dir], setPage] = useState([0, 0])
+  const reduced = useReducedMotion()
+  const moveX = reduced ? 0 : 16
+
+  const cardVariants = {
+    enter: (d: number) => ({ opacity: 0, x: d > 0 ? moveX : -moveX }),
+    center: { opacity: 1, x: 0 },
+    exit: (d: number) => ({ opacity: 0, x: d > 0 ? -moveX : moveX }),
+  }
 
   const goNext = () => {
     if (current < items.length - 1) setPage([current + 1, 1])
@@ -44,7 +37,6 @@ export default function VocabCards({ items }: VocabCardsProps) {
 
   return (
     <div className="mx-auto max-w-lg">
-      {/* Progress header */}
       <div className="mb-3 flex items-center gap-3">
         <span className="text-xs font-medium text-stone-500 tabular-nums">
           Term {current + 1} of {items.length}
@@ -58,7 +50,6 @@ export default function VocabCards({ items }: VocabCardsProps) {
         </div>
       </div>
 
-      {/* Card */}
       <div className="relative min-h-[280px]">
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div
@@ -71,24 +62,17 @@ export default function VocabCards({ items }: VocabCardsProps) {
             transition={{ opacity: { duration: 0.15 }, x: { duration: 0.2 } }}
             className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900"
           >
-            {/* Term */}
             <h2 className="font-serif text-xl font-semibold tracking-tight text-stone-900 dark:text-stone-100">
               {item.term}
             </h2>
-
-            {/* Phonetic */}
             {item.phonetic && (
               <p className="mt-1 text-xs text-stone-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>
                 [{item.phonetic}]
               </p>
             )}
-
-            {/* Definition */}
             <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
               {item.definition}
             </p>
-
-            {/* Example */}
             {item.example && (
               <div className="mt-3 border-l-2 border-stone-200 pl-3 dark:border-stone-700">
                 <p className="text-xs font-medium text-stone-400">Usage</p>
@@ -97,8 +81,6 @@ export default function VocabCards({ items }: VocabCardsProps) {
                 </p>
               </div>
             )}
-
-            {/* Chinese */}
             {item.chinese && (
               <p className="mt-3 pt-3 border-t border-stone-100 text-xs text-stone-400 dark:border-stone-800 dark:text-stone-500">
                 {item.chinese}
@@ -108,7 +90,6 @@ export default function VocabCards({ items }: VocabCardsProps) {
         </AnimatePresence>
       </div>
 
-      {/* Navigation */}
       <div className="mt-5 flex items-center justify-between">
         <button
           onClick={goPrev}
