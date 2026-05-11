@@ -39,7 +39,7 @@ export default function Navbar() {
       </aside>
 
       {/* Mobile top bar */}
-      <nav className="sticky top-0 z-50 flex items-center justify-between border-b border-stone-200 bg-stone-50/90 px-4 py-2.5 backdrop-blur-sm sm:hidden dark:border-stone-800 dark:bg-stone-950/90">
+      <nav className="sticky top-0 z-50 flex w-full items-center justify-between border-b border-stone-200 bg-stone-50/90 px-4 py-2.5 backdrop-blur-sm sm:hidden dark:border-stone-800 dark:bg-stone-950/90">
         <Link href="/" className="font-serif text-base font-semibold tracking-tight text-stone-900 dark:text-stone-100">
           v<span className="text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">.</span>w
         </Link>
