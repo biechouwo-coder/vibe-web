@@ -28,7 +28,8 @@ function getVocabularyPreview(content: string): string {
       if (terms.length >= 3) break
     }
   }
-  return terms.length > 0 ? terms.join(' · ') : ''
+  const prefix = "Key terms from today’s article"
+  return terms.length > 0 ? prefix + ': ' + terms.join(' · ') : prefix
 }
 
 // ── Passage preview ──
@@ -50,25 +51,31 @@ function getPassageMeta(content: string): string | null {
   return null
 }
 
-function isMetaLine(trimmed: string): boolean {
-  const lower = trimmed.toLowerCase()
-  return (
-    lower.startsWith('**paper:**') || lower.startsWith('**authors:**') ||
-    lower.startsWith('**journal:**') || lower.startsWith('**year:**') || lower.startsWith('**doi:**')
-  )
-}
-
 function getPassagePreview(content: string): string {
   const lines = content.split('\n')
+  let inExcerpt = false
   const previewLines: string[] = []
+
   for (const line of lines) {
     const trimmed = line.trim()
-    if (trimmed.startsWith('**Key Vocabulary:**')) break
-    if (!trimmed) continue
-    if (isMetaLine(trimmed)) continue
-    previewLines.push(trimmed)
-    if (previewLines.length >= 3) break
+
+    // Start collecting after **Excerpt:**
+    if (trimmed.startsWith('**Excerpt:**')) {
+      inExcerpt = true
+      continue
+    }
+
+    // Stop at known section breaks
+    if (inExcerpt) {
+      if (trimmed.startsWith('**Writing Focus:**') ||
+          trimmed.startsWith('**Key Vocabulary:**') ||
+          trimmed.startsWith('**Discussion Questions:**')) break
+      if (!trimmed) continue
+      previewLines.push(trimmed)
+      if (previewLines.length >= 3) break
+    }
   }
+
   return previewLines.join(' ')
 }
 
@@ -106,9 +113,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read note</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
-              pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
-            }`}>
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
@@ -142,9 +147,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read note</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
-              pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
-            }`}>
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
@@ -180,9 +183,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read full</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
-              pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
-            }`}>
+            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
