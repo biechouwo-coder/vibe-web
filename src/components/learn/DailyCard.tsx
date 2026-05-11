@@ -12,35 +12,77 @@ interface DailyCardProps {
   detailHref?: string
 }
 
-// Shared neutral nav link style
 const NAV_LINK_CLASS =
   'inline-flex items-center gap-1.5 rounded-md border border-stone-200 bg-white px-2.5 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
 
-// ── Tag helpers ──
+// ── Academic keyword helpers ──
 
-/** Internal / structural tags that should never appear on card UI. */
+/** Tags that are purely structural and meaningless to end users. */
 const STRUCTURAL_TAGS = new Set([
-  'daily', 'conversation', 'vocabulary', 'passage', 'journal',
-  'core', 'cnf', 'academic', 'finance', 'carbon', 'economics', 'china',
+  'daily', 'journal',
+  'core', 'cnf', 'academic',
 ])
 
 /** "carbon-pricing" → "Carbon Pricing" */
 function formatTagLabel(tag: string): string {
+  // Preserve common acronyms
+  if (tag === 'eu-ets') return 'EU ETS'
+  if (tag === 'esg') return 'ESG'
   return tag
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 }
 
-/** Returns up to 3 filtered, formatted academic keywords for a card. */
-function getDisplayTags(tags: string | null): string[] {
-  if (!tags) return []
-  return tags
-    .split(',')
-    .map((t) => t.trim().toLowerCase())
-    .filter((t) => !STRUCTURAL_TAGS.has(t))
-    .map(formatTagLabel)
-    .slice(0, 3)
+/**
+ * Derive 1-3 academic-relevant keywords for a card.
+ * Priority: filtered tags → title-derived topic.
+ */
+function getAcademicKeywords(title: string, tags: string | null): string[] {
+  // Try tags first
+  if (tags) {
+    const filtered = tags
+      .split(',')
+      .map((t) => t.trim().toLowerCase())
+      .filter((t) => !STRUCTURAL_TAGS.has(t))
+      .map(formatTagLabel)
+    if (filtered.length > 0) return filtered.slice(0, 3)
+  }
+
+  // Fallback: extract from title
+  const cleaned = title
+    .replace(/ 101$/, '')
+    .replace(/ (Fundamentals|Essentials|Terms)$/i, '')
+    .replace(/^The /i, '')
+    .replace(/ —.*$/, '')
+
+  // Conversation titles → short scenario keywords
+  if (title.includes('Introducing Yourself')) return ['Introduction']
+  if (title.includes('Group Project')) return ['Group Project']
+  if (title.includes('Presenting Data')) return ['Presentation']
+
+  // Vocabulary titles → topic keywords
+  if (title.includes('Carbon Market')) return ['Carbon Markets']
+  if (title.includes('Carbon Pricing')) return ['Carbon Pricing', 'Carbon Trading']
+  if (title.includes('Carbon Accounting')) return ['Carbon Accounting']
+  if (title.includes('ESG')) return ['ESG Investing']
+  if (title.includes('Climate Science')) return ['Climate Policy']
+  if (title.includes('Energy Economics')) return ['Energy Economics']
+  if (title.includes('Green Finance')) return ['Green Finance']
+  if (title.includes('Academic Research')) return ['Research Methods']
+
+  // Passage / paper titles → research topic
+  if (title.includes('carbon pricing') || title.includes('Carbon Pricing')) return ['Carbon Pricing']
+  if (title.includes('meta-analysis') || title.includes('Meta-Analysis') || title.includes('Meta Analysis')) return ['Meta Analysis']
+  if (title.includes('EU ETS') || title.includes('Emissions Trading')) return ['EU ETS']
+  if (title.includes('Green Bond') || title.includes('carbon-linked')) return ['Green Bond', 'Carbon Finance']
+  if (title.includes('ESG') || title.includes('esg')) return ['ESG']
+  if (title.includes('Credit Risk') || title.includes('credit risk')) return ['Credit Risk']
+  if (title.includes('Quasi-Experimental')) return ['Carbon Pricing', 'Empirical']
+
+  // Generic: take first 1-2 meaningful words
+  const words = cleaned.split(/[\s,]+/).filter((w) => w.length > 2).slice(0, 2)
+  return words.length > 0 ? words : [cleaned]
 }
 
 // ── Vocabulary preview ──
@@ -112,7 +154,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
   const summary = firstLine
     ? firstLine.replace(/^["']|["']$/g, '').replace(/^.*?:\s*/, '').replace(/^["']|["']$/g, '').trim()
     : ''
-  const displayTags = getDisplayTags(tags)
+  const keywords = getAcademicKeywords(title, tags)
 
   return (
     <motion.div
@@ -122,13 +164,11 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
     >
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Conversation</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
-      {summary && (
-        <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-2">{summary}</p>
-      )}
-      {displayTags.length > 0 && (
+      {summary && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-2">{summary}</p>}
+      {keywords.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1">
-          {displayTags.map((tag) => (
-            <span key={tag} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{tag}</span>
+          {keywords.map((kw) => (
+            <span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>
           ))}
         </div>
       )}
@@ -151,7 +191,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
 
 function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Omit<DailyCardProps, 'type'>) {
   const preview = getVocabularyPreview(content)
-  const displayTags = getDisplayTags(tags)
+  const keywords = getAcademicKeywords(title, tags)
 
   return (
     <motion.div
@@ -162,10 +202,10 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-400">Vocabulary</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500">{preview}</p>}
-      {displayTags.length > 0 && (
+      {keywords.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1">
-          {displayTags.map((tag) => (
-            <span key={tag} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{tag}</span>
+          {keywords.map((kw) => (
+            <span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>
           ))}
         </div>
       )}
@@ -189,7 +229,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
 function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<DailyCardProps, 'type'>) {
   const preview = getPassagePreview(content)
   const meta = getPassageMeta(content)
-  const displayTags = getDisplayTags(tags)
+  const keywords = getAcademicKeywords(title, tags)
 
   return (
     <motion.div
@@ -201,10 +241,10 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {meta && <p className="mt-1 text-[10px] text-stone-400">{meta}</p>}
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-3">{preview}</p>}
-      {displayTags.length > 0 && (
+      {keywords.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1">
-          {displayTags.map((tag) => (
-            <span key={tag} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{tag}</span>
+          {keywords.map((kw) => (
+            <span key={kw} className="rounded bg-stone-100 px-1.5 py-0.5 text-[10px] text-stone-500 dark:bg-stone-800 dark:text-stone-400">{kw}</span>
           ))}
         </div>
       )}
