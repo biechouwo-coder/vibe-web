@@ -322,3 +322,79 @@ async function ensureLearningTasks(
     })
   }
 }
+
+// ── Unified Reading content (vocabulary + excerpt from journal articles) ──
+// Each reading item provides an academic excerpt plus curated vocabulary.
+// In a future step, getDailyReading() will replace getDailyVocabulary()
+// and getDailyPassage().
+
+interface ReadingVocabularyItem {
+  term: string
+  phonetic: string
+  definition: string
+  example: string
+  chinese: string
+}
+
+interface ReadingContentItem {
+  title: string
+  paperTitle: string
+  authors: string
+  journal: string
+  year: number
+  doi: string
+  excerpt: string
+  writingFocus: string
+  vocabulary: ReadingVocabularyItem[]
+  discussionQuestions: string[]
+  tags: string
+}
+
+const readingContent: ReadingContentItem[] = [
+  {
+    title: 'Carbon Pricing Meta-Analysis',
+    paperTitle: 'Systematic review and meta-analysis of ex-post evaluations on the effectiveness of carbon pricing',
+    authors: 'Döbbeling-Hildebrandt, N., Miersch, K., Khanna, T.M., Bachelet, M., Kalkuhl, M., Koch, N., Edenhofer, O., Steckel, J.C.',
+    journal: 'Nature Communications',
+    year: 2024,
+    doi: '10.1038/s41467-024-48512-w',
+    excerpt: 'Carbon pricing is widely regarded as a central instrument for achieving climate mitigation targets. However, the ex-post empirical evidence on its effectiveness has been fragmented across disciplines, methods, and policy contexts. This study presents a systematic review and meta-analysis of 483 effect sizes from 80 causal ex-post evaluations covering 21 carbon pricing schemes worldwide. The results show that carbon pricing has led to statistically significant emission reductions ranging from 5% to 21% across different policies and contexts. After correcting for publication bias, the average reduction effect is estimated at 4% to 15%. Notably, at least 17 of the 21 policies evaluated produced immediate and substantial emission reductions.',
+    writingFocus: 'Summarising meta-analysis findings for a policy audience',
+    vocabulary: [
+      { term: 'Meta-analysis', phonetic: '\u02ccmet\u0259 \u0259\u02c8n\u00e6l\u0259s\u026as', definition: 'A statistical technique for combining findings from independent studies.', example: 'The meta-analysis synthesised 80 evaluations of carbon pricing schemes.', chinese: '荟萃分析' },
+      { term: 'Ex-post evaluation', phonetic: 'eks po\u028ast \u026a\u02ccv\u00e6lju\u02c8e\u026a\u0283\u0259n', definition: 'An assessment conducted after a policy has been implemented.', example: 'Ex-post evaluations measure actual emission reductions.', chinese: '事后评估' },
+      { term: 'Publication bias', phonetic: '\u02ccp\u028cbl\u026a\u02c8ke\u026a\u0283\u0259n \u02c8ba\u026a\u0259s', definition: 'The tendency to publish only studies with significant results.', example: 'After correcting for publication bias the estimated effect was smaller.', chinese: '出版偏倿' },
+      { term: 'Effect size', phonetic: '\u026a\u02c8fekt sa\u026az', definition: 'The magnitude of a measured change caused by an intervention.', example: 'The effect size varied from 5% to 21% across policies.', chinese: '效应量' },
+      { term: 'Causal evaluation', phonetic: '\u02c8k\u0254\u02d0z\u0259l \u026a\u02ccv\u00e6lju\u02c8e\u026a\u0283\u0259n', definition: 'Analysis that identifies cause-and-effect relationships.', example: 'Only causal evaluations were included in the systematic review.', chinese: '因果评估' },
+    ],
+    discussionQuestions: [
+      'Why is a meta-analysis more reliable than a single empirical study?',
+      'How might publication bias affect the perceived effectiveness of carbon pricing?',
+      'What policy implications follow from the finding that 17 of 21 schemes reduced emissions?',
+    ],
+    tags: 'carbon-pricing,meta-analysis,policy',
+  },
+  {
+    title: 'EU ETS Firm-Level Evidence',
+    paperTitle: 'Does Pricing Carbon Mitigate Climate Change? Firm-Level Evidence from the European Union Emissions Trading System',
+    authors: 'Colmer, J., Martin, R., Mu\u00fbls, M., Wagner, U.',
+    journal: 'The Review of Economic Studies',
+    year: 2024,
+    doi: '10.1093/restud/rdae055',
+    excerpt: 'The European Union Emissions Trading System (EU ETS) is the world\u2019s largest carbon market and a cornerstone of EU climate policy. This paper provides rigorous firm-level evidence on the impact of the EU ETS on CO\u2082 emissions and economic performance. Using administrative data covering regulated manufacturing firms the authors find that the EU ETS induced firms to reduce CO\u2082 emissions by 14% to 16% relative to unregulated firms. These emission reductions were achieved without detectable contractions in economic activity.',
+    writingFocus: 'Reporting causal empirical results for an economics journal',
+    vocabulary: [
+      { term: 'Firm-level evidence', phonetic: 'f\u025c\u02d0rm \u02c8lev\u0259l \u02c8ev\u026ad\u0259ns', definition: 'Data and analysis conducted at the individual company level.', example: 'Firm-level evidence shows regulated companies reduced emissions.', chinese: '企业层面证据' },
+      { term: 'Emissions Trading System', phonetic: '\u026a\u02c8m\u026a\u0283\u0259nz \u02c8tre\u026ad\u026a\u014b \u02c8s\u026ast\u0259m', definition: 'A market-based approach to controlling pollution by trading emission allowances.', example: 'The EU ETS is the world\u2019s largest carbon market.', chinese: '碳排放交易体系' },
+      { term: 'Carbon leakage', phonetic: '\u02c8k\u0251\u02d0b\u0259n \u02c8li\u02d0k\u026ad\u0292', definition: 'The relocation of production to regions with weaker climate policies.', example: 'The study found no evidence of carbon leakage within the EU.', chinese: '碳泄漏' },
+      { term: 'Administrative data', phonetic: '\u0259d\u02c8m\u026an\u026astre\u026at\u026av \u02c8de\u026at\u0259', definition: 'Data collected by government agencies for regulatory purposes.', example: 'Administrative data on manufacturing firms was used.', chinese: '行政数据' },
+      { term: 'Counterfactual', phonetic: '\u02ccka\u028ant\u0259r\u02c8f\u00e6kt\u0283u\u0259l', definition: 'What would have happened in the absence of the policy.', example: 'The study constructed a counterfactual using unregulated firms.', chinese: '反事实' },
+    ],
+    discussionQuestions: [
+      'Why is firm-level evidence important for evaluating carbon pricing policies?',
+      'What does the absence of carbon leakage suggest about EU ETS design?',
+      'How might these results differ for carbon pricing in developing economies?',
+    ],
+    tags: 'eu-ets,carbon-pricing,firm-level',
+  },
+]
