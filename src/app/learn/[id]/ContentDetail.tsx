@@ -11,6 +11,11 @@ interface ContentDetailProps {
   pushAction: (id: string) => Promise<{ ok: boolean; message: string }>
 }
 
+function formatTags(title: string, tags: string | null): string {
+  const keywords = getAcademicKeywords(title, tags)
+  return keywords.length > 0 ? ' · ' + keywords.join(' · ') : ''
+}
+
 // ── Conversation ──
 
 function parseConversation(content: string) {
@@ -31,11 +36,7 @@ function parseDialogueLines(text: string) {
     .map((line) => {
       const speaker = speakers.find((s) => line.startsWith(`${s}:`))
       if (speaker) {
-        return {
-          speaker,
-          message: line.replace(`${speaker}:`, '').replace(/^["']|["']$/g, '').trim(),
-          isYou: speaker === 'You',
-        }
+        return { speaker, message: line.replace(`${speaker}:`, '').replace(/^["']|["']$/g, '').trim(), isYou: speaker === 'You' }
       }
       return null
     })
@@ -54,17 +55,12 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
         <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
       </div>
-
       <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Dialogue</p>
         <div className="space-y-2.5">
           {dialogueLines.map((dl, i) => (
             <div key={i} className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] rounded-lg px-3.5 py-2.5 text-sm leading-relaxed ${
-                dl.isYou
-                  ? 'bg-emerald-800 text-white dark:bg-emerald-700'
-                  : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'
-              }`}>
+              <div className={`max-w-[85%] rounded-lg px-3.5 py-2.5 text-sm leading-relaxed ${dl.isYou ? 'bg-emerald-800 text-white dark:bg-emerald-700' : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'}`}>
                 {!dl.isYou && <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-stone-500">{dl.speaker}</span>}
                 <span>{dl.message}</span>
               </div>
@@ -72,7 +68,6 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
           ))}
         </div>
       </div>
-
       {vocabulary && (
         <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Key Vocabulary</p>
@@ -91,19 +86,15 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
           </div>
         </div>
       )}
-
       {translation && (
         <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-stone-400">Translation</p>
           <div className="whitespace-pre-line text-sm leading-relaxed text-stone-600 dark:text-stone-400">{translation}</div>
         </div>
       )}
-
       <div className="flex items-center gap-3 pb-6">
         <button onClick={handlePush} disabled={content.pushed}
-          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-            content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
-          }`}>
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
           {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
         {content.source && <span className="text-xs text-stone-400">Source: {content.source}</span>}
@@ -112,7 +103,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
   )
 }
 
-// ── Vocabulary card parser ──
+// ── Vocabulary ──
 
 function parseVocabSections(text: string) {
   const sections = text.split(/(?=## \d+\.)/).filter(Boolean)
@@ -142,14 +133,10 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
         <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
       </div>
-
-      {items.length > 0 ? <VocabCards items={items} /> : <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{renderFallback(content.content)}</div>}
-
+      {items.length > 0 ? <VocabCards items={items} /> : <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">{fallbackBody(content.content)}</div>}
       <div className="mt-8 flex items-center gap-3 pb-6">
         <button onClick={handlePush} disabled={content.pushed}
-          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-            content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
-          }`}>
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
           {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
         {content.source && <span className="text-xs text-stone-400">Source: {content.source}</span>}
@@ -158,11 +145,11 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
   )
 }
 
-// ── Passage ──
-
-function renderFallback(text: string) {
+function fallbackBody(text: string) {
   return <div className="whitespace-pre-line text-sm leading-relaxed text-stone-600 dark:text-stone-400">{text}</div>
 }
+
+// ── Passage (Reading) ──
 
 function renderMetaLine(line: string) {
   const match = line.match(/^\*\*(.+?):\*\*\s*(.*)$/)
@@ -184,92 +171,106 @@ function renderMetaLine(line: string) {
   )
 }
 
-function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
-  const source = getMetaValue(content.content, 'Source') || ''
-
-  const lines = content.content.split('\n')
-  const metaLines: string[] = []
-  const bodyLines: string[] = []
-  let inMeta = true
-
+function extractSection(content: string, startMarker: string, endMarkers: string[]): string[] {
+  const lines = content.split('\n')
+  let collecting = false
+  const result: string[] = []
   for (const line of lines) {
     const trimmed = line.trim()
-    if (inMeta && (trimmed.startsWith('**') || !trimmed)) {
-      if (trimmed.startsWith('**') && !trimmed.startsWith('**Source:**')) {
-        metaLines.push(trimmed)
-      } else if (!trimmed) {
-        inMeta = false
-      }
-    } else {
-      bodyLines.push(line)
+    if (!collecting && trimmed.startsWith(startMarker)) { collecting = true; continue }
+    if (collecting) {
+      if (endMarkers.some((m) => trimmed.startsWith(m))) break
+      if (!trimmed) continue
+      result.push(trimmed)
     }
   }
+  return result
+}
+
+function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
+  const metaKeys = ['Paper', 'Authors', 'Journal', 'Year', 'DOI']
+  const lines = content.content.split('\n')
+  const metaLines = lines.filter((l) => metaKeys.some((k) => l.trim().startsWith(`**${k}:**`)))
+
+  const excerptBody = extractSection(content.content, '**Excerpt:**', ['**Writing Focus:**', '**Key Vocabulary:**', '**Discussion Questions:**'])
+  const writingFocus = extractSection(content.content, '**Writing Focus:**', ['**Key Vocabulary:**', '**Discussion Questions:**'])
+  const vocabLines = extractSection(content.content, '**Key Vocabulary:**', ['**Discussion Questions:**'])
+  const discussionLines = extractSection(content.content, '**Discussion Questions:**', [])
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <BackLink href="/learn" />
-      {source && <p className="text-xs text-stone-400">{source.replace('**Source:** ', '')}</p>}
       <div>
         <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Journal Article</p>
         <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
       </div>
 
-      <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
-        {metaLines.map((line) => renderMetaLine(line))}
-      </div>
-
-      <div className="rounded-lg border border-stone-200 bg-white p-5 leading-relaxed dark:border-stone-800 dark:bg-stone-900">
-        <div className="whitespace-pre-line text-sm text-stone-700 dark:text-stone-300">
-          {bodyLines.map((line, i) => {
-            const trimmed = line.trim()
-            if (!trimmed) return <br key={i} />
-            if (trimmed.startsWith('**Key Vocabulary:**')) {
-              return <p key={i} className="mt-4 mb-2 text-xs font-semibold uppercase tracking-widest text-stone-500">{trimmed.replace(/\*\*/g, '')}</p>
-            }
-            if (trimmed.startsWith('**Discussion Questions:**')) {
-              return <p key={i} className="mt-4 mb-2 text-xs font-semibold uppercase tracking-widest text-stone-500">{trimmed.replace(/\*\*/g, '')}</p>
-            }
-            if (trimmed.startsWith('- ')) {
-              const text = trimmed.replace(/^-\s+/, '')
-              const parts = text.split(': ')
-              if (parts.length >= 2) {
-                return <p key={i} className="ml-3 text-sm text-stone-600 dark:text-stone-400">· <strong>{parts[0]}</strong>: {parts.slice(1).join(': ')}</p>
-              }
-              return <p key={i} className="ml-3 text-sm text-stone-600 dark:text-stone-400">· {text}</p>
-            }
-            if (/^\d+\./.test(trimmed)) {
-              return <p key={i} className="mt-1.5 text-sm text-stone-600 dark:text-stone-400">{trimmed}</p>
-            }
-            return <p key={i} className="text-sm text-stone-700 dark:text-stone-300">{trimmed}</p>
-          })}
+      {metaLines.length > 0 && (
+        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+          {metaLines.map((line) => renderMetaLine(line))}
         </div>
-      </div>
+      )}
+
+      {excerptBody.length > 0 && (
+        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Excerpt</p>
+          <div className="space-y-3 font-serif text-base leading-relaxed text-stone-800 dark:text-stone-200">
+            {excerptBody.map((para, i) => <p key={i}>{para}</p>)}
+          </div>
+        </div>
+      )}
+
+      {writingFocus.length > 0 && (
+        <div className="rounded-lg border border-stone-200 bg-stone-50 p-4 dark:border-stone-800 dark:bg-stone-800/30">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-500">Writing Focus</p>
+          <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-400">{writingFocus.join(' ')}</p>
+        </div>
+      )}
+
+      {vocabLines.length > 0 && (
+        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Key Vocabulary</p>
+          <div className="space-y-2">
+            {vocabLines.map((line, i) => {
+              const m = line.match(/-\s*([^/]+?)\s*(?:\/(.+?)\/)?\s*:\s*(.+)/)
+              if (!m) return <p key={i} className="text-sm text-stone-500">{line}</p>
+              return (
+                <div key={i} className="flex items-baseline gap-2 text-sm">
+                  <span className="font-medium text-stone-800 dark:text-stone-200">{m[1].trim()}</span>
+                  {m[2] && <span className="text-xs text-stone-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>[{m[2].trim()}]</span>}
+                  <span className="text-xs text-stone-500">— {m[3].trim()}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {discussionLines.length > 0 && (
+        <div className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Discussion Questions</p>
+          <div className="space-y-2">
+            {discussionLines.map((line, i) => {
+              const text = line.replace(/^\d+\.\s*/, '')
+              return (
+                <div key={i} className="flex gap-2 text-sm">
+                  <span className="shrink-0 font-medium text-stone-400">{i + 1}.</span>
+                  <span className="text-stone-600 dark:text-stone-400">{text}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="flex items-center gap-3 pb-6">
         <button onClick={handlePush} disabled={content.pushed}
-          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-            content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'
-          }`}>
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${content.pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-emerald-800 text-white hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-600'}`}>
           {content.pushed ? 'Saved to Notion' : 'Save to Notion'}
         </button>
       </div>
     </div>
   )
-}
-
-function getMetaValue(content: string, key: string): string | null {
-  const prefix = `**${key}:**`
-  for (const line of content.split('\n')) {
-    const trimmed = line.trim()
-    if (trimmed.startsWith(prefix)) return trimmed.slice(prefix.length).trim()
-  }
-  return null
-}
-
-
-function formatTags(title: string, tags: string | null): string {
-  const keywords = getAcademicKeywords(title, tags)
-  return keywords.length > 0 ? ' · ' + keywords.join(' · ') : ''
 }
 
 // ── Main ──
