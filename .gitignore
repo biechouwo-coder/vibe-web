@@ -41,7 +41,12 @@ yarn-error.log*
 next-env.d.ts
 
 # database
-prisma/dev.db
+prisma/dev.db*
 
 # claude worktrees (temporary)
 .claude/worktrees/
+
+# agent skills (local cache)
+.claude/skills/
+.agents/
+skills-lock.json

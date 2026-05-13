@@ -23,13 +23,16 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       exit={{ opacity: 0, height: 0 }}
       className={`group flex items-start gap-3 rounded-lg border p-3 transition-colors ${
         task.completed
-          ? 'border-stone-200 bg-stone-50 dark:border-stone-800 dark:bg-stone-800/30'
-          : 'border-stone-200 bg-white hover:border-stone-300 dark:border-stone-800 dark:bg-stone-900 dark:hover:border-stone-700'
+          ? 'border-stone-200/60'
+          : 'border-stone-200/80 hover:border-stone-300'
       }`}
+      style={{
+        backgroundColor: task.completed ? 'var(--task-warm-surface)' : 'var(--surface)',
+      }}
     >
       <button
         onClick={handleToggle}
-        className={`mt-0.5 flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded border transition-colors ${
+        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
           task.completed
             ? 'border-[var(--academic-navy)] bg-[var(--academic-navy)] dark:border-[var(--academic-navy)] dark:bg-[var(--academic-navy)]'
             : 'border-stone-300 hover:border-stone-500 dark:border-stone-600 dark:hover:border-stone-400'
@@ -54,7 +57,7 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       </div>
 
       <form action={deleteTask.bind(null, task.id)}>
-        <button type="submit" className="opacity-0 transition-opacity group-hover:opacity-100 rounded p-1 text-stone-400 hover:text-[var(--academic-red)] hover:bg-red-50 dark:hover:bg-red-950/30">
+        <button type="submit" className="rounded p-1.5 text-stone-400 transition-colors hover:text-[var(--academic-red)] hover:bg-[var(--task-warm-hover)] sm:opacity-0 sm:group-hover:opacity-100">
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>

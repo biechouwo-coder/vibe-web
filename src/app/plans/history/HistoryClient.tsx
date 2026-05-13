@@ -14,10 +14,10 @@ interface HistoryClientProps {
 
 function getIntensity(rate: number): string {
   if (rate === 0) return 'bg-stone-100 dark:bg-stone-900'
-  if (rate < 25) return 'bg-blue-200 dark:bg-blue-950'
-  if (rate < 50) return 'bg-blue-300 dark:bg-blue-900'
-  if (rate < 75) return 'bg-blue-400 dark:bg-blue-700'
-  return 'bg-blue-500 dark:bg-blue-500'
+  if (rate < 25) return 'bg-stone-200 dark:bg-stone-800'
+  if (rate < 50) return 'bg-stone-400 dark:bg-stone-600'
+  if (rate < 75) return 'bg-stone-500 dark:bg-stone-400'
+  return 'bg-stone-700 dark:bg-stone-200'
 }
 
 export default function HistoryClient({ dailyData }: HistoryClientProps) {
@@ -88,10 +88,10 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
       <div className="mt-3 flex items-center gap-2 text-xs text-stone-400">
         <span>Less</span>
         <div className="h-3 w-3 rounded-sm bg-stone-100 dark:bg-stone-900" />
-        <div className="h-3 w-3 rounded-sm bg-blue-200 dark:bg-blue-950" />
-        <div className="h-3 w-3 rounded-sm bg-blue-300 dark:bg-blue-900" />
-        <div className="h-3 w-3 rounded-sm bg-blue-400 dark:bg-blue-700" />
-        <div className="h-3 w-3 rounded-sm bg-blue-500 dark:bg-blue-500" />
+        <div className="h-3 w-3 rounded-sm bg-stone-200 dark:bg-stone-800" />
+        <div className="h-3 w-3 rounded-sm bg-stone-400 dark:bg-stone-600" />
+        <div className="h-3 w-3 rounded-sm bg-stone-500 dark:bg-stone-400" />
+        <div className="h-3 w-3 rounded-sm bg-stone-700 dark:bg-stone-200" />
         <span>More</span>
       </div>
     </div>

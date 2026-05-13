@@ -10,6 +10,13 @@
   --surface: #ffffff;
   --academic-navy: #013E75;
   --academic-red: #A42423;
+  --task-warm-surface: #faf7f3;
+  --task-warm-hover: #f3ede4;
+  --task-warm-track: #ede4d8;
+  --task-warm-dark: #2a1d14;
+  --task-warm-dark-hover: #3a281c;
+  --task-warm-border: #3d2a1c;
+  --task-warm-text: #f0e6d8;
   color-scheme: light;
 }
 
@@ -22,6 +29,13 @@
   --surface: #131210;
   --academic-navy: #7fb3df;
   --academic-red: #e08a88;
+  --task-warm-surface: #1c1510;
+  --task-warm-hover: #2a1d14;
+  --task-warm-track: #382a1e;
+  --task-warm-dark: #1c1410;
+  --task-warm-dark-hover: #2a1d14;
+  --task-warm-border: #352218;
+  --task-warm-text: #e8d5c0;
   color-scheme: dark;
 }
 

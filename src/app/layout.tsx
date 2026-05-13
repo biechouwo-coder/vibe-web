@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Geist, Geist_Mono, Noto_Sans, Noto_Serif } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import ThemeProvider from '@/components/theme/ThemeProvider'
-import { ThemeScript } from '@/components/theme/theme-script'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${notoSans.variable} ${notoSerif.variable} h-screen overflow-hidden antialiased`} suppressHydrationWarning>
       <head>
-        <ThemeScript />
+        <Script id="theme-init" strategy="beforeInteractive">{`(function(){var t;try{t=localStorage.getItem('vibe-theme')}catch(e){}var r=t==='dark'||(t!=='light'&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';var d=r==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.style.colorScheme=d?'dark':'light'})()`}</Script>
       </head>
       <body className="fixed inset-0 overflow-hidden">
         <ThemeProvider>

@@ -79,6 +79,20 @@ export function formatShanghaiDate(
 }
 
 /**
+ * Converts any Date to a "YYYY-MM-DD" date string in Shanghai timezone.
+ * Use this for Notion date properties to avoid UTC midnight boundary errors.
+ * Example: new Date('2026-05-13T17:00:00Z') → "2026-05-14" (Shanghai May 14).
+ */
+export function toShanghaiISODate(date: Date): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: TZ,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date)
+}
+
+/**
  * Formats a stored Date (from DB, already midnight UTC) in Shanghai timezone.
  * The stored date is treated as a "calendar date" — we want the day label
  * to match what the user saw when the content was created.

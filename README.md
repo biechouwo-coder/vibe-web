@@ -8,7 +8,7 @@ Live: https://vibe-web-production-1f28.up.railway.app
 
 1. **English learning** -- daily rotating conversation practice, academic vocabulary, and journal excerpts on carbon neutrality and green finance.
 2. **Task planner** -- daily to-do list with streak tracking, completion stats, and history view.
-3. **Notion sync** -- one-click push of learning content to your Notion workspace.
+3. **Notion sync** -- manually push learning content to Notion (Settings page to configure); task auto-sync is basic (push on completion).
 
 ## Tech stack
 
@@ -24,19 +24,14 @@ Live: https://vibe-web-production-1f28.up.railway.app
 
 ## Local development
 
-```bash
-# Install
-npm install
+Requires Node.js >= 20.9.0.
 
-# Set up database
+```bash
+npm install
 npx prisma generate
 npx prisma db push
-
-# Start dev server
-npm run dev
+npm run dev        # http://localhost:3000
 ```
-
-Open http://localhost:3000
 
 ## Environment variables
 
@@ -65,11 +60,11 @@ src/
     learn/              # DailyCard, VocabCards
     plans/              # TaskItem, TaskList, AddTaskForm
     ui/                 # BackLink, Confetti, Loading, StreakBadge
-    theme/              # ThemeProvider, ThemeScript, ThemeSelector
+    theme/              # ThemeProvider, ThemeSelector (theme-script replaced by next/script in layout)
   actions/              # Server Actions (learn.ts, plans.ts)
   lib/                  # Prisma client, Notion API, content library, date utils
 prisma/
-  schema.prisma         # Database schema (DailyContent, Task, Streak, NotionConfig)
+  schema.prisma         # DailyContent, Task, Streak, NotionConfig
   migrations/           # Migration history
 ```
 
@@ -78,4 +73,5 @@ prisma/
 - Dates use Asia/Shanghai timezone throughout.
 - The database (`prisma/dev.db`) is not tracked in git.
 - Never commit `.env*` files.
+- Notion token is stored as plain text in SQLite — suitable for personal/single-user deployment.
 - UI follows Academic Research Desk style: stone palette, navy accent, no gradients or green.

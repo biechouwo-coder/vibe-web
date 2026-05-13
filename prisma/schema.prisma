@@ -44,7 +44,7 @@ model Streak {
 
 model NotionConfig {
   id        String  @id @default("default")
-  token     String? // encrypted Notion integration token
+  token     String? // Notion integration token (plain text — no encryption at rest)
   dbEnglish String? // English learning database ID
   dbPlans   String? // Daily plans database ID
   enabled   Boolean @default(false)

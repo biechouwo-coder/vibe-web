@@ -2,6 +2,7 @@
 
 import { Client } from '@notionhq/client'
 import { prisma } from './prisma'
+import { toShanghaiISODate } from './date'
 
 export async function getNotionClient() {
   const config = await prisma.notionConfig.findFirst()
@@ -89,7 +90,7 @@ export async function pushEnglishContent(contentId: string) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const properties: Record<string, any> = {
-    Date: { date: { start: content.date.toISOString().split('T')[0] } },
+    Date: { date: { start: toShanghaiISODate(content.date) } },
     Type: { select: { name: content.type } },
     Title: { title: [{ text: { content: content.title } }] },
   }
@@ -135,13 +136,13 @@ export async function pushTaskToNotion(taskId: string) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const properties: Record<string, any> = {
-    Date: { date: { start: task.date.toISOString().split('T')[0] } },
+    Date: { date: { start: toShanghaiISODate(task.date) } },
     Task: { title: [{ text: { content: task.title } }] },
     Status: { select: { name: task.completed ? 'completed' : 'pending' } },
   }
 
   if (task.completedAt) {
-    properties.CompletedAt = { date: { start: task.completedAt.toISOString().split('T')[0] } }
+    properties.CompletedAt = { date: { start: toShanghaiISODate(task.completedAt) } }
   }
 
   await notion.pages.create({

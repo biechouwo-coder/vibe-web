@@ -22,8 +22,10 @@ const navBtnClass =
   'inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
 
 export default async function Home() {
-  const stats = await getDailyStats()
+  // Order matters: content first (ensures today's learning tasks exist),
+  // then stats (counts the just-created tasks), then tasks (fetches them).
   const content = await fetchTodaysContent()
+  const stats = await getDailyStats()
   const tasks = await getTodaysTasks()
 
   return (
@@ -58,26 +60,27 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Right: Summary card (stone-900 background) */}
-        <div className="sm:col-span-2 rounded-2xl border border-stone-800 bg-stone-900 p-5 text-stone-100 dark:border-stone-700 dark:bg-stone-800/60">
+        {/* Right: Tasks summary (warm paper-dark card) */}
+        <div className="sm:col-span-2 rounded-2xl border p-5 text-[var(--task-warm-text)]" style={{ backgroundColor: 'var(--task-warm-dark)', borderColor: 'var(--task-warm-border)' }}>
           <div className="flex items-baseline justify-between">
-            <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">Tasks</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--task-warm-text)]/50">Tasks</p>
             <p className="font-semibold tabular-nums">
-              {stats.completedTasks}<span className="text-sm font-normal text-stone-500">/{stats.totalTasks}</span>
+              {stats.completedTasks}<span className="text-sm font-normal text-[var(--task-warm-text)]/50">/{stats.totalTasks}</span>
             </p>
           </div>
           <div className="mt-2">
             <ProgressBar value={stats.completionRate} />
           </div>
 
-          <div className="mt-4 flex items-center gap-3 border-t border-stone-700 pt-3 dark:border-stone-600/50">
-            <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">Streak</p>
+          <div className="mt-4 flex items-center gap-3 border-t pt-3" style={{ borderColor: 'var(--task-warm-border)' }}>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--task-warm-text)]/50">Streak</p>
             <StreakBadge current={stats.streak.currentStreak} />
           </div>
 
           <Link
             href="/plans"
-            className="mt-4 flex items-center justify-center rounded-lg border border-stone-600 py-2 text-xs font-medium text-stone-300 transition-colors hover:border-stone-500 hover:bg-stone-800 dark:border-stone-600 dark:hover:border-stone-500 dark:hover:bg-stone-700"
+            className="mt-4 flex items-center justify-center rounded-lg border py-2 text-xs font-medium transition-colors hover:brightness-125"
+            style={{ borderColor: 'var(--task-warm-border)', color: 'var(--task-warm-text)', backgroundColor: 'var(--task-warm-dark-hover)' }}
           >
             Open task planner
           </Link>
@@ -95,7 +98,7 @@ export default async function Home() {
             </svg>
           </Link>
         </div>
-        <div className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-lg border border-stone-200/80 p-4" style={{ backgroundColor: 'var(--task-warm-surface)' }}>
           <HomeTaskList tasks={tasks} />
         </div>
       </section>

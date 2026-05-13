@@ -46,9 +46,9 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           <input
             name="clearToken"
             type="checkbox"
-            className="h-4 w-4 rounded border-stone-300 text-red-500 focus:ring-red-400"
+            className="h-4 w-4 rounded border-stone-300 text-[var(--academic-red)] focus:ring-[var(--academic-red)]"
           />
-          <span className="text-sm text-red-600 dark:text-red-400">Clear saved token</span>
+          <span className="text-sm text-[var(--academic-red)] dark:text-[var(--academic-red)]">Clear saved token</span>
         </label>
       )}
 

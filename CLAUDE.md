@@ -18,12 +18,13 @@ npx prisma studio    # DB GUI
 - **Deploy:** Railway (auto-deploy from GitHub `master`)
 
 ## UI — Academic Research Desk
-- **Layout:** Desktop = left sidebar + rounded-[28px] workspace; Mobile = sticky top nav
-- **Background:** `stone-200` / `stone-950` (outer), `stone-50` / `stone-950` (workspace)
+- **Layout:** Desktop = left sidebar + rounded-[28px] workspace; Mobile = top nav + scrollable main
+- **Background:** `stone-200` / `stone-950` (outer, fixed), `stone-50` / `stone-950` (workspace shell)
 - **Cards:** `rounded-2xl`, `border border-stone-200`, `shadow-sm shadow-stone-200/40`
 - **Color tokens:** `--academic-navy: #013E75` (primary accent), `--academic-red: #A42423` (destructive)
-- **No emerald/green** in UI classes; no emoji; no gradients
-- **Unified palette:** `stone-*` throughout (no `zinc-*`)
+- **Target (not fully achieved):** no emerald/green, no emoji, no gradients in UI
+- **Target (not fully achieved):** `stone-*` unified palette (known exception: `plans/history/page.tsx` uses `zinc-400`)
+- **Known emoji usage:** `src/lib/notion.ts` (Notion page headers) and `src/lib/content.ts` (task titles) use emoji as content data, not UI decoration
 
 ## Color Usage
 - Navy (`--academic-navy`): progress bars, primary buttons, completed checkboxes, navbar underline
@@ -40,6 +41,8 @@ npx prisma studio    # DB GUI
 - Content: `src/lib/content.ts` — uses `upsert` for atomic dedup
 - Academic keywords: `src/lib/academic-keywords.ts` — shared by DailyCard and ContentDetail
 - Notion API: `src/lib/notion.ts`; config returns `hasToken: boolean`, never raw token
+- **Notion security:** token stored as plain text in SQLite; no auth guard on Settings action — suitable for personal/single-user deployment only
+- **Notion idempotency:** `pushEnglishContent` checks `pushed` flag before creating page (low race risk); `pushTaskToNotion` always creates new pages (no dedup) — task toggle creates duplicates in Notion
 - VocabCards: `src/components/learn/VocabCards.tsx` (academic glossary, 40px slide, reduced-motion aware)
 
 ## Content Library (`src/lib/content.ts`)

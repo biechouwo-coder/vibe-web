@@ -51,7 +51,7 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
     <>
       <Confetti active={showConfetti} />
       <div className="mb-2 flex items-center gap-2">
-        <div className="flex-1 h-1 rounded-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
+        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--task-warm-track)' }}>
           <motion.div
             className="h-full rounded-full bg-[var(--academic-navy)] dark:bg-[var(--academic-navy)]"
             initial={false}
@@ -80,9 +80,14 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
       animate={{ opacity: 1, y: 0 }}
       className={`group flex items-center gap-2.5 rounded-md px-2.5 py-2 transition-colors ${
         task.completed
-          ? 'bg-stone-50 dark:bg-stone-800/50'
-          : 'hover:bg-stone-50 dark:hover:bg-stone-800/50'
+          ? ''
+          : ''
       }`}
+      style={{
+        backgroundColor: task.completed ? 'var(--task-warm-hover)' : undefined,
+      }}
+      onMouseEnter={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = 'var(--task-warm-hover)'; }}
+      onMouseLeave={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = ''; }}
     >
       <button
         onClick={() => onToggle(task.id)}
