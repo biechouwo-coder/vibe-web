@@ -13,10 +13,10 @@
   --task-warm-surface: #faf7f3;
   --task-warm-hover: #f3ede4;
   --task-warm-track: #ede4d8;
-  --task-warm-dark: #2a1d14;
-  --task-warm-dark-hover: #3a281c;
-  --task-warm-border: #3d2a1c;
-  --task-warm-text: #f0e6d8;
+  --task-warm-dark: #5a3e2b;
+  --task-warm-dark-hover: #6b4d38;
+  --task-warm-border: #6b4d38;
+  --task-warm-text: #faf7f3;
   color-scheme: light;
 }
 
@@ -32,10 +32,10 @@
   --task-warm-surface: #1c1510;
   --task-warm-hover: #2a1d14;
   --task-warm-track: #382a1e;
-  --task-warm-dark: #1c1410;
-  --task-warm-dark-hover: #2a1d14;
-  --task-warm-border: #352218;
-  --task-warm-text: #e8d5c0;
+  --task-warm-dark: #2d1f15;
+  --task-warm-dark-hover: #3d2a1c;
+  --task-warm-border: #4a3020;
+  --task-warm-text: #ede0d0;
   color-scheme: dark;
 }
 
