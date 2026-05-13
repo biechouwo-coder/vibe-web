@@ -17,7 +17,7 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden sm:flex sm:flex-col sm:w-16 md:w-20 lg:w-24 sm:h-full sm:shrink-0 sm:items-center sm:pt-8 sm:gap-8">
+      <aside className="hidden sm:flex sm:flex-col sm:w-16 md:w-20 lg:w-24 sm:h-full sm:shrink-0 sm:items-center sm:pt-8 sm:gap-8" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
         <Link href="/" className="font-serif text-lg font-semibold tracking-tight text-[var(--text-main)]">
           v<span className="text-[var(--accent)]">.</span>w
         </Link>
@@ -39,7 +39,7 @@ export default function Navbar() {
       </aside>
 
       {/* Mobile top bar */}
-      <nav className="shrink-0 z-50 flex w-full items-center justify-between border-b px-4 py-2.5 backdrop-blur-sm sm:hidden" style={{ borderColor: 'var(--border-soft)', backgroundColor: 'color-mix(in srgb, var(--workspace-bg) 90%, transparent)' }}>
+      <nav className="shrink-0 z-50 flex w-full items-center justify-between border-b px-4 py-2.5 backdrop-blur-sm sm:hidden" style={{ borderColor: 'var(--border-soft)', backgroundColor: 'var(--sidebar-bg)' }}>
         <Link href="/" className="font-serif text-base font-semibold tracking-tight text-[var(--text-main)]">
           v<span className="text-[var(--accent)]">.</span>w
         </Link>

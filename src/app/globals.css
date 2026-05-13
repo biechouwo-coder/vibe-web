@@ -40,6 +40,8 @@
   --scrollbar-thumb: var(--palette-muted);
   --scrollbar-thumb-hover: #a8a6a0;
 
+  --sidebar-bg: #dedcd5;
+
   color-scheme: light;
 }
 
@@ -70,6 +72,8 @@
 
   --scrollbar-thumb: #3d3b36;
   --scrollbar-thumb-hover: #4a4742;
+
+  --sidebar-bg: #181713;
 
   color-scheme: dark;
 }
