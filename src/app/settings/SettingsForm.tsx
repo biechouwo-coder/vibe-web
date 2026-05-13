@@ -36,7 +36,7 @@ export default function SettingsForm({ config }: SettingsFormProps) {
         />
         {config?.hasToken && (
           <p className="mt-1 text-xs text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">
-            ✅ Token configured. Leave blank to keep the current token.
+            Token configured. Leave blank to keep the current token.
           </p>
         )}
       </div>

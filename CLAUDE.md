@@ -14,7 +14,7 @@ npx prisma studio    # DB GUI
 - **Schema unique constraints:** `DailyContent(date+type)`, `Task(date+contentId)`
 - **Migrations:** `prisma/migrations/20260507091401_init/` + `20260510091002_add_unique_constraints/`
 - **Styling:** Tailwind CSS 4, class-based dark mode via `@custom-variant dark` + `html.dark`
-- **Animations:** Framer Motion — `useReducedMotion()` used; cards use `initial={false}`
+- **Animations:** Framer Motion -- `useReducedMotion()` used; cards use `initial={false}`
 - **Deploy:** Railway (auto-deploy from GitHub `master`)
 
 ## UI — Academic Research Desk
@@ -43,8 +43,8 @@ npx prisma studio    # DB GUI
 - VocabCards: `src/components/learn/VocabCards.tsx` (academic glossary, 40px slide, reduced-motion aware)
 
 ## Content Library (`src/lib/content.ts`)
-- **Conversations (8)**: topic-based with `formatConversationContent()` — outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation
-- **Readings (6)**: Journal-based `readingContent` array — paperTitle/authors/journal/year/doi/excerpt/writingFocus/vocabulary/discussionQuestions
+- **Conversations (8)**: topic-based with `formatConversationContent()` -- outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation
+- **Readings (6)**: Journal-based `readingContent` array -- paperTitle/authors/journal/year/doi/excerpt/writingFocus/vocabulary/discussionQuestions
 - Vocabulary and passage come from the **same** reading item via `getDailyReadingItem()`
 - Formatters: `formatReadingContent()` → passage DB, `formatVocabularyFromReading()` → vocabulary DB
 

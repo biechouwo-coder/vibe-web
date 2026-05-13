@@ -36,7 +36,7 @@ export default async function Home() {
 
       {/* First row: focus card + summary (desktop 2-col) */}
       <div className="grid gap-4 sm:grid-cols-5">
-        {/* Left — Today's Focus */}
+        {/* Left: Today's Focus */}
         <div className="sm:col-span-3 rounded-2xl border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
           <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Today&rsquo;s Focus</p>
           <h2 className="mt-2 font-serif text-lg font-semibold leading-snug text-stone-900 dark:text-stone-100">
@@ -58,7 +58,7 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Right — Summary card (stone-900 background) */}
+        {/* Right: Summary card (stone-900 background) */}
         <div className="sm:col-span-2 rounded-2xl border border-stone-800 bg-stone-900 p-5 text-stone-100 dark:border-stone-700 dark:bg-stone-800/60">
           <div className="flex items-baseline justify-between">
             <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">Tasks</p>

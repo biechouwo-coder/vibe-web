@@ -43,6 +43,14 @@ body {
   background: #1c1917;
 }
 
+html,
+body {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 html {
   scroll-behavior: smooth;
 }
