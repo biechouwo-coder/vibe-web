@@ -46,7 +46,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="flex h-full min-h-0 flex-col sm:flex-row sm:p-4 md:p-6">
             <Navbar />
-            <main className="min-h-0 flex-1 overflow-hidden rounded-none sm:rounded-[28px] border border-white/60 bg-stone-50 shadow-sm dark:border-stone-800/60 dark:bg-stone-950">
+            <main className="min-h-0 flex-1 overflow-hidden rounded-none sm:rounded-[28px] border shadow-sm" style={{ borderColor: 'var(--border-soft)', backgroundColor: 'var(--workspace-bg)' }}>
               <div data-scroll-root className="h-full overflow-y-auto overscroll-contain">
                 <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10 lg:px-10">
                   {children}

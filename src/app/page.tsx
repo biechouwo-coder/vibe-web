@@ -19,7 +19,9 @@ function formatDate(): string {
 }
 
 const navBtnClass =
-  'inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
+  'inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors hover:border-[var(--text-muted)] hover:bg-[var(--task-hover)]'
+  + ' '
+  + 'border-[var(--border-card)] bg-[var(--card-bg)] text-[var(--text-muted)]'
 
 export default async function Home() {
   // Order matters: content first (ensures today's learning tasks exist),
@@ -39,12 +41,12 @@ export default async function Home() {
       {/* First row: focus card + summary (desktop 2-col) */}
       <div className="grid gap-4 sm:grid-cols-5">
         {/* Left: Today's Focus */}
-        <div className="sm:col-span-3 rounded-2xl border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
-          <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Today&rsquo;s Focus</p>
-          <h2 className="mt-2 font-serif text-lg font-semibold leading-snug text-stone-900 dark:text-stone-100">
+        <div className="sm:col-span-3 rounded-2xl border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
+          <p className="text-xs font-medium uppercase tracking-wider text-[var(--text-soft)]">Today&rsquo;s Focus</p>
+          <h2 className="mt-2 font-serif text-lg font-semibold leading-snug text-[var(--text-main)]">
             {content.passage.title}
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-stone-500">
+          <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
             Journal excerpt for academic writing practice. Read the passage, study the vocabulary, and practise the conversations.
           </p>
           <div className="mt-4">
@@ -60,27 +62,27 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Right: Tasks summary (warm paper-dark card) */}
-        <div className="sm:col-span-2 rounded-2xl border p-5 text-[var(--task-warm-text)]" style={{ backgroundColor: 'var(--task-warm-dark)', borderColor: 'var(--task-warm-border)' }}>
+        {/* Right: Tasks summary */}
+        <div className="sm:col-span-2 rounded-2xl border p-5" style={{ backgroundColor: 'var(--task-dark)', borderColor: 'var(--task-dark-border)', color: 'var(--task-dark-text)' }}>
           <div className="flex items-baseline justify-between">
-            <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--task-warm-text)]/50">Tasks</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider opacity-50">Tasks</p>
             <p className="font-semibold tabular-nums">
-              {stats.completedTasks}<span className="text-sm font-normal text-[var(--task-warm-text)]/50">/{stats.totalTasks}</span>
+              {stats.completedTasks}<span className="text-sm font-normal opacity-50">/{stats.totalTasks}</span>
             </p>
           </div>
           <div className="mt-2">
             <ProgressBar value={stats.completionRate} />
           </div>
 
-          <div className="mt-4 flex items-center gap-3 border-t pt-3" style={{ borderColor: 'var(--task-warm-border)' }}>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--task-warm-text)]/50">Streak</p>
+          <div className="mt-4 flex items-center gap-3 border-t pt-3" style={{ borderColor: 'var(--task-dark-border)' }}>
+            <p className="text-[10px] font-medium uppercase tracking-wider opacity-50">Streak</p>
             <StreakBadge current={stats.streak.currentStreak} />
           </div>
 
           <Link
             href="/plans"
             className="mt-4 flex items-center justify-center rounded-lg border py-2 text-xs font-medium transition-colors hover:brightness-125"
-            style={{ borderColor: 'var(--task-warm-border)', color: 'var(--task-warm-text)', backgroundColor: 'var(--task-warm-dark-hover)' }}
+            style={{ borderColor: 'var(--task-dark-border)', color: 'var(--task-dark-text)', backgroundColor: 'var(--task-dark-hover)' }}
           >
             Open task planner
           </Link>
@@ -98,7 +100,7 @@ export default async function Home() {
             </svg>
           </Link>
         </div>
-        <div className="rounded-lg border border-stone-200/80 p-4" style={{ backgroundColor: 'var(--task-warm-surface)' }}>
+        <div className="rounded-lg border p-4" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--task-surface)' }}>
           <HomeTaskList tasks={tasks} />
         </div>
       </section>

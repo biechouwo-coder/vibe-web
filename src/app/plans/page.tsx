@@ -30,7 +30,7 @@ export default async function PlansPage() {
         <StreakBadge current={streak.currentStreak} />
       </section>
 
-      <section className="rounded-2xl border border-stone-200/80 p-5" style={{ backgroundColor: 'var(--task-warm-surface)' }}>
+      <section className="rounded-2xl border border-stone-200/80 p-5" style={{ backgroundColor: 'var(--task-surface)' }}>
         <div className="mb-4 flex items-center justify-between">
           <p className="text-sm font-medium text-stone-600 dark:text-stone-400">
             {completedTasks}/{tasks.length} tasks completed

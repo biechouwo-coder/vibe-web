@@ -9,13 +9,14 @@ interface StreakBadgeProps {
 export default function StreakBadge({ current }: StreakBadgeProps) {
   return (
     <motion.div
-      className="inline-flex items-baseline gap-1.5 rounded-md border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-600 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-400"
+      className="inline-flex items-baseline gap-1.5 rounded-md border px-3 py-1.5 text-sm"
+      style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2 }}
     >
-      <span className="text-xs font-medium uppercase tracking-widest text-stone-400">Streak</span>
-      <span className="font-semibold tabular-nums text-stone-900 dark:text-stone-100">{current}</span>
+      <span className="text-xs font-medium uppercase tracking-widest" style={{ color: 'var(--text-soft)' }}>Streak</span>
+      <span className="font-semibold tabular-nums" style={{ color: 'var(--text-main)' }}>{current}</span>
       <span className="text-xs">day{current !== 1 ? 's' : ''}</span>
     </motion.div>
   )

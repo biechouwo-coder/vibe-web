@@ -51,9 +51,9 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
     <>
       <Confetti active={showConfetti} />
       <div className="mb-2 flex items-center gap-2">
-        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--task-warm-track)' }}>
+        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--task-track)' }}>
           <motion.div
-            className="h-full rounded-full bg-[var(--academic-navy)] dark:bg-[var(--academic-navy)]"
+            className="h-full rounded-full" style={{ backgroundColor: 'var(--accent)' }}
             initial={false}
             animate={{ width: `${tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0}%` }}
             transition={{ duration: 0.3 }}
@@ -84,16 +84,16 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
           : ''
       }`}
       style={{
-        backgroundColor: task.completed ? 'var(--task-warm-hover)' : undefined,
+        backgroundColor: task.completed ? 'var(--task-hover)' : undefined,
       }}
-      onMouseEnter={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = 'var(--task-warm-hover)'; }}
+      onMouseEnter={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = 'var(--task-hover)'; }}
       onMouseLeave={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = ''; }}
     >
       <button
         onClick={() => onToggle(task.id)}
         className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
           task.completed
-            ? 'border-[var(--academic-navy)] bg-[var(--academic-navy)] dark:border-[var(--academic-navy)] dark:bg-[var(--academic-navy)]'
+            ? 'border-[var(--academic-navy)] bg-[var(--academic-navy)] dark:border-[var(--accent)] dark:bg-[var(--accent)]'
             : 'border-stone-300 hover:border-stone-500 dark:border-stone-600 dark:hover:border-stone-400'
         }`}
       >
