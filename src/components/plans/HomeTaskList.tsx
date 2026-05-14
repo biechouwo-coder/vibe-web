@@ -37,8 +37,8 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
   if (tasks.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2 py-6 text-center">
-        <p className="text-sm text-stone-400">No tasks for today</p>
-        <Link href="/plans" className="text-xs font-medium text-stone-500 transition-colors hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-200">
+        <p className="text-sm text-[var(--text-soft)]">No tasks for today</p>
+        <Link href="/plans" className="text-xs font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--text-main)] dark:text-stone-400 dark:hover:text-stone-200">
           Add one
         </Link>
       </div>
@@ -59,7 +59,7 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
             transition={{ duration: 0.3 }}
           />
         </div>
-        <span className="text-xs text-stone-400 shrink-0 tabular-nums">{completedCount}/{tasks.length}</span>
+        <span className="text-xs text-[var(--text-soft)] shrink-0 tabular-nums">{completedCount}/{tasks.length}</span>
       </div>
       <div className="space-y-0.5">
         <AnimatePresence>
@@ -94,7 +94,7 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
         className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
           task.completed
             ? 'border-[var(--academic-navy)] bg-[var(--academic-navy)] dark:border-[var(--accent)] dark:bg-[var(--accent)]'
-            : 'border-stone-300 hover:border-stone-500 dark:border-stone-600 dark:hover:border-stone-400'
+            : 'border-[var(--text-soft)] hover:border-[var(--text-muted)] dark:border-stone-600 dark:hover:border-stone-400'
         }`}
       >
         {task.completed && (
@@ -103,7 +103,7 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
           </motion.svg>
         )}
       </button>
-      <p className={`flex-1 truncate text-sm ${task.completed ? 'text-stone-400 line-through dark:text-stone-500' : 'text-stone-700 dark:text-stone-300'}`}>
+      <p className={`flex-1 truncate text-sm ${task.completed ? 'text-[var(--text-soft)] line-through dark:text-stone-500' : 'text-[var(--text-main)] dark:text-stone-300'}`}>
         {task.title}
       </p>
     </motion.div>

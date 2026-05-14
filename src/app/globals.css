@@ -3,18 +3,18 @@
 
 /* ── Palette ── */
 :root {
-  --palette-paper: #e7e6e1;
-  --palette-cream: #f7f6e7;
-  --palette-muted: #c1c0b9;
+  --palette-paper: #FAF9F4;
+  --palette-cream: #F3E6EB;
+  --palette-muted: #e8e3df;
   --palette-blue:  #537791;
 
   /* semantic tokens */
-  --app-bg:       var(--palette-paper);
-  --workspace-bg: var(--palette-cream);
-  --surface-bg:   var(--palette-cream);
-  --card-bg:      #ffffff;
-  --border-soft:  var(--palette-muted);
-  --border-card:  #d4d3cd;
+  --app-bg:       #FAF9F4;
+  --workspace-bg: #FFFFFF;
+  --surface-bg:   #FFFFFF;
+  --card-bg:      #FFFFFF;
+  --border-soft:  #e8e5e0;
+  --border-card:  #e8e5e0;
   --accent:       var(--palette-blue);
   --accent-hover: #456a82;
 
@@ -25,22 +25,22 @@
   /* text */
   --text-main:  #263238;
   --text-muted: #66727a;
-  --text-soft:  #8a8a85;
+  --text-soft:  #8a8580;
 
-  /* Tasks warm area */
-  --task-surface:   var(--palette-cream);
-  --task-hover:     #eeede0;
-  --task-track:     var(--palette-muted);
-  --task-dark:      #3f3a33;
-  --task-dark-hover:#555048;
-  --task-dark-border:#5c5750;
-  --task-dark-text:  var(--palette-cream);
+  /* Tasks area */
+  --task-surface:   #F3E6EB;
+  --task-hover:     #EDDCE2;
+  --task-track:     #EDDCE2;
+  --task-dark:      #C88E4E;
+  --task-dark-hover:#b37d3f;
+  --task-dark-border:#d4995a;
+  --task-dark-text:  #FFFFFF;
 
   /* scrollbar */
-  --scrollbar-thumb: var(--palette-muted);
+  --scrollbar-thumb: #c1c0b9;
   --scrollbar-thumb-hover: #a8a6a0;
 
-  --sidebar-bg: #dedcd5;
+  --sidebar-bg: #FAF9F4;
 
   color-scheme: light;
 }

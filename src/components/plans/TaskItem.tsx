@@ -23,11 +23,12 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       exit={{ opacity: 0, height: 0 }}
       className={`group flex items-start gap-3 rounded-lg border p-3 transition-colors ${
         task.completed
-          ? 'border-stone-200/60'
-          : 'border-stone-200/80 hover:border-stone-300'
+          ? ''
+          : 'hover:border-[var(--text-muted)]'
       }`}
       style={{
-        backgroundColor: task.completed ? 'var(--task-surface)' : 'var(--surface)',
+        borderColor: 'var(--border-card)',
+        backgroundColor: task.completed ? 'var(--task-surface)' : 'var(--card-bg)',
       }}
     >
       <button
@@ -35,7 +36,7 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
         className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
           task.completed
             ? 'border-[var(--academic-navy)] bg-[var(--academic-navy)] dark:border-[var(--accent)] dark:bg-[var(--accent)]'
-            : 'border-stone-300 hover:border-stone-500 dark:border-stone-600 dark:hover:border-stone-400'
+            : 'border-[var(--text-soft)] hover:border-[var(--text-muted)] dark:border-stone-600 dark:hover:border-stone-400'
         }`}
       >
         {task.completed && (
@@ -46,18 +47,18 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       </button>
 
       <div className="flex-1 min-w-0">
-        <p className={`text-sm ${task.completed ? 'text-stone-400 line-through dark:text-stone-500' : 'text-stone-800 dark:text-stone-200'}`}>
+        <p className={`text-sm ${task.completed ? 'text-[var(--text-soft)] line-through dark:text-stone-500' : 'text-[var(--text-main)] dark:text-stone-200'}`}>
           {task.title}
         </p>
         {task.description && (
-          <p className={`mt-0.5 text-xs ${task.completed ? 'text-stone-300 dark:text-stone-600' : 'text-stone-500 dark:text-stone-400'}`}>
+          <p className={`mt-0.5 text-xs ${task.completed ? 'text-[var(--text-soft)]/60 dark:text-stone-600' : 'text-[var(--text-muted)] dark:text-stone-400'}`}>
             {task.description}
           </p>
         )}
       </div>
 
       <form action={deleteTask.bind(null, task.id)}>
-        <button type="submit" className="rounded p-1.5 text-stone-400 transition-colors hover:text-[var(--academic-red)] hover:bg-[var(--task-hover)] sm:opacity-0 sm:group-hover:opacity-100">
+        <button type="submit" className="rounded p-1.5 text-[var(--text-soft)] transition-colors hover:text-[var(--academic-red)] hover:bg-[var(--task-hover)] sm:opacity-0 sm:group-hover:opacity-100">
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>

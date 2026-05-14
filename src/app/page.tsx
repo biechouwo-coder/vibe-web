@@ -34,7 +34,7 @@ export default async function Home() {
     <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <section>
-        <p className="text-xs font-medium uppercase tracking-widest text-stone-400">{formatDate()}</p>
+        <p className="text-xs font-medium uppercase tracking-widest text-[var(--text-soft)]">{formatDate()}</p>
         <h1 className="mt-2 font-serif text-2xl font-semibold tracking-tight sm:text-3xl">Study Desk</h1>
       </section>
 
@@ -52,7 +52,7 @@ export default async function Home() {
           <div className="mt-4">
             <Link
               href={`/learn/${content.passage.id}`}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200"
+              className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
             >
               Open reading
               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
