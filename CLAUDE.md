@@ -18,19 +18,14 @@ npx prisma studio    # DB GUI
 - **Deploy:** Railway (auto-deploy from GitHub `master`)
 
 ## UI — Academic Research Desk
-- **Layout:** Desktop = left sidebar + rounded-[28px] workspace; Mobile = top nav + scrollable main
-- **Background:** `stone-200` / `stone-950` (outer, fixed), `stone-50` / `stone-950` (workspace shell)
-- **Cards:** `rounded-2xl`, `border border-stone-200`, `shadow-sm shadow-stone-200/40`
-- **Color tokens:** `--academic-navy: #013E75` (primary accent), `--academic-red: #A42423` (destructive)
-- **Target (not fully achieved):** no emerald/green, no emoji, no gradients in UI
-- **Target (not fully achieved):** `stone-*` unified palette (known exception: `plans/history/page.tsx` uses `zinc-400`)
-- **Known emoji usage:** `src/lib/notion.ts` (Notion page headers) and `src/lib/content.ts` (task titles) use emoji as content data, not UI decoration
-
-## Color Usage
-- Navy (`--academic-navy`): progress bars, primary buttons, completed checkboxes, navbar underline
-- Deep red (`--academic-red`): delete/destructive actions only
-- Stone: all labels, secondary text, borders, backgrounds
-- Dark mode: navy → `#7fb3df`, red → `#e08a88`
+- **Layout:** Desktop = left sidebar (tinted bg) + workspace (left square, right rounded-[28px], no outer padding); Mobile = top nav + scrollable main
+- **Palette (globals.css):** `--palette-paper: #e7e6e1`, `--palette-cream: #f7f6e7`, `--palette-muted: #c1c0b9`, `--palette-blue: #537791`
+- **Background:** `var(--app-bg)` (paper) outer, `var(--workspace-bg)` (cream) workspace, `var(--sidebar-bg)` sidebar
+- **Cards:** `rounded-2xl`, border `var(--border-card)`, bg `var(--card-bg)`
+- **Color tokens:** `--accent: #537791` (primary), `--academic-red: #a45252` (destructive), `--text-main: #263238`, `--text-muted: #66727a`
+- **No emerald/green** in UI, no gradients
+- **Emoji only in data:** `src/lib/notion.ts` (Notion page headers) and `src/lib/content.ts` (task titles)
+- **Known palette exception:** `plans/history/page.tsx` uses `zinc-400`
 
 ## Key Conventions
 - Interactive components → `'use client'`, mutations → Server Actions (`src/actions/`)
