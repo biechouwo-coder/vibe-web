@@ -6,11 +6,11 @@
   --c-warm:   #FAF9F4;  /* body background */
   --c-white:  #FFFFFF;  /* workspace, cards, text-on-dark */
   --c-amber:  #C88E4E;  /* accent, buttons, Tasks card */
-  --c-soft:   #F3E6EB;  /* sidebar, panels, hover, borders, track */
+  --c-soft:   #F1F0EB;  /* panels, hover, borders, track */
 
   /* semantic — every token maps to one of the 4 above */
   --app-bg:          var(--c-warm);
-  --sidebar-bg:      var(--c-soft);
+  --sidebar-bg:      var(--c-warm);
   --main-bg:         var(--c-white);
   --workspace-bg:    var(--c-white);
   --card-bg:         var(--c-white);

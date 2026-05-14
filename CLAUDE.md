@@ -19,7 +19,7 @@ npx prisma studio    # DB GUI
 
 ## UI — Academic Research Desk
 - **Layout:** Desktop = left sidebar (tinted bg) + workspace (left square, right rounded-[28px], no outer padding); Mobile = top nav + scrollable main
-- **Palette:** 4 strict colors — `#FAF9F4` (body), `#FFFFFF` (workspace/cards), `#C88E4E` (accent/buttons/Tasks), `#F3E6EB` (sidebar/borders/hover/panels)
+- **Palette:** 4 strict colors — `#FAF9F4` (body + sidebar), `#FFFFFF` (workspace/cards), `#C88E4E` (accent/buttons/Tasks), `#F1F0EB` (borders/hover/panels)
 - **Background:** `var(--app-bg)` = `#FAF9F4` outer, `var(--workspace-bg)` = `#FFFFFF` workspace, `var(--sidebar-bg)` = `#F3E6EB` sidebar
 - **Cards:** `rounded-xl`, border `var(--border-card)`, bg `var(--card-bg)`, **no shadows**
 - **Accent:** `#C88E4E` (warm amber) for all primary CTAs, active nav, progress bars, checkboxes
