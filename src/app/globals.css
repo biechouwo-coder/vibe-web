@@ -3,10 +3,10 @@
 
 /* ── Palette (only 4 colors) ── */
 :root {
-  --c-warm:   #e7e6e1;  /* body background, sidebar */
+  --c-warm:   #FAF9F4;  /* body background, sidebar */
   --c-white:  #FFFFFF;  /* workspace, cards, text-on-dark */
-  --c-amber:  #537791;  /* accent, buttons, Tasks card */
-  --c-soft:   #c1c0b9;  /* panels, hover, borders, track */
+  --c-amber:  #364f6b;  /* accent, buttons, Tasks card */
+  --c-soft:   #F1F0EB;  /* panels, hover, borders, track */
 
   /* semantic — every token maps to one of the 4 above */
   --app-bg:          var(--c-warm);
