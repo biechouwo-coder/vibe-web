@@ -1,44 +1,41 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ── Palette ── */
+/* ── Palette (only 4 colors) ── */
 :root {
-  --sidebar-bg:    #F3E6EB;
-  --main-bg:       #FFFFFF;
-  --task-bg:       #C88E4E;
-  --soft-panel-bg: #F3E6EB;
+  --c-warm:   #FAF9F4;  /* body background */
+  --c-white:  #FFFFFF;  /* workspace, cards, text-on-dark */
+  --c-amber:  #C88E4E;  /* accent, buttons, Tasks card */
+  --c-soft:   #F3E6EB;  /* sidebar, panels, hover, borders, track */
 
-  /* derived tokens */
-  --app-bg:       #FAF9F4;
-  --workspace-bg: var(--main-bg);
-  --surface-bg:   var(--main-bg);
-  --card-bg:      #FFFFFF;
-  --border-soft:  #e8e5e0;
-  --border-card:  #e8e5e0;
-  --accent:       #537791;
-  --accent-hover: #456a82;
+  /* semantic — every token maps to one of the 4 above */
+  --app-bg:          var(--c-warm);
+  --sidebar-bg:      var(--c-soft);
+  --main-bg:         var(--c-white);
+  --workspace-bg:    var(--c-white);
+  --card-bg:         var(--c-white);
+  --border-soft:     var(--c-soft);
+  --border-card:     var(--c-soft);
+  --accent:          var(--c-amber);
+  --accent-hover:    var(--c-amber);
+  --task-bg:         var(--c-amber);
+  --soft-panel-bg:   var(--c-soft);
+  --task-surface:    var(--c-soft);
+  --task-hover:      var(--c-soft);
+  --task-track:      var(--c-soft);
+  --task-dark:       var(--c-amber);
+  --task-dark-hover: var(--c-amber);
+  --task-dark-border:var(--c-amber);
+  --task-dark-text:  var(--c-white);
+  --scrollbar-thumb: var(--c-soft);
+  --scrollbar-thumb-hover: var(--c-soft);
+  --academic-navy:   var(--c-amber);
+  --academic-red:    var(--c-amber);
 
-  /* academic tokens (backward compat) */
-  --academic-navy: var(--accent);
-  --academic-red:  #a45252;
-
-  /* text */
-  --text-main:  #263238;
-  --text-muted: #66727a;
-  --text-soft:  #8a8580;
-
-  /* Tasks derived */
-  --task-surface:   var(--soft-panel-bg);
-  --task-hover:     #EDDCE2;
-  --task-track:     #EDDCE2;
-  --task-dark:      var(--task-bg);
-  --task-dark-hover:#b37d3f;
-  --task-dark-border:#d4995a;
-  --task-dark-text:  #FFFFFF;
-
-  /* scrollbar */
-  --scrollbar-thumb: #c1c0b9;
-  --scrollbar-thumb-hover: #a8a6a0;
+  /* text (readability) */
+  --text-main:  #1b1b1b;
+  --text-muted: #666666;
+  --text-soft:  #999999;
 
   color-scheme: light;
 }
@@ -68,10 +65,9 @@
   --task-dark-border:#4a4740;
   --task-dark-text:  #e0ded6;
 
+  --sidebar-bg: #181713;
   --scrollbar-thumb: #3d3b36;
   --scrollbar-thumb-hover: #4a4742;
-
-  --sidebar-bg: #181713;
 
   color-scheme: dark;
 }
