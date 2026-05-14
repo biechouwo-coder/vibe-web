@@ -14,8 +14,8 @@
   --main-bg:         var(--c-white);
   --workspace-bg:    var(--c-white);
   --card-bg:         var(--c-white);
-  --border-soft:     var(--c-soft);
-  --border-card:     var(--c-soft);
+  --border-soft:     #e0ddd5;
+  --border-card:     #d6d3cb;
   --accent:          var(--c-amber);
   --accent-hover:    var(--c-amber);
   --task-bg:         var(--c-amber);
