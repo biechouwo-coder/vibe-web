@@ -19,7 +19,7 @@ export default function ThemeSelector() {
           <button
             key={opt.value}
             onClick={() => setTheme(opt.value)}
-            className={`rounded-md border px-3.5 py-2.5 text-left text-sm transition-colors ${
+            className={`rounded-[var(--radius-small)] border px-3.5 py-2.5 text-left text-sm transition-colors ${
               selected
                 ? 'border-stone-900 bg-stone-100 font-medium text-stone-900 dark:border-stone-200 dark:bg-stone-800 dark:text-stone-200'
                 : 'border-stone-200 bg-white text-stone-500 hover:border-stone-300 hover:bg-stone-50 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800'

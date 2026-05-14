@@ -54,7 +54,7 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
   })
 
   return (
-    <div className="rounded-2xl border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+    <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
       <div className="flex gap-1">
         <div className="flex flex-col gap-1 pt-5">
           {monthLabels.map((m) => (
@@ -76,7 +76,7 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: wi * 0.02 }}
-                  className={`h-3 w-3 rounded-sm ${getIntensity(cell.rate)}`}
+                  className={`h-3 w-3 rounded-[var(--radius-small)] ${getIntensity(cell.rate)}`}
                   title={`${cell.date}: ${cell.rate}%`}
                 />
               ))}
@@ -87,11 +87,11 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
 
       <div className="mt-3 flex items-center gap-2 text-xs text-stone-400">
         <span>Less</span>
-        <div className="h-3 w-3 rounded-sm bg-stone-100 dark:bg-stone-900" />
-        <div className="h-3 w-3 rounded-sm bg-stone-200 dark:bg-stone-800" />
-        <div className="h-3 w-3 rounded-sm bg-stone-400 dark:bg-stone-600" />
-        <div className="h-3 w-3 rounded-sm bg-stone-500 dark:bg-stone-400" />
-        <div className="h-3 w-3 rounded-sm bg-stone-700 dark:bg-stone-200" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-100 dark:bg-stone-900" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-200 dark:bg-stone-800" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-400 dark:bg-stone-600" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-500 dark:bg-stone-400" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-700 dark:bg-stone-200" />
         <span>More</span>
       </div>
     </div>

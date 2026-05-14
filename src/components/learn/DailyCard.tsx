@@ -14,7 +14,7 @@ interface DailyCardProps {
 }
 
 const NAV_LINK_CLASS =
-  'inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-medium transition-colors hover:border-[var(--text-muted)] hover:bg-[var(--task-hover)]'
+  'inline-flex items-center gap-1.5 rounded-[var(--radius-small)] border px-2.5 py-1.5 text-xs font-medium transition-colors hover:border-[var(--text-muted)] hover:bg-[var(--task-hover)]'
   + ' '
   + 'border-[var(--border-card)] bg-[var(--card-bg)] text-[var(--text-muted)]'
 
@@ -99,7 +99,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-xl border p-4 transition-colors hover:border-[var(--accent)]"
+      className="rounded-[var(--radius-panel)] border p-4 transition-colors hover:border-[var(--accent)]"
       style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
       <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">Speaking Practice</span>
       <h3 className="mt-1.5 font-medium text-[var(--text-main)]">{title}</h3>
@@ -113,7 +113,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Practice</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-[var(--task-track)] text-[var(--text-soft)]' : 'bg-[var(--accent)] text-white hover:brightness-110'}`}>
+            className={`ml-auto rounded-[var(--radius-small)] px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-[var(--task-track)] text-[var(--text-soft)]' : 'bg-[var(--accent)] text-white hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
@@ -130,7 +130,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-xl border p-4 transition-colors hover:border-[var(--accent)]"
+      className="rounded-[var(--radius-panel)] border p-4 transition-colors hover:border-[var(--accent)]"
       style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
       <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">Vocabulary</span>
       <h3 className="mt-1.5 font-medium text-[var(--text-main)]">{title}</h3>
@@ -144,7 +144,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Review terms</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-[var(--task-track)] text-[var(--text-soft)]' : 'bg-[var(--accent)] text-white hover:brightness-110'}`}>
+            className={`ml-auto rounded-[var(--radius-small)] px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-[var(--task-track)] text-[var(--text-soft)]' : 'bg-[var(--accent)] text-white hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
@@ -162,7 +162,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-xl border p-4 transition-colors hover:border-[var(--accent)]"
+      className="rounded-[var(--radius-panel)] border p-4 transition-colors hover:border-[var(--accent)]"
       style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
       <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">Reading</span>
       <h3 className="mt-1.5 font-medium text-[var(--text-main)]">{title}</h3>
@@ -177,7 +177,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read excerpt</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-[var(--task-track)] text-[var(--text-soft)]' : 'bg-[var(--accent)] text-white hover:brightness-110'}`}>
+            className={`ml-auto rounded-[var(--radius-small)] px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-[var(--task-track)] text-[var(--text-soft)]' : 'bg-[var(--accent)] text-white hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}

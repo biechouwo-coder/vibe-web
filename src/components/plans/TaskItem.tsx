@@ -21,7 +21,7 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, height: 0 }}
-      className={`group flex items-start gap-3 rounded-lg border p-3 transition-colors ${
+      className={`group flex items-start gap-3 rounded-[var(--radius-control)] border p-3 transition-colors ${
         task.completed
           ? ''
           : 'hover:border-[var(--text-muted)]'

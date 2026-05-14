@@ -30,7 +30,7 @@ export default async function PlansPage() {
         <StreakBadge current={streak.currentStreak} />
       </section>
 
-      <section className="rounded-xl border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--task-surface)' }}>
+      <section className="rounded-[var(--radius-panel)] border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--task-surface)' }}>
         <div className="mb-4 flex items-center justify-between">
           <p className="text-sm font-medium text-[var(--text-muted)] dark:text-stone-400">
             {completedTasks}/{tasks.length} tasks completed
@@ -51,7 +51,7 @@ export default async function PlansPage() {
       <section className="text-center">
         <a
           href="/plans/history"
-          className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 shadow-sm text-xs font-medium transition-all hover:shadow-sm dark:shadow-stone-950/30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
+          className="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border px-3 py-1.5 shadow-sm text-xs font-medium transition-all hover:shadow-sm dark:shadow-stone-950/30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
         >
           View history & stats
           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

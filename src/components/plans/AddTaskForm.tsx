@@ -13,7 +13,7 @@ export default function AddTaskForm() {
 
   return (
     <form ref={formRef} action={handleAction} className="flex gap-2">
-      <div className="flex flex-1 gap-2 rounded-2xl border border-stone-200 bg-white p-1 dark:border-stone-800 dark:bg-stone-900">
+      <div className="flex flex-1 gap-2 rounded-[var(--radius-panel)] border border-stone-200 bg-white p-1 dark:border-stone-800 dark:bg-stone-900">
         <input
           name="title"
           type="text"
@@ -30,7 +30,7 @@ export default function AddTaskForm() {
       </div>
       <button
         type="submit"
-        className="rounded-2xl bg-[var(--academic-navy)] px-4 py-2 text-sm font-medium text-white transition-colors hover:brightness-110 active:brightness-90"
+        className="rounded-[var(--radius-panel)] bg-[var(--academic-navy)] px-4 py-2 text-sm font-medium text-white transition-colors hover:brightness-110 active:brightness-90"
       >
         Add
       </button>

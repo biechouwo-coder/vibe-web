@@ -19,7 +19,7 @@ function formatDate(): string {
 }
 
 const navBtnClass =
-  'inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors hover:border-[var(--text-muted)] hover:bg-[var(--task-hover)]'
+  'inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border px-3 py-1.5 text-xs font-medium transition-colors hover:border-[var(--text-muted)] hover:bg-[var(--task-hover)]'
   + ' '
   + 'border-[var(--border-card)] bg-[var(--card-bg)] text-[var(--text-muted)]'
 
@@ -41,7 +41,7 @@ export default async function Home() {
       {/* First row: focus card + summary (desktop 2-col) */}
       <div className="grid gap-4 sm:grid-cols-5">
         {/* Left: Today's Focus */}
-        <div className="sm:col-span-3 rounded-xl border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
+        <div className="sm:col-span-3 rounded-[var(--radius-panel)] border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
           <p className="text-xs font-medium uppercase tracking-wider text-[var(--text-soft)]">Today&rsquo;s Focus</p>
           <h2 className="mt-2 font-serif text-lg font-semibold leading-snug text-[var(--text-main)]">
             {content.passage.title}
@@ -52,7 +52,7 @@ export default async function Home() {
           <div className="mt-4">
             <Link
               href={`/learn/${content.passage.id}`}
-              className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border px-3 py-1.5 text-xs font-medium transition-colors dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
             >
               Open reading
               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -63,7 +63,7 @@ export default async function Home() {
         </div>
 
         {/* Right: Tasks summary */}
-        <div className="sm:col-span-2 rounded-xl border p-5" style={{ backgroundColor: 'var(--task-dark)', borderColor: 'var(--task-dark-border)', color: 'var(--task-dark-text)' }}>
+        <div className="sm:col-span-2 rounded-[var(--radius-panel)] border p-5" style={{ backgroundColor: 'var(--task-dark)', borderColor: 'var(--task-dark-border)', color: 'var(--task-dark-text)' }}>
           <div className="flex items-baseline justify-between">
             <p className="text-[10px] font-medium uppercase tracking-wider opacity-50">Tasks</p>
             <p className="font-semibold tabular-nums">
@@ -81,7 +81,7 @@ export default async function Home() {
 
           <Link
             href="/plans"
-            className="mt-4 flex items-center justify-center rounded-lg border py-2 text-xs font-medium transition-colors hover:brightness-125"
+            className="mt-4 flex items-center justify-center rounded-[var(--radius-control)] border py-2 text-xs font-medium transition-colors hover:brightness-125"
             style={{ borderColor: 'var(--task-bg)', color: '#FFFFFF', backgroundColor: 'var(--task-bg)' }}
           >
             Open task planner
@@ -100,7 +100,7 @@ export default async function Home() {
             </svg>
           </Link>
         </div>
-        <div className="rounded-lg border p-4" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--task-surface)' }}>
+        <div className="rounded-[var(--radius-panel)] border p-4" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--task-surface)' }}>
           <HomeTaskList tasks={tasks} />
         </div>
       </section>

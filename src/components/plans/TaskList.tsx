@@ -44,7 +44,7 @@ export default function TaskList({ tasks }: TaskListProps) {
       </div>
 
       {completedTasks.length > 0 && completedTasks.length === tasks.length && (
-        <div className="mt-6 rounded-lg border border-stone-200 bg-stone-50 p-4 text-center dark:border-stone-800 dark:bg-stone-800/30">
+        <div className="mt-6 rounded-[var(--radius-panel)] border border-stone-200 bg-stone-50 p-4 text-center dark:border-stone-800 dark:bg-stone-800/30">
           <p className="text-sm font-medium text-stone-700 dark:text-stone-300">
             All tasks completed today.
           </p>

@@ -60,7 +60,7 @@ export default function VocabCards({ items }: VocabCardsProps) {
             animate="center"
             exit="exit"
             transition={{ opacity: { duration: 0.2 }, x: { duration: 0.28 } }}
-            className="rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900"
+            className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900"
           >
             <h2 className="font-serif text-xl font-semibold tracking-tight text-stone-900 dark:text-stone-100">
               {item.term}
@@ -94,7 +94,7 @@ export default function VocabCards({ items }: VocabCardsProps) {
         <button
           onClick={goPrev}
           disabled={current === 0}
-          className="inline-flex items-center gap-1 rounded-md border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:bg-stone-800"
+          className="inline-flex items-center gap-1 rounded-[var(--radius-small)] border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:bg-stone-800"
         >
           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -109,7 +109,7 @@ export default function VocabCards({ items }: VocabCardsProps) {
         <button
           onClick={goNext}
           disabled={current === items.length - 1}
-          className="inline-flex items-center gap-1 rounded-md border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:bg-stone-800"
+          className="inline-flex items-center gap-1 rounded-[var(--radius-small)] border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:bg-stone-800"
         >
           Next
           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

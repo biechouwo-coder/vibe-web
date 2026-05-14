@@ -37,6 +37,12 @@
   --text-muted: #666666;
   --text-soft:  #999999;
 
+  /* Apple-style radius tokens */
+  --radius-shell:   24px;
+  --radius-panel:   16px;
+  --radius-control: 10px;
+  --radius-small:   6px;
+
   color-scheme: light;
 }
 

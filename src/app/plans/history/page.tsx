@@ -49,19 +49,19 @@ export default async function HistoryPage() {
       </section>
 
       <section className="grid gap-4 sm:grid-cols-4">
-        <div className="rounded-2xl border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
           <p className="text-xs font-medium uppercase tracking-wider text-zinc-400">Active Days</p>
           <p className="mt-1 text-2xl font-bold">{dailyData.length}</p>
         </div>
-        <div className="rounded-2xl border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
           <p className="text-xs font-medium uppercase tracking-wider text-zinc-400">Tasks Done</p>
           <p className="mt-1 text-2xl font-bold">{totalCompleted}</p>
         </div>
-        <div className="rounded-2xl border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
           <p className="text-xs font-medium uppercase tracking-wider text-zinc-400">Avg Completion</p>
           <p className="mt-1 text-2xl font-bold">{avgCompletion}%</p>
         </div>
-        <div className="rounded-2xl border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
           <p className="text-xs font-medium uppercase tracking-wider text-zinc-400">Best Streak</p>
           <p className="mt-1 text-2xl font-bold">{streak.longestStreak}d</p>
         </div>

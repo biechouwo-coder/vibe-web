@@ -32,7 +32,7 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           name="token"
           type="password"
           placeholder={config?.hasToken ? '••••••••••••••••' : 'ntn_xxxxxxxxxxxx'}
-          className="mt-1 w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200"
+          className="mt-1 w-full rounded-[var(--radius-control)] border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200"
         />
         {config?.hasToken && (
           <p className="mt-1 text-xs text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">
@@ -62,7 +62,7 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           type="text"
           defaultValue={config?.dbEnglish ?? ''}
           placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-          className="mt-1 w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200"
+          className="mt-1 w-full rounded-[var(--radius-control)] border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200"
         />
       </div>
 
@@ -76,7 +76,7 @@ export default function SettingsForm({ config }: SettingsFormProps) {
           type="text"
           defaultValue={config?.dbPlans ?? ''}
           placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-          className="mt-1 w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200"
+          className="mt-1 w-full rounded-[var(--radius-control)] border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200"
         />
       </div>
 
@@ -92,7 +92,7 @@ export default function SettingsForm({ config }: SettingsFormProps) {
 
       <button
         type="submit"
-        className="rounded-2xl bg-[var(--academic-navy)] px-5 py-2 text-sm font-medium text-white transition-colors hover:brightness-110"
+        className="rounded-[var(--radius-panel)] bg-[var(--academic-navy)] px-5 py-2 text-sm font-medium text-white transition-colors hover:brightness-110"
       >
         Save Settings
       </button>

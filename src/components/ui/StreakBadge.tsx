@@ -9,7 +9,7 @@ interface StreakBadgeProps {
 export default function StreakBadge({ current }: StreakBadgeProps) {
   return (
     <motion.div
-      className="inline-flex items-baseline gap-1.5 rounded-md border px-3 py-1.5 text-sm"
+      className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-small)] border px-3 py-1.5 text-sm"
       style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
