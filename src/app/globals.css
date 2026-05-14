@@ -3,13 +3,13 @@
 
 /* ── Palette ── */
 :root {
-  --sidebar-bg:    #FAF9F4;
+  --sidebar-bg:    #F3E6EB;
   --main-bg:       #FFFFFF;
   --task-bg:       #C88E4E;
   --soft-panel-bg: #F3E6EB;
 
   /* derived tokens */
-  --app-bg:       var(--sidebar-bg);
+  --app-bg:       #FAF9F4;
   --workspace-bg: var(--main-bg);
   --surface-bg:   var(--main-bg);
   --card-bg:      #FFFFFF;

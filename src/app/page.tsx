@@ -41,7 +41,7 @@ export default async function Home() {
       {/* First row: focus card + summary (desktop 2-col) */}
       <div className="grid gap-4 sm:grid-cols-5">
         {/* Left: Today's Focus */}
-        <div className="sm:col-span-3 rounded-2xl border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
+        <div className="sm:col-span-3 rounded-xl border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
           <p className="text-xs font-medium uppercase tracking-wider text-[var(--text-soft)]">Today&rsquo;s Focus</p>
           <h2 className="mt-2 font-serif text-lg font-semibold leading-snug text-[var(--text-main)]">
             {content.passage.title}
@@ -63,7 +63,7 @@ export default async function Home() {
         </div>
 
         {/* Right: Tasks summary */}
-        <div className="sm:col-span-2 rounded-2xl border p-5" style={{ backgroundColor: 'var(--task-dark)', borderColor: 'var(--task-dark-border)', color: 'var(--task-dark-text)' }}>
+        <div className="sm:col-span-2 rounded-xl border p-5" style={{ backgroundColor: 'var(--task-dark)', borderColor: 'var(--task-dark-border)', color: 'var(--task-dark-text)' }}>
           <div className="flex items-baseline justify-between">
             <p className="text-[10px] font-medium uppercase tracking-wider opacity-50">Tasks</p>
             <p className="font-semibold tabular-nums">
@@ -82,7 +82,7 @@ export default async function Home() {
           <Link
             href="/plans"
             className="mt-4 flex items-center justify-center rounded-lg border py-2 text-xs font-medium transition-colors hover:brightness-125"
-            style={{ borderColor: 'var(--task-dark-border)', color: 'var(--task-dark-text)', backgroundColor: 'var(--task-dark-hover)' }}
+            style={{ borderColor: 'var(--task-bg)', color: '#FFFFFF', backgroundColor: 'var(--task-bg)' }}
           >
             Open task planner
           </Link>

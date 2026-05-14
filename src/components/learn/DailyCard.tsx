@@ -99,7 +99,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+      className="rounded-xl border p-4 transition-colors hover:border-[var(--accent)]"
       style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
       <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">Speaking Practice</span>
       <h3 className="mt-1.5 font-medium text-[var(--text-main)]">{title}</h3>
@@ -130,7 +130,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+      className="rounded-xl border p-4 transition-colors hover:border-[var(--accent)]"
       style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
       <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">Vocabulary</span>
       <h3 className="mt-1.5 font-medium text-[var(--text-main)]">{title}</h3>
@@ -162,7 +162,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border p-4 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+      className="rounded-xl border p-4 transition-colors hover:border-[var(--accent)]"
       style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
       <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">Reading</span>
       <h3 className="mt-1.5 font-medium text-[var(--text-main)]">{title}</h3>
