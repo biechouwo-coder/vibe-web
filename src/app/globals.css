@@ -5,7 +5,7 @@
 :root {
   --c-warm:   #FAF9F4;  /* body background, sidebar */
   --c-white:  #FFFFFF;  /* workspace, cards, text-on-dark */
-  --c-amber:  #7C8B7A;  /* accent, buttons, Tasks card */
+  --c-amber:  #7B7486;  /* accent, buttons, Tasks card */
   --c-soft:   #F1F0EB;  /* panels, hover, borders, track */
 
   /* semantic — every token maps to one of the 4 above */
