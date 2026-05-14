@@ -41,7 +41,7 @@ export default function VocabCards({ items }: VocabCardsProps) {
         <span className="text-xs font-medium text-stone-500 tabular-nums">
           Term {current + 1} of {items.length}
         </span>
-        <div className="flex-1 h-1 rounded-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
+        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--main-bg)' }}>
           <motion.div
             className="h-full rounded-full bg-[var(--academic-navy)] dark:bg-[var(--academic-navy)]"
             animate={{ width: `${((current + 1) / items.length) * 100}%` }}
