@@ -3,23 +3,23 @@
 
 /* ── Palette ── */
 :root {
-  --palette-paper: #FAF9F4;
-  --palette-cream: #F3E6EB;
-  --palette-muted: #e8e3df;
-  --palette-blue:  #537791;
+  --sidebar-bg:    #FAF9F4;
+  --main-bg:       #FFFFFF;
+  --task-bg:       #C88E4E;
+  --soft-panel-bg: #F3E6EB;
 
-  /* semantic tokens */
-  --app-bg:       #FAF9F4;
-  --workspace-bg: #FFFFFF;
-  --surface-bg:   #FFFFFF;
+  /* derived tokens */
+  --app-bg:       var(--sidebar-bg);
+  --workspace-bg: var(--main-bg);
+  --surface-bg:   var(--main-bg);
   --card-bg:      #FFFFFF;
   --border-soft:  #e8e5e0;
   --border-card:  #e8e5e0;
-  --accent:       var(--palette-blue);
+  --accent:       #537791;
   --accent-hover: #456a82;
 
   /* academic tokens (backward compat) */
-  --academic-navy: var(--palette-blue);
+  --academic-navy: var(--accent);
   --academic-red:  #a45252;
 
   /* text */
@@ -27,11 +27,11 @@
   --text-muted: #66727a;
   --text-soft:  #8a8580;
 
-  /* Tasks area */
-  --task-surface:   #F3E6EB;
+  /* Tasks derived */
+  --task-surface:   var(--soft-panel-bg);
   --task-hover:     #EDDCE2;
   --task-track:     #EDDCE2;
-  --task-dark:      #C88E4E;
+  --task-dark:      var(--task-bg);
   --task-dark-hover:#b37d3f;
   --task-dark-border:#d4995a;
   --task-dark-text:  #FFFFFF;
@@ -39,8 +39,6 @@
   /* scrollbar */
   --scrollbar-thumb: #c1c0b9;
   --scrollbar-thumb-hover: #a8a6a0;
-
-  --sidebar-bg: #FAF9F4;
 
   color-scheme: light;
 }
