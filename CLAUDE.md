@@ -19,10 +19,10 @@ npx prisma studio    # DB GUI
 
 ## UI — Academic Research Desk
 - **Layout:** Desktop = left sidebar (tinted bg) + workspace (left square, right rounded-[28px], no outer padding); Mobile = top nav + scrollable main
-- **Palette (globals.css):** `--palette-paper: #e7e6e1`, `--palette-cream: #f7f6e7`, `--palette-muted: #c1c0b9`, `--palette-blue: #537791`
-- **Background:** `var(--app-bg)` (paper) outer, `var(--workspace-bg)` (cream) workspace, `var(--sidebar-bg)` sidebar
-- **Cards:** `rounded-2xl`, border `var(--border-card)`, bg `var(--card-bg)`
-- **Color tokens:** `--accent: #537791` (primary), `--academic-red: #a45252` (destructive), `--text-main: #263238`, `--text-muted: #66727a`
+- **Palette:** 4 strict colors — `#FAF9F4` (body), `#FFFFFF` (workspace/cards), `#C88E4E` (accent/buttons/Tasks), `#F3E6EB` (sidebar/borders/hover/panels)
+- **Background:** `var(--app-bg)` = `#FAF9F4` outer, `var(--workspace-bg)` = `#FFFFFF` workspace, `var(--sidebar-bg)` = `#F3E6EB` sidebar
+- **Cards:** `rounded-xl`, border `var(--border-card)`, bg `var(--card-bg)`, **no shadows**
+- **Accent:** `#C88E4E` (warm amber) for all primary CTAs, active nav, progress bars, checkboxes
 - **No emerald/green** in UI, no gradients
 - **Emoji only in data:** `src/lib/notion.ts` (Notion page headers) and `src/lib/content.ts` (task titles)
 - **Known palette exception:** `plans/history/page.tsx` uses `zinc-400`

@@ -74,4 +74,4 @@ prisma/
 - The database (`prisma/dev.db`) is not tracked in git.
 - Never commit `.env*` files.
 - Notion token is stored as plain text in SQLite — suitable for personal/single-user deployment.
-- Palette: paper `#e7e6e1`, cream `#f7f6e7`, muted `#c1c0b9`, blue accent `#537791`. No gradients or green.
+- Palette: `#FAF9F4` / `#FFFFFF` / `#C88E4E` / `#F3E6EB`. No shadows, no gradients, no green.
