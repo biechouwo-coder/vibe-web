@@ -78,7 +78,7 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
       layout
       initial={false}
       animate={{ opacity: 1, y: 0 }}
-      className={`group flex items-center gap-2.5 rounded-md px-2.5 py-2 transition-colors ${
+      className={`group flex items-center gap-2.5 rounded-[var(--radius-small)] px-2.5 py-2 transition-colors ${
         task.completed
           ? 'bg-stone-50 dark:bg-stone-800/50'
           : 'hover:bg-stone-50 dark:hover:bg-stone-800/50'

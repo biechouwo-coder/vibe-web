@@ -42,3 +42,6 @@ next-env.d.ts
 
 # database
 prisma/dev.db
+
+# local agent worktrees
+.claude/worktrees/

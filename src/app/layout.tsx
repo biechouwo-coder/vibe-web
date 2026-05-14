@@ -28,8 +28,8 @@ const notoSerif = Noto_Serif({
 })
 
 export const metadata: Metadata = {
-  title: 'vibe.web — Academic Research Desk',
-  description: 'Daily English reading & study planner for HKUST-GZ Carbon Neutrality & Green Finance',
+  title: 'vibe.web | Academic Research Desk',
+  description: 'Daily English reading and study planner for HKUST-GZ Carbon Neutrality and Green Finance',
 }
 
 export default function RootLayout({
@@ -42,11 +42,11 @@ export default function RootLayout({
       <head>
         <ThemeScript />
       </head>
-      <body className="min-h-screen">
+      <body className="h-dvh overflow-hidden">
         <ThemeProvider>
-          <div className="flex min-h-screen flex-col sm:flex-row sm:p-4 md:p-6">
+          <div className="flex h-dvh flex-col sm:flex-row sm:p-4 md:p-6">
             <Navbar />
-            <main className="flex-1 overflow-hidden rounded-none sm:rounded-[28px] border border-white/60 bg-stone-50 shadow-sm dark:border-stone-800/60 dark:bg-stone-950">
+            <main className="min-h-0 flex-1 overflow-y-auto rounded-none border border-white/60 bg-stone-50 shadow-sm sm:rounded-[var(--radius-shell)] dark:border-stone-800/60 dark:bg-stone-950">
               <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10 lg:px-10">
                 {children}
               </div>

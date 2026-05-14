@@ -19,11 +19,12 @@ function formatDate(): string {
 }
 
 const navBtnClass =
-  'inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
+  'inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
 
 export default async function Home() {
-  const stats = await getDailyStats()
+  // Ensure today's content and learning tasks exist before counting stats.
   const content = await fetchTodaysContent()
+  const stats = await getDailyStats()
   const tasks = await getTodaysTasks()
 
   return (
@@ -37,7 +38,7 @@ export default async function Home() {
       {/* First row: focus card + summary (desktop 2-col) */}
       <div className="grid gap-4 sm:grid-cols-5">
         {/* Left — Today's Focus */}
-        <div className="sm:col-span-3 rounded-2xl border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+        <div className="sm:col-span-3 rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
           <p className="text-xs font-medium uppercase tracking-wider text-stone-400">Today&rsquo;s Focus</p>
           <h2 className="mt-2 font-serif text-lg font-semibold leading-snug text-stone-900 dark:text-stone-100">
             {content.passage.title}
@@ -48,7 +49,7 @@ export default async function Home() {
           <div className="mt-4">
             <Link
               href={`/learn/${content.passage.id}`}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200"
             >
               Open reading
               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -59,7 +60,7 @@ export default async function Home() {
         </div>
 
         {/* Right — Summary card (stone-900 background) */}
-        <div className="sm:col-span-2 rounded-2xl border border-stone-800 bg-stone-900 p-5 text-stone-100 dark:border-stone-700 dark:bg-stone-800/60">
+        <div className="sm:col-span-2 rounded-[var(--radius-panel)] border border-stone-800 bg-stone-900 p-5 text-stone-100 dark:border-stone-700 dark:bg-stone-800/60">
           <div className="flex items-baseline justify-between">
             <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">Tasks</p>
             <p className="font-semibold tabular-nums">
@@ -77,7 +78,7 @@ export default async function Home() {
 
           <Link
             href="/plans"
-            className="mt-4 flex items-center justify-center rounded-lg border border-stone-600 py-2 text-xs font-medium text-stone-300 transition-colors hover:border-stone-500 hover:bg-stone-800 dark:border-stone-600 dark:hover:border-stone-500 dark:hover:bg-stone-700"
+            className="mt-4 flex items-center justify-center rounded-[var(--radius-control)] border border-stone-600 py-2 text-xs font-medium text-stone-300 transition-colors hover:border-stone-500 hover:bg-stone-800 dark:border-stone-600 dark:hover:border-stone-500 dark:hover:bg-stone-700"
           >
             Open task planner
           </Link>
@@ -95,7 +96,7 @@ export default async function Home() {
             </svg>
           </Link>
         </div>
-        <div className="rounded-lg border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
+        <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
           <HomeTaskList tasks={tasks} />
         </div>
       </section>

@@ -30,7 +30,7 @@ export default async function PlansPage() {
         <StreakBadge current={streak.currentStreak} />
       </section>
 
-      <section className="rounded-2xl border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+      <section className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
         <div className="mb-4 flex items-center justify-between">
           <p className="text-sm font-medium text-stone-600 dark:text-stone-400">
             {completedTasks}/{tasks.length} tasks completed
@@ -51,7 +51,7 @@ export default async function PlansPage() {
       <section className="text-center">
         <a
           href="/plans/history"
-          className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-3 py-1.5 shadow-sm shadow-stone-200/40 dark:shadow-stone-950/30 text-xs font-medium text-stone-600 transition-all hover:border-stone-300 hover:shadow-sm dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600"
+          className="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border border-stone-200 bg-white px-3 py-1.5 shadow-sm shadow-stone-200/40 dark:shadow-stone-950/30 text-xs font-medium text-stone-600 transition-all hover:border-stone-300 hover:shadow-sm dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600"
         >
           View history & stats
           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

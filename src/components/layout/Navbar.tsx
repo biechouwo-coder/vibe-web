@@ -17,7 +17,7 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden sm:flex sm:flex-col sm:w-16 md:w-20 lg:w-24 sm:h-screen sm:sticky sm:top-0 sm:items-center sm:pt-8 sm:gap-8">
+      <aside className="hidden sm:flex sm:h-full sm:w-16 sm:shrink-0 sm:flex-col sm:items-center sm:gap-8 sm:pt-8 md:w-20 lg:w-24">
         <Link href="/" className="font-serif text-lg font-semibold tracking-tight text-stone-800 dark:text-stone-200">
           v<span className="text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">.</span>w
         </Link>
@@ -39,7 +39,7 @@ export default function Navbar() {
       </aside>
 
       {/* Mobile top bar */}
-      <nav className="sticky top-0 z-50 flex w-full items-center justify-between border-b border-stone-200 bg-stone-50/90 px-4 py-2.5 backdrop-blur-sm sm:hidden dark:border-stone-800 dark:bg-stone-950/90">
+      <nav className="sticky top-0 z-50 flex w-full shrink-0 items-center justify-between border-b border-stone-200 bg-stone-50/90 px-4 py-2.5 backdrop-blur-sm sm:hidden dark:border-stone-800 dark:bg-stone-950/90">
         <Link href="/" className="font-serif text-base font-semibold tracking-tight text-stone-900 dark:text-stone-100">
           v<span className="text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">.</span>w
         </Link>

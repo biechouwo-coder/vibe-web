@@ -14,7 +14,7 @@ interface DailyCardProps {
 }
 
 const NAV_LINK_CLASS =
-  'inline-flex items-center gap-1.5 rounded-md border border-stone-200 bg-white px-2.5 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
+  'inline-flex items-center gap-1.5 rounded-[var(--radius-small)] border border-stone-200 bg-white px-2.5 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
 
 // ── Helpers ──
 
@@ -97,7 +97,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
+      className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Speaking Practice</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {summary && <p className="mt-2 text-xs leading-relaxed text-stone-500 line-clamp-2">{summary}</p>}
@@ -110,7 +110,7 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Practice</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
+            className={`ml-auto rounded-[var(--radius-small)] px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
@@ -127,7 +127,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
+      className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Vocabulary</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {preview && <p className="mt-2 text-xs leading-relaxed text-stone-500">{preview}</p>}
@@ -140,7 +140,7 @@ function VocabularyCard({ title, content, tags, pushed, onPush, detailHref }: Om
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Review terms</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
+            className={`ml-auto rounded-[var(--radius-small)] px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}
@@ -158,7 +158,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
+      className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-4 shadow-sm shadow-stone-200/40 transition-all hover:shadow-md hover:-translate-y-0.5 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30 dark:hover:shadow-lg">
       <span className="text-[10px] font-semibold uppercase tracking-widest text-stone-500">Reading</span>
       <h3 className="mt-1.5 font-medium text-stone-800 dark:text-stone-200">{title}</h3>
       {meta && <p className="mt-1 text-[10px] text-stone-400">{meta}</p>}
@@ -172,7 +172,7 @@ function PassageCard({ title, content, tags, pushed, onPush, detailHref }: Omit<
         {detailHref && <a href={detailHref} className={NAV_LINK_CLASS}>Read excerpt</a>}
         {onPush && (
           <button onClick={onPush} disabled={pushed}
-            className={`ml-auto rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
+            className={`ml-auto rounded-[var(--radius-small)] px-2.5 py-1.5 text-xs font-medium transition-colors ${pushed ? 'bg-stone-100 text-stone-400 dark:bg-stone-800' : 'bg-[var(--academic-navy)] text-white hover:brightness-110 dark:bg-[var(--academic-navy)] dark:hover:brightness-110'}`}>
             {pushed ? 'Pushed' : 'Save to Notion'}
           </button>
         )}

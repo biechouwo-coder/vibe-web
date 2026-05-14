@@ -10,6 +10,13 @@
   --surface: #ffffff;
   --academic-navy: #013E75;
   --academic-red: #A42423;
+
+  /* Apple-style radius tokens */
+  --radius-shell:   24px;
+  --radius-panel:   16px;
+  --radius-control: 10px;
+  --radius-small:   6px;
+
   color-scheme: light;
 }
 
