@@ -21,7 +21,7 @@ interface Particle {
 const EMPTY: Particle[] = []
 
 function generateParticles(): Particle[] {
-  const colors = ['#537791', '#e7e6e1', '#c1c0b9', '#f7f6e7', '#537791', '#e7e6e1']
+  const colors = ['#537791', '#e7e6e1', '#c1c0b9', '#FFFFFF', '#537791', '#e7e6e1']
   return Array.from({ length: 20 }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
