@@ -82,7 +82,7 @@ export default async function Home() {
           <Link
             href="/plans"
             className="mt-4 flex items-center justify-center rounded-[var(--radius-control)] border py-2 text-xs font-medium transition-colors hover:brightness-125"
-            style={{ borderColor: 'var(--task-bg)', color: '#FFFFFF', backgroundColor: 'var(--task-bg)' }}
+            style={{ borderColor: 'var(--task-bg)', color: 'var(--text-main)', backgroundColor: 'var(--main-bg)' }}
           >
             Open task planner
           </Link>
