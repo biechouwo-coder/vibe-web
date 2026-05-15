@@ -1,0 +1,42 @@
+{
+  "projectName": "vibe.web — Academic Research Desk",
+  "projectId": "1422762201768554961",
+  "screens": [
+    {
+      "id": "01-study-desk",
+      "title": "Study Desk",
+      "description": "Daily academic dashboard with Today's Focus, progress tracking, learning cards, and task list",
+      "imagePath": "public/assets/screens/01-study-desk.png",
+      "width": 2560,
+      "height": 2048,
+      "durationInSeconds": 5
+    },
+    {
+      "id": "02-readings",
+      "title": "Today's Readings",
+      "description": "Learning content with speaking practice, vocabulary terms, reading excerpts, and history",
+      "imagePath": "public/assets/screens/02-readings.png",
+      "width": 2560,
+      "height": 3404,
+      "durationInSeconds": 5
+    },
+    {
+      "id": "03-plans",
+      "title": "Daily Plans",
+      "description": "Task management with progress summary, add task form, and checkbox task list",
+      "imagePath": "public/assets/screens/03-plans.png",
+      "width": 2560,
+      "height": 2224,
+      "durationInSeconds": 4
+    },
+    {
+      "id": "04-settings",
+      "title": "Settings",
+      "description": "Configuration page with theme selector, Notion integration, and about section",
+      "imagePath": "public/assets/screens/04-settings.png",
+      "width": 2560,
+      "height": 2470,
+      "durationInSeconds": 4
+    }
+  ]
+}

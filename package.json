@@ -7,7 +7,7 @@
     "build": "node scripts/build.js",
     "start": "node scripts/start.js",
     "lint": "eslint",
-    "postinstall": "prisma generate"
+    "postinstall": "node -e \"process.env.DATABASE_URL=process.env.DATABASE_URL||'file:./dev.db';require('child_process').execSync('npx prisma generate',{stdio:'inherit'})\""
   },
   "dependencies": {
     "@notionhq/client": "^5.20.0",

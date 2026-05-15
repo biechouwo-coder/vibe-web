@@ -8,7 +8,10 @@ const path = require('path')
 const isWindows = process.platform === 'win32'
 const npxCmd = isWindows ? 'npx.cmd' : 'npx'
 
-const dbUrl = process.env.DATABASE_URL || 'file:./dev.db'
+// Force SQLite default if DATABASE_URL is missing or non-file (e.g. stale PostgreSQL URL)
+const dbUrl = (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('file:'))
+  ? process.env.DATABASE_URL
+  : 'file:./dev.db'
 
 try {
   console.log('[startup] Running prisma db push...')
