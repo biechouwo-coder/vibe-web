@@ -51,7 +51,7 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
     <>
       <Confetti active={showConfetti} />
       <div className="mb-2 flex items-center gap-2">
-        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--main-bg)' }}>
+        <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--task-track)' }}>
           <motion.div
             className="h-full rounded-full" style={{ backgroundColor: 'var(--accent)' }}
             initial={false}

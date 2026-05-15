@@ -8,7 +8,7 @@ interface ProgressBarProps {
 
 export default function ProgressBar({ value }: ProgressBarProps) {
   return (
-    <div className="h-2 w-full overflow-hidden rounded-full" style={{ backgroundColor: 'var(--main-bg)' }}>
+    <div className="h-2 w-full overflow-hidden rounded-full" style={{ backgroundColor: 'var(--task-track)' }}>
       <motion.div
         className="h-full rounded-full" style={{ backgroundColor: 'var(--accent)' }}
         initial={{ width: 0 }}
