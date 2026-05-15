@@ -28,7 +28,7 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       }`}
       style={{
         borderColor: 'var(--border-card)',
-        backgroundColor: task.completed ? 'var(--task-surface)' : 'var(--card-bg)',
+        backgroundColor: task.completed ? 'var(--task-surface)' : '#faf9f6',
       }}
     >
       <button
