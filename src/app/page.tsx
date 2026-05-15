@@ -19,13 +19,10 @@ function formatDate(): string {
 }
 
 const navBtnClass =
-  'inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border px-3 py-1.5 text-xs font-medium transition-colors hover:border-[var(--text-muted)] hover:bg-[var(--task-hover)]'
-  + ' '
-  + 'border-[var(--border-card)] bg-[var(--card-bg)] text-[var(--text-muted)]'
+  'inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 transition-colors hover:border-stone-300 hover:bg-stone-100 hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200'
 
 export default async function Home() {
-  // Order matters: content first (ensures today's learning tasks exist),
-  // then stats (counts the just-created tasks), then tasks (fetches them).
+  // Ensure today's content and learning tasks exist before counting stats.
   const content = await fetchTodaysContent()
   const stats = await getDailyStats()
   const tasks = await getTodaysTasks()
@@ -34,25 +31,25 @@ export default async function Home() {
     <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <section>
-        <p className="text-xs font-medium uppercase tracking-widest text-[var(--text-soft)]">{formatDate()}</p>
-        <h1 className="mt-2 font-serif text-2xl font-semibold tracking-tight sm:text-3xl">Study Desk</h1>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Study Desk</p>
+        <h1 className="mt-1 font-serif text-[28px] font-semibold leading-tight tracking-[-0.01em] text-[var(--foreground)]">{formatDate()}</h1>
       </section>
 
       {/* First row: focus card + summary (desktop 2-col) */}
       <div className="grid gap-4 sm:grid-cols-5">
-        {/* Left: Today's Focus */}
-        <div className="sm:col-span-3 rounded-[var(--radius-panel)] border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
-          <p className="text-xs font-medium uppercase tracking-wider text-[var(--text-soft)]">Today&rsquo;s Focus</p>
-          <h2 className="mt-2 font-serif text-lg font-semibold leading-snug text-[var(--text-main)]">
+        {/* Left — Today's Focus with navy left accent */}
+        <div className="sm:col-span-3 rounded-[var(--radius-panel)] border border-[var(--border)] border-l-[4px] border-l-[var(--academic-navy)] bg-[var(--surface)] p-5">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--academic-navy)]">Today&rsquo;s Focus</p>
+          <h2 className="mt-2 font-serif text-xl font-semibold leading-snug text-[var(--foreground)]">
             {content.passage.title}
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
+          <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
             Journal excerpt for academic writing practice. Read the passage, study the vocabulary, and practise the conversations.
           </p>
           <div className="mt-4">
             <Link
               href={`/learn/${content.passage.id}`}
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border px-3 py-1.5 text-xs font-medium transition-colors dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:bg-stone-800 dark:hover:text-stone-200" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] text-xs font-semibold uppercase tracking-[0.05em] text-[var(--academic-navy)] transition-all hover:gap-2"
             >
               Open reading
               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -62,27 +59,26 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Right: Tasks summary */}
-        <div className="sm:col-span-2 rounded-[var(--radius-panel)] border p-5" style={{ backgroundColor: 'var(--task-dark)', borderColor: 'var(--task-dark-border)', color: 'var(--task-dark-text)' }}>
+        {/* Right — Summary card (light, tonal layered) */}
+        <div className="sm:col-span-2 rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--background)] p-5">
           <div className="flex items-baseline justify-between">
-            <p className="text-[10px] font-medium uppercase tracking-wider opacity-50">Tasks</p>
-            <p className="font-semibold tabular-nums">
-              {stats.completedTasks}<span className="text-sm font-normal opacity-50">/{stats.totalTasks}</span>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Progress</p>
+            <p className="font-semibold tabular-nums text-[var(--foreground)]">
+              {stats.completedTasks}<span className="text-sm font-normal text-[var(--muted)]">/{stats.totalTasks}</span>
             </p>
           </div>
-          <div className="mt-2">
+          <div className="mt-3">
             <ProgressBar value={stats.completionRate} />
           </div>
 
-          <div className="mt-4 flex items-center gap-3 border-t pt-3" style={{ borderColor: 'var(--task-dark-border)' }}>
-            <p className="text-[10px] font-medium uppercase tracking-wider opacity-50">Streak</p>
+          <div className="mt-5 flex items-center gap-3 border-t border-[var(--border)] pt-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Streak</p>
             <StreakBadge current={stats.streak.currentStreak} />
           </div>
 
           <Link
             href="/plans"
-            className="mt-4 flex items-center justify-center rounded-[var(--radius-control)] border py-2 text-xs font-medium transition-colors hover:brightness-125"
-            style={{ borderColor: 'var(--task-bg)', color: 'var(--text-main)', backgroundColor: 'var(--main-bg)' }}
+            className="mt-4 flex items-center justify-center rounded-[var(--radius-control)] border border-[var(--border)] py-2 text-xs font-semibold uppercase tracking-[0.05em] text-[var(--muted)] transition-colors hover:border-[var(--academic-navy)] hover:text-[var(--academic-navy)]"
           >
             Open task planner
           </Link>
@@ -92,7 +88,7 @@ export default async function Home() {
       {/* Today's Tasks */}
       <section>
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-serif text-lg font-semibold">Today&apos;s Tasks</h2>
+          <h2 className="font-serif text-xl font-semibold text-[var(--foreground)]">Today&apos;s Tasks</h2>
           <Link href="/plans" className={navBtnClass}>
             Manage all
             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -100,7 +96,7 @@ export default async function Home() {
             </svg>
           </Link>
         </div>
-        <div className="rounded-[var(--radius-panel)] border p-4" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--task-surface)' }}>
+        <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">
           <HomeTaskList tasks={tasks} />
         </div>
       </section>
@@ -108,7 +104,7 @@ export default async function Home() {
       {/* Learning Queue */}
       <section>
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-serif text-lg font-semibold">Learning Queue</h2>
+          <h2 className="font-serif text-xl font-semibold text-[var(--foreground)]">Learning Queue</h2>
           <Link href="/learn" className={navBtnClass}>
             View all
             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

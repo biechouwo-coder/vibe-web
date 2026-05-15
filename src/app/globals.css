@@ -1,80 +1,84 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ── Palette (only 4 colors) ── */
+/* ── Academic Editorial palette (Stitch) ── */
 :root {
-  --c-warm:   #FAF9F4;  /* body background, sidebar */
-  --c-white:  #FFFFFF;  /* workspace, cards, text-on-dark */
-  --c-amber:  #7B7486;  /* accent, buttons, Tasks card */
-  --c-soft:   #F1F0EB;  /* panels, hover, borders, track */
+  /* Core tokens */
+  --paper:          #faf8f3;
+  --surface:        #ffffff;
+  --accent:         #013E75;
+  --muted:          #706c67;
+  --border:         #e8e4dd;
+  --border-light:   #e8e4dd80;
+  --academic-navy:  #013E75;
+  --academic-red:   #A42423;
 
-  /* semantic — every token maps to one of the 4 above */
-  --app-bg:          var(--c-warm);
-  --sidebar-bg:      var(--c-warm);
-  --main-bg:         var(--c-white);
-  --workspace-bg:    var(--c-white);
-  --card-bg:         var(--c-white);
-  --border-soft:     var(--c-soft);
-  --border-card:     var(--c-soft);
-  --accent:          var(--c-amber);
-  --accent-hover:    var(--c-amber);
-  --task-bg:         var(--c-amber);
-  --soft-panel-bg:   var(--c-soft);
-  --task-surface:    var(--c-soft);
-  --task-hover:      var(--c-soft);
-  --task-track:      var(--c-soft);
-  --task-dark:       var(--c-amber);
-  --task-dark-hover: var(--c-amber);
-  --task-dark-border:var(--c-amber);
-  --task-dark-text:  var(--c-white);
-  --scrollbar-thumb: var(--c-soft);
-  --scrollbar-thumb-hover: var(--c-soft);
-  --academic-navy:   var(--c-amber);
-  --academic-red:    var(--c-amber);
+  /* Component aliases */
+  --app-bg:          #faf8f3;
+  --sidebar-bg:      #faf8f3;
+  --main-bg:         #ffffff;
+  --workspace-bg:    #ffffff;
+  --card-bg:         #ffffff;
+  --border-soft:     #e8e4dd;
+  --border-card:     #e8e4dd;
+  --accent-hover:    #012d54;
+  --task-bg:         #013E75;
+  --soft-panel-bg:   #faf8f3;
+  --task-surface:    #faf8f3;
+  --task-hover:      #e8e4dd;
+  --task-track:      #e8e4dd;
+  --task-dark:       #1a1817;
+  --task-dark-hover: #2a2724;
+  --task-dark-border:#3d3a36;
+  --task-dark-text:  #ffffff;
+  --scrollbar-thumb: #d6d3d1;
+  --scrollbar-thumb-hover: #a8a29e;
+  --text-main:   #1a1817;
+  --text-muted:  #706c67;
+  --text-soft:   #999999;
+  --foreground:  #1a1817;
+  --background:  #faf8f3;
 
-  /* text (readability) */
-  --text-main:  #1b1b1b;
-  --text-muted: #666666;
-  --text-soft:  #999999;
-
-  /* Apple-style radius tokens */
-  --radius-shell:   24px;
+  --radius-shell:   28px;
   --radius-panel:   16px;
   --radius-control: 10px;
-  --radius-small:   6px;
-
+  --radius-small:   4px;
   color-scheme: light;
 }
 
 .dark {
-  --app-bg:       #1c1a17;
-  --workspace-bg: #1e1d19;
-  --surface-bg:   #1e1d19;
-  --card-bg:      #25231f;
-  --border-soft:  #3d3b36;
-  --border-card:  #3d3b36;
-  --accent:       #7ba3b5;
-  --accent-hover: #8fb8c8;
-
-  --academic-navy: var(--accent);
-  --academic-red:  #c47a7a;
-
-  --text-main:  #e8e6e0;
-  --text-muted: #9a9790;
-  --text-soft:  #6e6c66;
-
-  --task-surface:   #1e1d19;
-  --task-hover:     #282620;
-  --task-track:     #3d3b36;
-  --task-dark:      #2a2722;
-  --task-dark-hover:#3d3a34;
-  --task-dark-border:#4a4740;
-  --task-dark-text:  #e0ded6;
-
-  --sidebar-bg: #181713;
-  --scrollbar-thumb: #3d3b36;
-  --scrollbar-thumb-hover: #4a4742;
-
+  --paper:          #0c0a09;
+  --surface:        #131210;
+  --accent:         #7fb3df;
+  --muted:          #78716c;
+  --border:         #292524;
+  --border-light:   #29252480;
+  --academic-navy:  #7fb3df;
+  --academic-red:   #e08a88;
+  --app-bg:         #0c0a09;
+  --sidebar-bg:     #0c0a09;
+  --main-bg:        #131210;
+  --workspace-bg:   #131210;
+  --card-bg:        #131210;
+  --border-soft:    #292524;
+  --border-card:    #292524;
+  --accent-hover:   #8fb8c8;
+  --task-bg:        #7fb3df;
+  --soft-panel-bg:  #1c1a17;
+  --task-surface:   #1c1a17;
+  --task-hover:      #292524;
+  --task-track:      #292524;
+  --task-dark:       #2a2724;
+  --task-dark-hover: #3d3a36;
+  --task-dark-border:#3d3a36;
+  --task-dark-text:  #e8e6e0;
+  --scrollbar-thumb: #44403c;
+  --scrollbar-thumb-hover: #57534e;
+  --text-main:   #e7e5e4;
+  --text-muted:  #9a9790;
+  --text-soft:   #6e6c66;
+  --foreground:  #e7e5e4;
+  --background:  #0c0a09;
   color-scheme: dark;
 }
 
@@ -87,29 +91,16 @@
 }
 
 body {
-  background: var(--app-bg);
+  background: var(--paper);
   color: var(--text-main);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-html,
-body {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  overscroll-behavior: none;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { border-radius: 3px; background: var(--scrollbar-thumb); }
 ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
-::selection {
-  background-color: var(--accent);
-  color: white;
-}
+::selection { background-color: var(--accent); color: white; }

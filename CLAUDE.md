@@ -14,18 +14,24 @@ npx prisma studio    # DB GUI
 - **Schema unique constraints:** `DailyContent(date+type)`, `Task(date+contentId)`
 - **Migrations:** `prisma/migrations/20260507091401_init/` + `20260510091002_add_unique_constraints/`
 - **Styling:** Tailwind CSS 4, class-based dark mode via `@custom-variant dark` + `html.dark`
-- **Animations:** Framer Motion -- `useReducedMotion()` used; cards use `initial={false}`
+- **Animations:** Framer Motion — `useReducedMotion()` used; cards use `initial={false}`
 - **Deploy:** Railway (auto-deploy from GitHub `master`)
 
 ## UI — Academic Research Desk
-- **Layout:** Desktop = left sidebar (tinted bg) + workspace (left square, right rounded-[28px], no outer padding); Mobile = top nav + scrollable main
-- **Palette:** 4 strict colors — `#FAF9F4` (body + sidebar), `#FFFFFF` (workspace/cards), `#C88E4E` (accent/buttons/Tasks), `#F1F0EB` (borders/hover/panels)
-- **Background:** `var(--app-bg)` = `#FAF9F4` outer, `var(--workspace-bg)` = `#FFFFFF` workspace, `var(--sidebar-bg)` = `#F3E6EB` sidebar
-- **Cards:** `rounded-xl`, border `var(--border-card)`, bg `var(--card-bg)`, **no shadows**
-- **Accent:** `#C88E4E` (warm amber) for all primary CTAs, active nav, progress bars, checkboxes
-- **No emerald/green** in UI, no gradients
-- **Emoji only in data:** `src/lib/notion.ts` (Notion page headers) and `src/lib/content.ts` (task titles)
-- **Known palette exception:** `plans/history/page.tsx` uses `zinc-400`
+- **Design system:** Academic Editorial — full spec in [DESIGN.md](DESIGN.md); Stitch project `projects/1422762201768554961`
+- **Layout:** Desktop = left sidebar + rounded-[28px] workspace; Mobile = sticky top nav
+- **Background:** Warm Paper `#faf8f3` (outer), Pure White `#ffffff` (workspace) — tonal layering, not shadows
+- **Cards:** `rounded-2xl`, `border border-[var(--border)]`, ambient shadow `0_2px_4px_rgba(26,24,23,0.05)` on hover
+- **Color tokens:** `--academic-navy: #013E75` (primary), `--academic-red: #A42423` (destructive), `--paper: #faf8f3` (outer bg), `--muted: #706c67` (secondary text), `--border: #e8e4dd`
+- **Warm paper palette** — no `stone-*`, no `zinc-*`; all colors via CSS variables in `globals.css`
+- **No emerald/green** in UI classes; no emoji; no gradients
+
+## Color Usage
+- Navy (`--academic-navy`): progress bars, primary buttons, completed checkboxes, navbar underline, focus-card left-border
+- Deep red (`--academic-red`): delete/destructive actions only
+- Muted Stone (`--muted`): all labels, secondary text, placeholders
+- Warm Gray (`--border`): borders, dividers, structural lines
+- Dark mode: navy → `#7fb3df`, red → `#e08a88`
 
 ## Key Conventions
 - Interactive components → `'use client'`, mutations → Server Actions (`src/actions/`)
@@ -36,13 +42,11 @@ npx prisma studio    # DB GUI
 - Content: `src/lib/content.ts` — uses `upsert` for atomic dedup
 - Academic keywords: `src/lib/academic-keywords.ts` — shared by DailyCard and ContentDetail
 - Notion API: `src/lib/notion.ts`; config returns `hasToken: boolean`, never raw token
-- **Notion security:** token stored as plain text in SQLite; no auth guard on Settings action — suitable for personal/single-user deployment only
-- **Notion idempotency:** `pushEnglishContent` checks `pushed` flag before creating page (low race risk); `pushTaskToNotion` always creates new pages (no dedup) — task toggle creates duplicates in Notion
 - VocabCards: `src/components/learn/VocabCards.tsx` (academic glossary, 40px slide, reduced-motion aware)
 
 ## Content Library (`src/lib/content.ts`)
-- **Conversations (8)**: topic-based with `formatConversationContent()` -- outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation
-- **Readings (6)**: Journal-based `readingContent` array -- paperTitle/authors/journal/year/doi/excerpt/writingFocus/vocabulary/discussionQuestions
+- **Conversations (8)**: topic-based with `formatConversationContent()` — outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation
+- **Readings (6)**: Journal-based `readingContent` array — paperTitle/authors/journal/year/doi/excerpt/writingFocus/vocabulary/discussionQuestions
 - Vocabulary and passage come from the **same** reading item via `getDailyReadingItem()`
 - Formatters: `formatReadingContent()` → passage DB, `formatVocabularyFromReading()` → vocabulary DB
 
