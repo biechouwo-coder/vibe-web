@@ -1,4 +1,5 @@
 // Startup script: run DB migration then start Next.js
+// Railway deployment: prisma db push → next start
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { execSync, spawn } = require('child_process')
 const path = require('path')
