@@ -243,6 +243,11 @@ async function ensureLearningTasks(
   passage: { id: string; title: string }
 ) {
   const date = getShanghaiDate()
+
+  // Only seed tasks once per day — if the user deletes any, they stay deleted.
+  const existing = await prisma.task.findFirst({ where: { date } })
+  if (existing) return
+
   const taskDefs = [
     { title: `💬 ${conversation.title}`, contentId: conversation.id },
     { title: `📝 ${vocabulary.title}`, contentId: vocabulary.id },
@@ -250,10 +255,8 @@ async function ensureLearningTasks(
   ]
 
   for (const [i, t] of taskDefs.entries()) {
-    await prisma.task.upsert({
-      where: { date_contentId: { date, contentId: t.contentId } },
-      update: {},
-      create: {
+    await prisma.task.create({
+      data: {
         date,
         title: t.title,
         contentId: t.contentId,
