@@ -54,7 +54,7 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       </div>
 
       <form action={deleteTask.bind(null, task.id)}>
-        <button type="submit" className="opacity-0 transition-opacity group-hover:opacity-100 rounded p-1 text-stone-400 hover:text-[var(--academic-red)] hover:bg-red-50 dark:hover:bg-red-950/30">
+        <button type="submit" className="rounded p-1 text-stone-300 transition-colors hover:text-[var(--academic-red)] hover:bg-red-50 dark:text-stone-600 dark:hover:text-[var(--academic-red)] dark:hover:bg-red-950/30">
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>

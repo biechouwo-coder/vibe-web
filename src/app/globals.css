@@ -2,33 +2,38 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #fafaf9;
-  --foreground: #1c1917;
-  --accent: #013E75;
-  --muted: #78716c;
-  --border: #e7e5e4;
-  --surface: #ffffff;
+  /* Academic Editorial palette — tonal layers on warm paper */
+  --paper:        #faf8f3;
+  --background:   #faf8f3;
+  --foreground:   #1a1817;
+  --accent:       #013E75;
+  --muted:        #706c67;
+  --border:       #e8e4dd;
+  --border-light: #e8e4dd80;
+  --surface:      #ffffff;
   --academic-navy: #013E75;
-  --academic-red: #A42423;
+  --academic-red:  #A42423;
 
   /* Apple-style radius tokens */
-  --radius-shell:   24px;
+  --radius-shell:   28px;
   --radius-panel:   16px;
   --radius-control: 10px;
-  --radius-small:   6px;
+  --radius-small:   4px;
 
   color-scheme: light;
 }
 
 .dark {
-  --background: #0c0a09;
-  --foreground: #e7e5e4;
-  --accent: #7fb3df;
-  --muted: #78716c;
-  --border: #292524;
-  --surface: #131210;
+  --paper:        #0c0a09;
+  --background:   #0c0a09;
+  --foreground:   #e7e5e4;
+  --accent:       #7fb3df;
+  --muted:        #78716c;
+  --border:       #292524;
+  --border-light: #29252480;
+  --surface:      #131210;
   --academic-navy: #7fb3df;
-  --academic-red: #e08a88;
+  --academic-red:  #e08a88;
   color-scheme: dark;
 }
 
@@ -41,13 +46,9 @@
 }
 
 body {
-  background: #d6d3d1;
+  background: var(--paper);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
-}
-
-.dark body {
-  background: #1c1917;
 }
 
 html {

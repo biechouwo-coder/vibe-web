@@ -20,10 +20,12 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 ## 🚀 功能速览
 
 ### 🏠 首页 Dashboard
-- 今日日期 + 欢迎语
+- 今日日期 + 学习桌面标题
+- Today's Focus — 每日重点阅读文献（navy 加粗左边框）
 - 任务完成进度条（今日完成 X/Y）
 - 连续学习天数（Streak）展示
 - 今日学习内容预览（对话 / 词汇 / 文献）
+- 今日任务清单（可勾选完成）
 
 ### 📚 Learn — 英语学习
 三种内容类型，每日自动轮换：
@@ -50,13 +52,14 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 
 ### 🏠 Home — 今日布局
 按优先级从上到下：
-1. **Stats** — 任务进度 / Streak / 快捷入口
-2. **Today's Tasks** — 今日任务清单（可勾选完成）
-3. **Today's Learning** — 三个学习卡片（类型标签在顶部）
+1. **Today's Focus** — 今日重点阅读文章（navy 左边框高亮），附带 Open Reading 快捷入口
+2. **Progress & Streak** — 任务进度条 + 连续学习天数
+3. **Today's Tasks** — 今日任务清单（可勾选完成，全部完成触发纸屑动画）
+4. **Learning Queue** — 三个学习卡片（Speaking / Vocabulary / Reading）
 
 ### 💬 对话知识卡片
 点 **Read full →** 进入详情页后可看到：
-- **对话气泡** — 教授/同学蓝色气泡靠左，你的绿色气泡靠右
+- **对话气泡** — 教授/同学气泡靠左，你的气泡靠右（navy 强调色）
 - **词汇卡片** — 带 IPA 国际音标 + 中英释义双列展示
 - **全文翻译** — 对照阅读区域
 
@@ -74,8 +77,9 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 `Carbon Pricing & Trading` · `Carbon Accounting` · `ESG Investing` · `Climate Science & Policy` · `Energy Economics`
 
 ### ⚙️ Settings — 设置
-- 配置 Notion 集成（Token + 数据库 ID）
-- 启用/禁用 Notion 自动推送
+- **Appearance** — Light / Dark / System 三选一主题
+- **Notion Integration** — 配置 Token + 数据库 ID，启用/禁用自动推送
+- **About** — 应用版本及介绍
 
 ---
 
@@ -198,10 +202,10 @@ src/
 
 ## 🗺️ 后续规划
 
+- [x] **暗色/亮色模式** — 已支持三种主题：Light / Dark / System
 - [ ] **AI 内容生成** — 接入 Claude API 每日自动生成个性化英语内容
 - [ ] **PostgreSQL 迁移** — 用 Railway 内置 PostgreSQL 替代 SQLite，数据持久化
 - [ ] **定时推送** — 每天自动推送到 Notion（无需手动点击）
-- [ ] **多主题** — 暗色/亮色模式切换
 - [ ] **自定义学习内容** — 用户可上传自己的学习材料
 
 ---

@@ -46,7 +46,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="flex h-dvh flex-col sm:flex-row sm:p-4 md:p-6">
             <Navbar />
-            <main className="min-h-0 flex-1 overflow-y-auto rounded-none border border-white/60 bg-stone-50 shadow-sm sm:rounded-[var(--radius-shell)] dark:border-stone-800/60 dark:bg-stone-950">
+            <main className="min-h-0 flex-1 overflow-y-auto rounded-none border border-[var(--border-light)] bg-[var(--surface)] shadow-[0_2px_4px_rgba(26,24,23,0.05)] sm:rounded-[var(--radius-shell)] dark:border-[var(--border)] dark:bg-[var(--surface)]">
               <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10 lg:px-10">
                 {children}
               </div>

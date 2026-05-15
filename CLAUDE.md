@@ -18,17 +18,19 @@ npx prisma studio    # DB GUI
 - **Deploy:** Railway (auto-deploy from GitHub `master`)
 
 ## UI — Academic Research Desk
+- **Design system:** Academic Editorial — full spec in [DESIGN.md](DESIGN.md); Stitch project `projects/1422762201768554961`
 - **Layout:** Desktop = left sidebar + rounded-[28px] workspace; Mobile = sticky top nav
-- **Background:** `stone-200` / `stone-950` (outer), `stone-50` / `stone-950` (workspace)
-- **Cards:** `rounded-2xl`, `border border-stone-200`, `shadow-sm shadow-stone-200/40`
-- **Color tokens:** `--academic-navy: #013E75` (primary accent), `--academic-red: #A42423` (destructive)
+- **Background:** Warm Paper `#faf8f3` (outer), Pure White `#ffffff` (workspace) — tonal layering, not shadows
+- **Cards:** `rounded-2xl`, `border border-[var(--border)]`, ambient shadow `0_2px_4px_rgba(26,24,23,0.05)` on hover
+- **Color tokens:** `--academic-navy: #013E75` (primary), `--academic-red: #A42423` (destructive), `--paper: #faf8f3` (outer bg), `--muted: #706c67` (secondary text), `--border: #e8e4dd`
+- **Warm paper palette** — no `stone-*`, no `zinc-*`; all colors via CSS variables in `globals.css`
 - **No emerald/green** in UI classes; no emoji; no gradients
-- **Unified palette:** `stone-*` throughout (no `zinc-*`)
 
 ## Color Usage
-- Navy (`--academic-navy`): progress bars, primary buttons, completed checkboxes, navbar underline
+- Navy (`--academic-navy`): progress bars, primary buttons, completed checkboxes, navbar underline, focus-card left-border
 - Deep red (`--academic-red`): delete/destructive actions only
-- Stone: all labels, secondary text, borders, backgrounds
+- Muted Stone (`--muted`): all labels, secondary text, placeholders
+- Warm Gray (`--border`): borders, dividers, structural lines
 - Dark mode: navy → `#7fb3df`, red → `#e08a88`
 
 ## Key Conventions
