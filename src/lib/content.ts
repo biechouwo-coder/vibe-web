@@ -227,26 +227,35 @@ export async function getDailyPassage(reading?: ReadingContentItem) {
 }
 
 export async function getAllTodaysContent() {
+  const date = getShanghaiDate()
   const reading = getDailyReadingItem()
+
+  // Decide whether to seed learning tasks BEFORE content upsert runs.
+  const needsSeed = await (async () => {
+    const anyTask = await prisma.task.findFirst({ where: { date } })
+    if (anyTask) return false
+    // No tasks — check if it's a fresh day (no content yet) or a revisit after delete.
+    const anyContent = await prisma.dailyContent.findFirst({ where: { date } })
+    return !anyContent // seed only on the very first visit of the day
+  })()
+
   const conversation = await getDailyConversation()
   const vocabulary = await getDailyVocabulary(reading)
   const passage = await getDailyPassage(reading)
 
-  await ensureLearningTasks(conversation, vocabulary, passage)
+  if (needsSeed) {
+    await seedLearningTasks(conversation, vocabulary, passage)
+  }
 
   return { conversation, vocabulary, passage }
 }
 
-async function ensureLearningTasks(
+async function seedLearningTasks(
   conversation: { id: string; title: string },
   vocabulary: { id: string; title: string },
   passage: { id: string; title: string }
 ) {
   const date = getShanghaiDate()
-
-  // Only seed tasks once per day — if the user deletes any, they stay deleted.
-  const existing = await prisma.task.findFirst({ where: { date } })
-  if (existing) return
 
   const taskDefs = [
     { title: `💬 ${conversation.title}`, contentId: conversation.id },
