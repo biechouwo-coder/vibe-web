@@ -1,8 +1,24 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { toggleTask } from '@/actions/plans'
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { toggleTask, reorderTasks } from '@/actions/plans'
 import Confetti from '@/components/ui/Confetti'
 import Link from 'next/link'
 import type { TaskWithMeta } from '@/types'
@@ -34,6 +50,25 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
     await toggleTask(taskId)
   }, [tasks])
 
+  const handleDragEnd = useCallback(async (event: DragEndEvent) => {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+
+    setTasks((prev) => {
+      const taskIds = prev.map((t) => t.id)
+      const oldIndex = taskIds.indexOf(active.id as string)
+      const newIndex = taskIds.indexOf(over.id as string)
+      const reordered = arrayMove(prev, oldIndex, newIndex)
+      reorderTasks(reordered.map((t) => t.id))
+      return reordered
+    })
+  }, [])
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 8 } })
+  )
+
   if (tasks.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2 py-6 text-center">
@@ -46,12 +81,6 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
   }
 
   const completedCount = tasks.filter((t) => t.completed).length
-
-  // Sort: incomplete first, then by sortOrder within each group
-  const sortedTasks = [...tasks].sort((a, b) => {
-    if (a.completed === b.completed) return a.sortOrder - b.sortOrder
-    return a.completed ? 1 : -1
-  })
 
   return (
     <>
@@ -67,38 +96,66 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
         </div>
         <span className="text-xs text-[var(--text-soft)] shrink-0 tabular-nums">{completedCount}/{tasks.length}</span>
       </div>
-      <div className="space-y-0.5">
-        <AnimatePresence>
-          {sortedTasks.map((task) => (
-            <TaskRow key={task.id} task={task} onToggle={handleToggle} />
-          ))}
-        </AnimatePresence>
-      </div>
+
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
+          <div className="space-y-0.5">
+            <AnimatePresence>
+              {tasks.map((task) => (
+                <SortableTaskRow key={task.id} task={task} onToggle={handleToggle} />
+              ))}
+            </AnimatePresence>
+          </div>
+        </SortableContext>
+      </DndContext>
     </>
   )
 }
 
-function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string) => void }) {
+function SortableTaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string) => void }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
+
+  const style = useMemo(() => ({
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  }), [transform, transition, isDragging])
+
   return (
     <motion.div
+      ref={setNodeRef}
       layout
       initial={false}
       animate={{ opacity: 1, y: 0 }}
-      className="group flex items-center gap-2.5 rounded-[var(--radius-small)] border px-2.5 py-2 transition-colors"
+      className="group flex items-center gap-2 rounded-[var(--radius-small)] border px-1.5 py-2 transition-colors"
       style={{
+        ...style,
         backgroundColor: task.completed ? 'var(--task-hover)' : '#eeece6',
         borderColor: 'var(--border)',
       }}
       onMouseEnter={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = 'var(--task-hover)'; }}
       onMouseLeave={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = '#eeece6'; }}
     >
+      {/* Drag handle */}
+      <button
+        className="cursor-grab touch-none px-0.5 text-[var(--text-soft)] opacity-0 transition-opacity group-hover:opacity-100 active:cursor-grabbing"
+        {...attributes}
+        {...listeners}
+        aria-label="Drag to reorder"
+      >
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h.01M12 7h.01M16 7h.01M8 12h.01M12 12h.01M16 12h.01M8 17h.01M12 17h.01M16 17h.01" />
+        </svg>
+      </button>
+
+      {/* Checkbox */}
       <button
         onClick={() => onToggle(task.id)}
-        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
-          task.completed
-            ? 'border-[var(--academic-navy)] bg-[var(--academic-navy)] dark:border-[var(--accent)] dark:bg-[var(--accent)]'
-            : 'border-[var(--text-soft)] hover:border-[var(--text-muted)] dark:border-stone-600 dark:hover:border-stone-400'
-        }`}
+        className="shrink-0 flex h-4 w-4 items-center justify-center rounded border transition-colors"
+        style={{
+          borderColor: task.completed ? 'var(--academic-navy)' : 'var(--text-soft)',
+          backgroundColor: task.completed ? 'var(--academic-navy)' : 'transparent',
+        }}
       >
         {task.completed && (
           <motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -106,6 +163,8 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
           </motion.svg>
         )}
       </button>
+
+      {/* Title */}
       <p className={`flex-1 truncate text-sm ${task.completed ? 'text-[var(--text-soft)] line-through dark:text-stone-500' : 'text-[var(--text-main)] dark:text-stone-300'}`}>
         {task.title}
       </p>

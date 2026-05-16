@@ -96,7 +96,7 @@ export async function pushEnglishContent(contentId: string) {
   }
 
   if (content.tags) {
-    properties.Tags = { multi_select: content.tags.split(',').map((t) => ({ name: t.trim() })) }
+    properties.Tags = { multi_select: content.tags.split(',').map((t: string) => ({ name: t.trim() })) }
   }
 
   const contentBlocks = parseContentToBlocks(content.content)

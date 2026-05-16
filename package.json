@@ -10,6 +10,9 @@
     "postinstall": "node -e \"process.env.DATABASE_URL=process.env.DATABASE_URL||'file:./dev.db';require('child_process').execSync('npx prisma generate',{stdio:'inherit'})\""
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@notionhq/client": "^5.20.0",
     "@prisma/client": "^6.19.3",
     "framer-motion": "^12.38.0",

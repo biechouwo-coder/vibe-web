@@ -11,7 +11,7 @@ export default async function PlansPage() {
   const tasks = await getTodaysTasks()
   const streak = await getStreak()
 
-  const completedTasks = tasks.filter((t) => t.completed).length
+  const completedTasks = tasks.filter((t: { completed: boolean }) => t.completed).length
   const completionRate = tasks.length > 0 ? Math.round((completedTasks / tasks.length) * 100) : 0
 
   const today = formatShanghaiDate('en-US', {

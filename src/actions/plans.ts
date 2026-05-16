@@ -74,6 +74,17 @@ export async function toggleTask(taskId: string) {
   revalidatePath('/')
 }
 
+export async function reorderTasks(taskIds: string[]) {
+  for (let i = 0; i < taskIds.length; i++) {
+    await prisma.task.update({
+      where: { id: taskIds[i] },
+      data: { sortOrder: i },
+    })
+  }
+  revalidatePath('/')
+  revalidatePath('/plans')
+}
+
 export async function deleteTask(taskId: string) {
   await prisma.task.delete({ where: { id: taskId } })
   revalidatePath('/plans')
@@ -124,7 +135,7 @@ export async function getStreak() {
 export async function getDailyStats() {
   const date = getToday()
   const tasks = await prisma.task.findMany({ where: { date } })
-  const completed = tasks.filter((t) => t.completed).length
+  const completed = tasks.filter((t: { completed: boolean }) => t.completed).length
   const streak = await getStreak()
 
   return {

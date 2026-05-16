@@ -32,7 +32,7 @@ export default async function HistoryPage() {
     .map(([date, data]) => ({ date, ...data }))
     .sort((a, b) => a.date.localeCompare(b.date))
 
-  const totalCompleted = tasks.filter((t) => t.completed).length
+  const totalCompleted = tasks.filter((t: { completed: boolean }) => t.completed).length
   const avgCompletion =
     dailyData.length > 0
       ? Math.round(dailyData.reduce((acc, d) => acc + (d.total > 0 ? (d.completed / d.total) * 100 : 0), 0) / dailyData.length)
