@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import { getNotionConfig } from '@/actions/learn'
 import SettingsForm from './SettingsForm'
 import ThemeSelector from '@/components/theme/ThemeSelector'
+import StatsSection from './StatsSection'
 
 export default async function SettingsPage() {
   const config = await getNotionConfig()
@@ -62,7 +63,11 @@ export default async function SettingsPage() {
         <SettingsForm config={config} />
       </section>
 
-      <section className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
+      <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">
+        <StatsSection />
+      </section>
+
+      <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">
         <h2 className="font-serif text-lg font-semibold">About</h2>
         <div className="mt-3 space-y-2 text-sm text-stone-500">
           <p>

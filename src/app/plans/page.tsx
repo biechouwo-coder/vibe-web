@@ -47,18 +47,6 @@ export default async function PlansPage() {
       <section>
         <TaskList tasks={tasks} />
       </section>
-
-      <section className="text-center">
-        <a
-          href="/plans/history"
-          className="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border px-3 py-1.5 shadow-sm text-xs font-medium transition-all hover:shadow-sm dark:shadow-stone-950/30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-400 dark:hover:border-stone-600" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)', color: 'var(--text-muted)' }}
-        >
-          View history & stats
-          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
-      </section>
     </div>
   )
 }
