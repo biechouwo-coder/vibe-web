@@ -18,15 +18,15 @@ export default function Navbar() {
     <>
       {/* Desktop sidebar */}
       <aside className="hidden sm:flex sm:flex-col sm:w-16 md:w-20 lg:w-24 sm:h-full sm:shrink-0 sm:items-center sm:pt-8 sm:gap-8" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
-        <Link href="/" className="font-serif text-lg font-semibold tracking-tight text-[var(--text-main)]">
+        <Link href="/" className="w-full text-center font-serif text-lg font-semibold tracking-tight text-[var(--text-main)]">
           v<span className="text-[var(--accent)]">.</span>w
         </Link>
-        <nav className="flex flex-col items-center gap-2">
+        <nav className="flex w-full flex-col items-center gap-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
             return (
-              <Link key={item.href} href={item.href} className="relative flex flex-col items-center gap-0.5 py-2 w-full">
-                <span className={`transition-colors ${isActive ? 'text-sm font-bold text-[var(--text-main)]' : 'text-xs text-[var(--text-muted)] hover:text-[var(--text-main)]'}`}>
+              <Link key={item.href} href={item.href} className="relative flex w-full flex-col items-center py-2">
+                <span className={`text-center transition-colors ${isActive ? 'text-sm font-bold text-[var(--text-main)]' : 'text-xs text-[var(--text-muted)] hover:text-[var(--text-main)]'}`}>
                   {item.label === 'Study Desk' ? 'Desk' : item.label}
                 </span>
                 {isActive && (
