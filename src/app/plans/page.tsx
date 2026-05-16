@@ -66,10 +66,13 @@ export default async function PlansPage() {
       <div className="grid gap-6 sm:grid-cols-5">
         {/* Left: today's tasks */}
         <div className="sm:col-span-3">
-          <div className="mb-3">
-            <AddTaskForm />
+          <div className="rounded-[var(--radius-panel)] border p-4" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface)' }}>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)] mb-3">Today&apos;s Tasks</p>
+            <div className="mb-3">
+              <AddTaskForm />
+            </div>
+            <TaskList tasks={tasks} />
           </div>
-          <TaskList tasks={tasks} />
         </div>
 
         {/* Right: task pool */}
