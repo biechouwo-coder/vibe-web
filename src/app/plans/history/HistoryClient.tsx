@@ -45,11 +45,13 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
     weeks.push(cells.slice(i, i + 7))
   }
 
-  // Month labels
+  // Month labels: first month always shown, then on month change when day <= 7
   const monthLabels: { index: number; label: string }[] = []
+  let lastMonth = ''
   cells.forEach((c, i) => {
-    if (c.day <= 7 && !monthLabels.some((m) => m.label === c.month)) {
+    if (c.month !== lastMonth && (!lastMonth || c.day <= 7)) {
       monthLabels.push({ index: Math.floor(i / 7), label: c.month })
+      lastMonth = c.month
     }
   })
 
