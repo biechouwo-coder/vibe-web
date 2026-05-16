@@ -96,7 +96,7 @@ export default async function Home() {
             </svg>
           </Link>
         </div>
-        <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">
+        <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[#faf9f6] p-5">
           <HomeTaskList tasks={tasks} />
         </div>
       </section>
