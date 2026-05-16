@@ -24,6 +24,12 @@ export default async function SettingsPage() {
         </div>
       </section>
 
+      <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">
+        <h2 className="font-serif text-lg font-semibold text-[var(--foreground)]">History &amp; Stats</h2>
+        <p className="mt-1 mb-4 text-sm text-[var(--muted)]">Your task completion statistics and activity overview</p>
+        <StatsSection />
+      </section>
+
       <section className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
         <h2 className="font-serif text-lg font-semibold">Notion Integration</h2>
         <p className="mt-1 text-sm text-stone-500">
@@ -61,10 +67,6 @@ export default async function SettingsPage() {
         </div>
 
         <SettingsForm config={config} />
-      </section>
-
-      <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">
-        <StatsSection />
       </section>
 
       <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">

@@ -35,8 +35,6 @@ export default async function StatsSection() {
 
   return (
     <>
-      <h2 className="font-serif text-lg font-semibold text-[var(--foreground)] mb-4">History &amp; Stats</h2>
-
       <div className="grid gap-3 sm:grid-cols-4">
         <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-4">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)]">Active Days</p>
