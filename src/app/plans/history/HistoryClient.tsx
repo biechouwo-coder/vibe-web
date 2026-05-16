@@ -13,11 +13,11 @@ interface HistoryClientProps {
 }
 
 function getIntensity(rate: number): string {
-  if (rate === 0) return 'bg-stone-100 dark:bg-stone-900'
-  if (rate < 25) return 'bg-stone-200 dark:bg-stone-800'
-  if (rate < 50) return 'bg-stone-400 dark:bg-stone-600'
-  if (rate < 75) return 'bg-stone-500 dark:bg-stone-400'
-  return 'bg-stone-700 dark:bg-stone-200'
+  if (rate === 0) return 'bg-[var(--border)] dark:bg-[var(--border)]'
+  if (rate < 25) return 'bg-[var(--academic-navy)]/15 dark:bg-[var(--academic-navy)]/25'
+  if (rate < 50) return 'bg-[var(--academic-navy)]/35 dark:bg-[var(--academic-navy)]/40'
+  if (rate < 75) return 'bg-[var(--academic-navy)]/60 dark:bg-[var(--academic-navy)]/60'
+  return 'bg-[var(--academic-navy)] dark:bg-[var(--academic-navy)]'
 }
 
 function buildMonthGrid(year: number, month: number, dailyData: DayData[]) {
@@ -119,11 +119,11 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
       {/* Legend */}
       <div className="mt-3 flex items-center gap-2 text-[10px] text-[var(--text-soft)]">
         <span>Less</span>
-        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-100 dark:bg-stone-900" />
-        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-200 dark:bg-stone-800" />
-        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-400 dark:bg-stone-600" />
-        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-500 dark:bg-stone-400" />
-        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-700 dark:bg-stone-200" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-[var(--border)]" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-[var(--academic-navy)]/15" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-[var(--academic-navy)]/35" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-[var(--academic-navy)]/60" />
+        <div className="h-3 w-3 rounded-[var(--radius-small)] bg-[var(--academic-navy)]" />
         <span>More</span>
       </div>
     </div>
