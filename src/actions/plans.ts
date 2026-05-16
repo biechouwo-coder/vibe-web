@@ -13,7 +13,10 @@ export async function getTodaysTasks() {
   const date = getToday()
   return prisma.task.findMany({
     where: { date },
-    orderBy: { sortOrder: 'asc' },
+    orderBy: [
+      { completed: 'asc' },
+      { sortOrder: 'asc' },
+    ],
   })
 }
 
