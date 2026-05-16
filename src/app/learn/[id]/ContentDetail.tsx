@@ -165,8 +165,23 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
 
       {(!!translation || !!legacyTrans) && (
         <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-stone-400">Translation</p>
-          <div className="whitespace-pre-line text-sm leading-relaxed text-stone-600 dark:text-stone-400">{translation || legacyTrans}</div>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Translation</p>
+          <div className="space-y-2.5">
+            {(dialogueLines.length > 0 ? dialogueLines : legacyDialog).map((dl, i) => {
+              const transLines = (translation || legacyTrans).split('\n').filter(Boolean)
+              const chinese = transLines[i]?.replace(/^[^：]*：\s*/, '')?.replace(/^["']|["']$/g, '')?.trim() || ''
+              if (!chinese) return null
+              return (
+                <div key={i} className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}>
+                  <div className="max-w-[85%] rounded-[var(--radius-control)] px-3.5 py-2 text-sm leading-relaxed" style={{ backgroundColor: dl.isYou ? 'var(--academic-navy)' : 'var(--task-surface)' }}>
+                    {!dl.isYou && <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-stone-500">{dl.speaker}</span>}
+                    <p className={dl.isYou ? 'text-white' : 'text-stone-700 dark:text-stone-300'}>{dl.message}</p>
+                    <p className="mt-1 text-xs opacity-70" style={{ color: dl.isYou ? 'rgba(255,255,255,0.75)' : 'var(--muted)' }}>{chinese}</p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       )}
 
