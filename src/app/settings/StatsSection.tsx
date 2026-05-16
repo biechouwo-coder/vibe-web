@@ -34,8 +34,9 @@ export default async function StatsSection() {
       : 0
 
   return (
-    <>
-      <div className="grid gap-3 sm:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2">
+      {/* Left: 2×2 stat cards */}
+      <div className="grid grid-cols-2 gap-3">
         <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-4">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)]">Active Days</p>
           <p className="mt-1 text-2xl font-bold text-[var(--foreground)]">{dailyData.length}</p>
@@ -54,10 +55,11 @@ export default async function StatsSection() {
         </div>
       </div>
 
-      <div className="mt-4">
+      {/* Right: heatmap */}
+      <div>
         <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)] mb-2">Daily Activity</p>
         <HistoryClient dailyData={dailyData} />
       </div>
-    </>
+    </div>
   )
 }
