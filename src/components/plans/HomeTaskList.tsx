@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   DndContext,
   closestCenter,
@@ -100,11 +100,9 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
           <div className="space-y-0.5">
-            <AnimatePresence>
-              {tasks.map((task) => (
-                <SortableTaskRow key={task.id} task={task} onToggle={handleToggle} />
-              ))}
-            </AnimatePresence>
+            {tasks.map((task) => (
+              <SortableTaskRow key={task.id} task={task} onToggle={handleToggle} />
+            ))}
           </div>
         </SortableContext>
       </DndContext>
@@ -124,11 +122,8 @@ function SortableTaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id
   }), [transform, transition, isDragging])
 
   return (
-    <motion.div
+    <div
       ref={setNodeRef}
-      layout
-      initial={false}
-      animate={{ opacity: 1, y: 0 }}
       className="group flex items-center gap-2 rounded-[var(--radius-small)] border px-1.5 py-2 transition-colors"
       style={{
         ...style,
@@ -172,6 +167,6 @@ function SortableTaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id
       <p className={`flex-1 truncate text-sm ${task.completed ? 'text-[var(--text-soft)] line-through dark:text-stone-500' : 'text-[var(--text-main)] dark:text-stone-300'}`}>
         {task.title}
       </p>
-    </motion.div>
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   DndContext,
   closestCenter,
@@ -86,11 +86,9 @@ export default function TaskList({ tasks: initialTasks }: TaskListProps) {
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
           <div className="space-y-2">
-            <AnimatePresence>
-              {tasks.map((task) => (
-                <SortableTaskItem key={task.id} task={task} onToggle={handleToggle} />
-              ))}
-            </AnimatePresence>
+            {tasks.map((task) => (
+              <SortableTaskItem key={task.id} task={task} onToggle={handleToggle} />
+            ))}
           </div>
         </SortableContext>
       </DndContext>
@@ -118,12 +116,8 @@ function SortableTaskItem({ task, onToggle }: { task: TaskWithMeta; onToggle: (i
   }), [transform, transition, isDragging])
 
   return (
-    <motion.div
+    <div
       ref={setNodeRef}
-      layout
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, height: 0 }}
       className="group flex items-center gap-2 rounded-[var(--radius-control)] border p-3 transition-colors hover:border-[var(--text-muted)]"
       style={{
         ...style,
@@ -181,6 +175,6 @@ function SortableTaskItem({ task, onToggle }: { task: TaskWithMeta; onToggle: (i
           </svg>
         </button>
       </form>
-    </motion.div>
+    </div>
   )
 }
