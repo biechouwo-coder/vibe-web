@@ -25,7 +25,7 @@ export default async function SettingsPage() {
       </section>
 
       <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">
-        <h2 className="font-serif text-lg font-semibold text-[var(--foreground)]">History &amp; Stats</h2>
+        <h2 className="font-serif text-lg font-semibold text-[var(--foreground)]">Activity History</h2>
         <p className="mt-1 mb-4 text-sm text-[var(--muted)]">Your task completion statistics and activity overview</p>
         <StatsSection />
       </section>
