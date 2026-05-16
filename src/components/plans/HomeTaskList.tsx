@@ -47,6 +47,12 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
 
   const completedCount = tasks.filter((t) => t.completed).length
 
+  // Sort: incomplete first, then by sortOrder within each group
+  const sortedTasks = [...tasks].sort((a, b) => {
+    if (a.completed === b.completed) return a.sortOrder - b.sortOrder
+    return a.completed ? 1 : -1
+  })
+
   return (
     <>
       <Confetti active={showConfetti} />
@@ -63,7 +69,7 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
       </div>
       <div className="space-y-0.5">
         <AnimatePresence>
-          {tasks.map((task) => (
+          {sortedTasks.map((task) => (
             <TaskRow key={task.id} task={task} onToggle={handleToggle} />
           ))}
         </AnimatePresence>
