@@ -161,13 +161,17 @@ async function upsertDailyContent(
 
 function formatConversationContent(item: typeof conversationContent[0]): string {
   const lines: string[] = []
+  const transLines = item.translation.split('\n').filter(Boolean)
   lines.push(`**Topic:** ${item.topic}`)
   lines.push(`**Scenario:** ${item.scenario}`)
   lines.push(`
 **Dialogue:**`)
-  for (const d of item.dialogue) {
+  for (let i = 0; i < item.dialogue.length; i++) {
+    const d = item.dialogue[i]
+    const zh = transLines[i]?.replace(/^[^：]*：\s*/, '').trim() || ''
     lines.push(`
 ${d.speaker}: "${d.text}"`)
+    if (zh) lines.push(`**zh:** ${zh}`)
   }
   lines.push(`
 **Useful Expressions:**`)
@@ -179,9 +183,6 @@ ${d.speaker}: "${d.text}"`)
 **Tone Note:** ${item.toneNote}`)
   lines.push(`
 **Practice Prompt:** ${item.practicePrompt}`)
-  lines.push(`
-**Translation:**`)
-  lines.push(item.translation)
   return lines.join("")
 }
 

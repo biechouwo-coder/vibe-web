@@ -48,13 +48,23 @@ function parseUsefulExpressions(text: string): { expr: string; note: string }[] 
 
 function parseDialogueLines(text: string) {
   const speakers = ['Professor', 'You', 'Classmate', 'Team Member', 'Other Student', 'Staff', 'Advisor']
-  return text.split('\n').filter(Boolean).map((line) => {
-    const speaker = speakers.find(s => line.trim().startsWith(`${s}:`))
+  const raw = text.split('\n').filter(Boolean)
+  const result: { speaker: string; message: string; isYou: boolean; chinese: string }[] = []
+  for (let i = 0; i < raw.length; i++) {
+    const line = raw[i].trim()
+    const speaker = speakers.find(s => line.startsWith(`${s}:`))
     if (speaker) {
-      return { speaker, message: line.trim().replace(`${speaker}:`, '').replace(/^["']|["']$/g, '').trim(), isYou: speaker === 'You' }
+      const message = line.replace(`${speaker}:`, '').replace(/^["']|["']$/g, '').trim()
+      const isYou = speaker === 'You'
+      // Look ahead for **zh:** marker on the next line
+      let chinese = ''
+      if (i + 1 < raw.length && raw[i + 1].trim().startsWith('**zh:**')) {
+        chinese = raw[i + 1].trim().replace('**zh:**', '').trim()
+      }
+      result.push({ speaker, message, isYou, chinese })
     }
-    return null
-  }).filter((item): item is NonNullable<typeof item> => item !== null)
+  }
+  return result
 }
 
 function ConversationDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
@@ -62,9 +72,8 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
   const scenario = getConvSection(content.content, '**Scenario:**', ['**Dialogue:**', '**Useful Expressions:**'])
   const dialogueText = getConvSection(content.content, '**Dialogue:**', ['**Useful Expressions:**', '**Tone Note:**', '**Practice Prompt:**', '**Translation:**'])
   const usefulExprText = getConvSection(content.content, '**Useful Expressions:**', ['**Tone Note:**', '**Practice Prompt:**', '**Translation:**'])
-  const toneNote = getConvSection(content.content, '**Tone Note:**', ['**Practice Prompt:**', '**Translation:**'])
-  const practicePrompt = getConvSection(content.content, '**Practice Prompt:**', ['**Translation:**'])
-  const translation = getConvSection(content.content, '**Translation:**', [])
+  const toneNote = getConvSection(content.content, '**Tone Note:**', ['**Practice Prompt:**'])
+  const practicePrompt = getConvSection(content.content, '**Practice Prompt:**', [])
 
   const dialogueLines = dialogueText ? parseDialogueLines(dialogueText) : []
   const usefulExpressions = usefulExprText ? parseUsefulExpressions(usefulExprText) : []
@@ -109,6 +118,9 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
                 <div className={`max-w-[85%] rounded-[var(--radius-control)] px-3.5 py-2.5 text-sm leading-relaxed ${dl.isYou ? 'bg-[var(--academic-navy)] text-white dark:bg-[var(--academic-navy)]' : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'}`}>
                   {!dl.isYou && <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-stone-500">{dl.speaker}</span>}
                   <span>{dl.message}</span>
+                  {dl.chinese && (
+                    <p className="mt-1.5 text-xs leading-relaxed opacity-75" style={{ color: dl.isYou ? 'rgba(255,255,255,0.75)' : 'var(--muted)' }}>{dl.chinese}</p>
+                  )}
                 </div>
               </div>
             ))}
@@ -163,27 +175,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
         </div>
       )}
 
-      {(!!translation || !!legacyTrans) && (
-        <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Translation</p>
-          <div className="space-y-2.5">
-            {(dialogueLines.length > 0 ? dialogueLines : legacyDialog).map((dl, i) => {
-              const transLines = (translation || legacyTrans).split('\n').filter(Boolean)
-              const chinese = transLines[i]?.replace(/^[^：]*：\s*/, '')?.replace(/^["']|["']$/g, '')?.trim() || ''
-              if (!chinese) return null
-              return (
-                <div key={i} className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}>
-                  <div className="max-w-[85%] rounded-[var(--radius-control)] px-3.5 py-2 text-sm leading-relaxed" style={{ backgroundColor: dl.isYou ? 'var(--academic-navy)' : 'var(--task-surface)' }}>
-                    {!dl.isYou && <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-stone-500">{dl.speaker}</span>}
-                    <p className={dl.isYou ? 'text-white' : 'text-stone-700 dark:text-stone-300'}>{dl.message}</p>
-                    <p className="mt-1 text-xs opacity-70" style={{ color: dl.isYou ? 'rgba(255,255,255,0.75)' : 'var(--muted)' }}>{chinese}</p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      {/* Translation is now inline after each dialogue line */}
 
       <div className="flex items-center gap-3 pb-6">
         <button onClick={handlePush} disabled={content.pushed}
