@@ -84,7 +84,7 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
           : ''
       }`}
       style={{
-        backgroundColor: task.completed ? 'var(--task-hover)' : undefined,
+        backgroundColor: task.completed ? 'var(--task-hover)' : '#ffffff',
       }}
       onMouseEnter={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = 'var(--task-hover)'; }}
       onMouseLeave={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = ''; }}
