@@ -27,12 +27,21 @@ model Task {
   title       String
   description String?
   contentId   String?   // links auto-generated tasks to DailyContent
+  templateId  String?   // links to TaskTemplate if copied from pool
   completed   Boolean   @default(false)
   completedAt DateTime?
   sortOrder   Int       @default(0)
   createdAt   DateTime  @default(now())
 
   @@unique([date, contentId])
+}
+
+model TaskTemplate {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
 }
 
 model Streak {

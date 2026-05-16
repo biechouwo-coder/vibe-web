@@ -91,6 +91,56 @@ export async function deleteTask(taskId: string) {
   revalidatePath('/')
 }
 
+export async function getTemplates() {
+  return prisma.taskTemplate.findMany({ orderBy: { sortOrder: 'asc' } })
+}
+
+export async function createTemplate(formData: FormData) {
+  const title = formData.get('title') as string
+  if (!title?.trim()) return { error: 'Title is required' }
+
+  const lastTemplate = await prisma.taskTemplate.findFirst({ orderBy: { sortOrder: 'desc' } })
+
+  await prisma.taskTemplate.create({
+    data: {
+      title: title.trim(),
+      description: (formData.get('description') as string)?.trim() || null,
+      sortOrder: (lastTemplate?.sortOrder ?? -1) + 1,
+    },
+  })
+
+  revalidatePath('/plans')
+}
+
+export async function deleteTemplate(id: string) {
+  await prisma.taskTemplate.delete({ where: { id } })
+  revalidatePath('/plans')
+}
+
+export async function copyTemplateToToday(templateId: string) {
+  const template = await prisma.taskTemplate.findUnique({ where: { id: templateId } })
+  if (!template) return { error: 'Template not found' }
+
+  const date = getToday()
+  const lastTask = await prisma.task.findFirst({
+    where: { date },
+    orderBy: { sortOrder: 'desc' },
+  })
+
+  await prisma.task.create({
+    data: {
+      date,
+      title: template.title,
+      description: template.description,
+      templateId,
+      sortOrder: (lastTask?.sortOrder ?? -1) + 1,
+    },
+  })
+
+  revalidatePath('/plans')
+  revalidatePath('/')
+}
+
 export async function updateStreak() {
   const today = getToday()
 

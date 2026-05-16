@@ -1,15 +1,20 @@
 export const dynamic = 'force-dynamic'
 
-import { getTodaysTasks, getStreak } from '@/actions/plans'
+import { getTodaysTasks, getStreak, getTemplates } from '@/actions/plans'
+import { getShanghaiDateSeed } from '@/lib/date'
+import { getGreeting } from '@/lib/greetings'
 import AddTaskForm from '@/components/plans/AddTaskForm'
 import TaskList from '@/components/plans/TaskList'
+import TaskPool from '@/components/plans/TaskPool'
 import ProgressBar from '@/components/layout/ProgressBar'
-import StreakBadge from '@/components/ui/StreakBadge'
 import { formatShanghaiDate } from '@/lib/date'
 
 export default async function PlansPage() {
   const tasks = await getTodaysTasks()
+  const templates = await getTemplates()
   const streak = await getStreak()
+  const seed = getShanghaiDateSeed()
+  const greeting = getGreeting(seed * 13 + seed) // mix the seed for more variety
 
   const completedTasks = tasks.filter((t: { completed: boolean }) => t.completed).length
   const completionRate = tasks.length > 0 ? Math.round((completedTasks / tasks.length) * 100) : 0
@@ -21,32 +26,43 @@ export default async function PlansPage() {
   })
 
   return (
-    <div className="space-y-8">
-      <section className="flex items-start justify-between">
-        <div>
-          <h1 className="font-serif text-2xl font-semibold tracking-tight">Daily Plans</h1>
-          <p className="mt-1 text-sm text-[var(--text-muted)] dark:text-stone-400">{today}</p>
-        </div>
-        <StreakBadge current={streak.currentStreak} />
+    <div className="space-y-6">
+      {/* Greeting */}
+      <section>
+        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">{today}</p>
+        <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight text-[var(--foreground)]">
+          {greeting}
+        </h1>
       </section>
 
-      <section className="rounded-[var(--radius-panel)] border p-5" style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--task-surface)' }}>
+      {/* Progress */}
+      <section className="rounded-[var(--radius-panel)] border p-5" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--task-surface)' }}>
         <div className="mb-4 flex items-center justify-between">
-          <p className="text-sm font-medium text-[var(--text-muted)] dark:text-stone-400">
+          <p className="text-sm font-medium text-[var(--muted)]">
             {completedTasks}/{tasks.length} tasks completed
           </p>
-          <p className="text-sm font-bold text-[var(--text-main)] dark:text-stone-400">{completionRate}%</p>
+          <p className="text-sm font-bold text-[var(--foreground)]">{completionRate}%</p>
         </div>
         <ProgressBar value={completionRate} />
       </section>
 
-      <section>
-        <AddTaskForm />
-      </section>
+      {/* Dual-column layout */}
+      <div className="grid gap-6 sm:grid-cols-5">
+        {/* Left: today's tasks */}
+        <div className="sm:col-span-3">
+          <div className="mb-3">
+            <AddTaskForm />
+          </div>
+          <TaskList tasks={tasks} />
+        </div>
 
-      <section>
-        <TaskList tasks={tasks} />
-      </section>
+        {/* Right: task pool */}
+        <div className="sm:col-span-2">
+          <div className="rounded-[var(--radius-panel)] border p-4" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface)' }}>
+            <TaskPool templates={templates} />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
