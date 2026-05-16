@@ -11,7 +11,23 @@ import { formatShanghaiDate } from '@/lib/date'
 
 export default async function PlansPage() {
   const tasks = await getTodaysTasks()
-  const templates = await getTemplates()
+  let templates = await getTemplates()
+
+  // Seed default templates on first ever load
+  if (templates.length === 0) {
+    const { prisma } = await import('@/lib/prisma')
+    const defaults = [
+      'Review today\'s English vocabulary',
+      'Read today\'s academic passage',
+      'Practice speaking dialogue',
+      'Write a reflection on today\'s reading',
+      'Study 5 new academic terms',
+    ]
+    await prisma.taskTemplate.createMany({
+      data: defaults.map((title, i) => ({ title, sortOrder: i })),
+    })
+    templates = await getTemplates()
+  }
   const streak = await getStreak()
   const seed = getShanghaiDateSeed()
   const greeting = getGreeting(seed * 13 + seed) // mix the seed for more variety
