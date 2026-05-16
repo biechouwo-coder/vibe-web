@@ -79,7 +79,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
   const usefulExpressions = usefulExprText ? parseUsefulExpressions(usefulExprText) : []
 
   const isNewFormat = !!topic
-  let legacyDialog: { speaker: string; message: string; isYou: boolean }[] = []
+  let legacyDialog: { speaker: string; message: string; isYou: boolean; chinese: string }[] = []
   let legacyVocab = ''
   let legacyTrans = ''
 
