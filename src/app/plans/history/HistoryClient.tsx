@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 interface DayData {
   date: string
@@ -20,74 +20,104 @@ function getIntensity(rate: number): string {
   return 'bg-stone-700 dark:bg-stone-200'
 }
 
-export default function HistoryClient({ dailyData }: HistoryClientProps) {
-  // Build a heatmap grid - show last 12 weeks (84 days)
-  const today = new Date()
-  const cells: { date: string; rate: number; day: number; month: string }[] = []
+function buildMonthGrid(year: number, month: number, dailyData: DayData[]) {
+  const firstDay = new Date(year, month, 1)
+  const lastDay = new Date(year, month + 1, 0)
 
-  for (let i = 83; i >= 0; i--) {
-    const d = new Date(today)
-    d.setDate(d.getDate() - i)
-    const key = d.toISOString().split('T')[0]
-    const found = dailyData.find((dd) => dd.date === key)
+  // getDay() gives Sunday=0, we need Monday=0
+  const startWeekday = (firstDay.getDay() + 6) % 7
+  const daysInMonth = lastDay.getDate()
+
+  const dataMap = new Map(dailyData.map((d) => [d.date, d]))
+
+  const cells: { day: number; rate: number; label: string }[] = []
+
+  // Empty cells before first day
+  for (let i = 0; i < startWeekday; i++) {
+    cells.push({ day: 0, rate: -1, label: '' })
+  }
+
+  // Day cells
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
+    const found = dataMap.get(dateStr)
     const rate = found && found.total > 0 ? Math.round((found.completed / found.total) * 100) : 0
-    cells.push({
-      date: key,
-      rate,
-      day: d.getDate(),
-      month: d.toLocaleDateString('en-US', { month: 'short' }),
-    })
+    cells.push({ day: d, rate, label: String(d) })
   }
 
-  // Group into weeks
-  const weeks: typeof cells[] = []
-  for (let i = 0; i < cells.length; i += 7) {
-    weeks.push(cells.slice(i, i + 7))
+  return cells
+}
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+export default function HistoryClient({ dailyData }: HistoryClientProps) {
+  const now = new Date()
+  const [year, setYear] = useState(now.getFullYear())
+  const [month, setMonth] = useState(now.getMonth())
+
+  const prevMonth = () => {
+    if (month === 0) { setYear((y) => y - 1); setMonth(11) }
+    else setMonth((m) => m - 1)
   }
 
-  // Month labels: first month always shown, then on month change when day <= 7
-  const monthLabels: { index: number; label: string }[] = []
-  let lastMonth = ''
-  cells.forEach((c, i) => {
-    if (c.month !== lastMonth && (!lastMonth || c.day <= 7)) {
-      monthLabels.push({ index: Math.floor(i / 7), label: c.month })
-      lastMonth = c.month
-    }
-  })
+  const nextMonth = () => {
+    if (month === 11) { setYear((y) => y + 1); setMonth(0) }
+    else setMonth((m) => m + 1)
+  }
+
+  const cells = buildMonthGrid(year, month, dailyData)
 
   return (
-    <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-900">
-      <div className="flex gap-1">
-        <div className="flex flex-col gap-1 pt-5">
-          {monthLabels.map((m) => (
-            <span
-              key={m.label}
-              className="text-xs text-stone-400"
-              style={{ marginTop: m.index === 0 ? '0' : undefined }}
-            >
-              {m.label}
-            </span>
-          ))}
-        </div>
-        <div className="flex gap-1">
-          {weeks.map((week, wi) => (
-            <div key={wi} className="flex flex-col gap-1">
-              {week.map((cell) => (
-                <motion.div
-                  key={cell.date}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: wi * 0.02 }}
-                  className={`h-3 w-3 rounded-[var(--radius-small)] ${getIntensity(cell.rate)}`}
-                  title={`${cell.date}: ${cell.rate}%`}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
+    <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-4">
+      {/* Header with month nav */}
+      <div className="mb-3 flex items-center justify-between">
+        <button
+          onClick={prevMonth}
+          className="rounded p-1 text-[var(--text-soft)] transition-colors hover:text-[var(--text-main)]"
+        >
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <span className="text-sm font-semibold text-[var(--text-main)]">
+          {MONTHS[month]} {year}
+        </span>
+        <button
+          onClick={nextMonth}
+          className="rounded p-1 text-[var(--text-soft)] transition-colors hover:text-[var(--text-main)]"
+        >
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
 
-      <div className="mt-3 flex items-center gap-2 text-xs text-stone-400">
+      {/* Day-of-week header */}
+      <div className="grid grid-cols-7 gap-1 mb-1">
+        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+          <div key={i} className="text-center text-[10px] font-medium text-[var(--text-soft)]">
+            {d}
+          </div>
+        ))}
+      </div>
+
+      {/* Calendar grid */}
+      <div className="grid grid-cols-7 gap-1">
+        {cells.map((cell, i) => (
+          cell.day === 0 ? (
+            <div key={`e-${i}`} className="h-5 w-full" />
+          ) : (
+            <div
+              key={cell.day}
+              className={`h-5 w-full rounded-[var(--radius-small)] ${getIntensity(cell.rate)}`}
+              title={`${cell.label}: ${cell.rate}%`}
+            />
+          )
+        ))}
+      </div>
+
+      {/* Legend */}
+      <div className="mt-3 flex items-center gap-2 text-[10px] text-[var(--text-soft)]">
         <span>Less</span>
         <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-100 dark:bg-stone-900" />
         <div className="h-3 w-3 rounded-[var(--radius-small)] bg-stone-200 dark:bg-stone-800" />
