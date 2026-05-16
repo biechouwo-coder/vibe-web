@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Noto_Sans, Noto_Serif } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
+import PageTransition from '@/components/layout/PageTransition'
 import ThemeProvider from '@/components/theme/ThemeProvider'
 import { ThemeScript } from '@/components/theme/theme-script'
 
@@ -47,9 +48,11 @@ export default function RootLayout({
           <div className="flex h-dvh flex-col sm:flex-row sm:p-4 md:p-6">
             <Navbar />
             <main className="min-h-0 flex-1 overflow-y-auto rounded-none border border-[var(--border-light)] bg-[var(--surface)] shadow-[0_2px_4px_rgba(26,24,23,0.05)] sm:rounded-[var(--radius-shell)] dark:border-[var(--border)] dark:bg-[var(--surface)]">
-              <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10 lg:px-10">
-                {children}
-              </div>
+              <PageTransition>
+                <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10 lg:px-10">
+                  {children}
+                </div>
+              </PageTransition>
             </main>
           </div>
         </ThemeProvider>
