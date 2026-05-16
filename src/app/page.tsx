@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import { getDailyStats, getTodaysTasks } from '@/actions/plans'
 import { fetchTodaysContent } from '@/actions/learn'
-import StreakBadge from '@/components/ui/StreakBadge'
+
 import ProgressBar from '@/components/layout/ProgressBar'
 import DailyCard from '@/components/learn/DailyCard'
 import HomeTaskList from '@/components/plans/HomeTaskList'
@@ -71,9 +71,12 @@ export default async function Home() {
             <ProgressBar value={stats.completionRate} />
           </div>
 
-          <div className="mt-5 flex items-center gap-3 border-t border-[var(--border)] pt-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Streak</p>
-            <StreakBadge current={stats.streak.currentStreak} />
+          <div className="mt-5 flex items-center justify-center border-t border-[var(--border)] pt-4">
+            <div className="inline-flex items-center gap-2 rounded-full border-2 border-[var(--accent)] bg-[var(--surface)] px-4 py-1.5 shadow-sm">
+              <span className="text-sm">🔥</span>
+              <span className="text-sm font-bold tabular-nums text-[var(--accent)]">{stats.streak.currentStreak}</span>
+              <span className="text-sm font-medium text-[var(--muted)]">-Day Streak</span>
+            </div>
           </div>
 
           <Link
