@@ -26,7 +26,7 @@ export default function Navbar() {
             const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
             return (
               <Link key={item.href} href={item.href} className="relative flex flex-col items-center gap-0.5 px-2 py-2">
-                <span className={`transition-colors ${isActive ? 'text-sm font-bold text-[var(--accent)]' : 'text-xs text-[var(--text-muted)] hover:text-[var(--text-main)]'}`}>
+                <span className={`transition-colors ${isActive ? 'text-sm font-bold text-[var(--text-main)]' : 'text-xs text-[var(--text-muted)] hover:text-[var(--text-main)]'}`}>
                   {item.label === 'Study Desk' ? 'Desk' : item.label}
                 </span>
                 {isActive && (
