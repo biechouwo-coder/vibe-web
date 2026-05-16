@@ -72,7 +72,7 @@ export default async function Home() {
           </div>
 
           <div className="mt-5 flex items-center justify-center border-t border-[var(--border)] pt-4">
-            <div className="inline-flex items-center gap-2 rounded-full border-2 border-[var(--accent)] bg-[var(--surface)] px-4 py-1.5 shadow-sm">
+            <div className="inline-flex items-center gap-2 rounded-full border bg-[var(--surface)] px-4 py-1.5" style={{ borderColor: 'var(--border)' }}>
               <span className="text-sm">🔥</span>
               <span className="text-sm font-bold tabular-nums text-[var(--accent)]">{stats.streak.currentStreak}</span>
               <span className="text-sm font-medium text-[var(--muted)]">-Day Streak</span>
