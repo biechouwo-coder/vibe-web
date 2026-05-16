@@ -69,6 +69,9 @@ export default function HistoryClient({ dailyData }: HistoryClientProps) {
 
   return (
     <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-4">
+      {/* Daily Activity title */}
+      <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)] mb-3">Daily Activity</p>
+
       {/* Header with month nav */}
       <div className="mb-3 flex items-center justify-between">
         <button

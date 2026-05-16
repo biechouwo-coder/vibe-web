@@ -57,7 +57,6 @@ export default async function StatsSection() {
 
       {/* Right: heatmap */}
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)] mb-2">Daily Activity</p>
         <HistoryClient dailyData={dailyData} />
       </div>
     </div>
