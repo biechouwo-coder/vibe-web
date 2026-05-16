@@ -78,7 +78,7 @@ export default async function Home() {
 
           <Link
             href="/plans"
-            className="mt-4 flex items-center justify-center rounded-[var(--radius-control)] border border-[var(--border)] py-2 text-xs font-semibold uppercase tracking-[0.05em] text-[var(--muted)] transition-colors hover:border-[var(--academic-navy)] hover:text-[var(--academic-navy)]"
+            className="mt-4 flex items-center justify-center rounded-[var(--radius-control)] border border-[var(--border)] bg-[#ffffff] py-2 text-xs font-semibold uppercase tracking-[0.05em] text-[var(--muted)] transition-colors hover:border-[var(--academic-navy)] hover:text-[var(--academic-navy)]"
           >
             Open task planner
           </Link>
@@ -96,7 +96,7 @@ export default async function Home() {
             </svg>
           </Link>
         </div>
-        <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[#faf9f6] p-5">
+        <div className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[#ffffff] p-5">
           <HomeTaskList tasks={tasks} />
         </div>
       </section>
