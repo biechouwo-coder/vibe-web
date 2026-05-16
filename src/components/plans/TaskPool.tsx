@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { createTemplate, deleteTemplate, copyTemplateToToday } from '@/actions/plans'
 
 interface Template {
@@ -16,6 +16,16 @@ interface TaskPoolProps {
 
 export default function TaskPool({ templates }: TaskPoolProps) {
   const formRef = useRef<HTMLFormElement>(null)
+  const [feedback, setFeedback] = useState('')
+
+  const handleCopy = async (id: string) => {
+    setFeedback('')
+    const result = await copyTemplateToToday(id)
+    if (result?.error) {
+      setFeedback(result.error)
+      setTimeout(() => setFeedback(''), 2500)
+    }
+  }
 
   const handleCreate = async (formData: FormData) => {
     await createTemplate(formData)
@@ -25,6 +35,10 @@ export default function TaskPool({ templates }: TaskPoolProps) {
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)] mb-3">Available Tasks</p>
+
+      {feedback && (
+        <p className="mb-2 text-xs text-[var(--academic-red)]">{feedback}</p>
+      )}
 
       <div className="space-y-1.5">
         {templates.length === 0 && (
@@ -39,7 +53,7 @@ export default function TaskPool({ templates }: TaskPoolProps) {
             <span className="flex-1 text-sm text-[var(--text-main)] truncate">{t.title}</span>
             <div className="flex items-center gap-1">
               <button
-                onClick={() => copyTemplateToToday(t.id)}
+                onClick={() => handleCopy(t.id)}
                 className="rounded p-1 text-[var(--accent)] transition-colors hover:bg-[var(--task-hover)]"
                 title="Add to today"
               >

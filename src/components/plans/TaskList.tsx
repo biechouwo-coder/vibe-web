@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
   DndContext,
@@ -29,6 +29,9 @@ interface TaskListProps {
 export default function TaskList({ tasks: initialTasks }: TaskListProps) {
   const [tasks, setTasks] = useState(initialTasks)
   const [showConfetti, setShowConfetti] = useState(false)
+
+  // Sync when RSC revalidates (e.g. template added to today)
+  useEffect(() => { setTasks(initialTasks) }, [initialTasks])
 
   const handleToggle = useCallback(async (taskId: string) => {
     const task = tasks.find((t) => t.id === taskId)

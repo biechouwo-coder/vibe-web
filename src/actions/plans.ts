@@ -122,6 +122,13 @@ export async function copyTemplateToToday(templateId: string) {
   if (!template) return { error: 'Template not found' }
 
   const date = getToday()
+
+  // Prevent duplicate: same template can only be added once per day
+  const existing = await prisma.task.findFirst({
+    where: { date, templateId },
+  })
+  if (existing) return { error: 'This task is already on today\'s list' }
+
   const lastTask = await prisma.task.findFirst({
     where: { date },
     orderBy: { sortOrder: 'desc' },
