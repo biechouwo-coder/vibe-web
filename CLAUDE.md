@@ -21,9 +21,11 @@ npx prisma studio    # DB GUI
 ## UI Components
 - **PageTransition:** `src/components/layout/PageTransition.tsx` — wraps page content for 0.2s fade+slide on route change (`AnimatePresence mode="wait"`, `key=pathname`)
 - **ProgressBar:** track = `var(--task-track)` (#e8e4dd), fill = `var(--accent)` (#013E75)
-- **TaskItem (plans):** pending bg `#ffffff`, delete btn always visible (`self-center` vertically)
-- **HomeTaskList:** Notion-style rows — each task has `border var(--border)` + bg `#e8e4dd` / `var(--task-hover)`
+- **TaskList (plans):** drag-and-drop via `@dnd-kit/core` + `@dnd-kit/sortable`; pending bg `#ffffff`, delete btn always visible; `DragOverlay` follows cursor while original slot collapses
+- **HomeTaskList:** same dnd-kit drag-and-drop; Notion-style rows — `border var(--border)` + bg `#eeece6` / `var(--task-hover)`; 6-dot drag handle (⠿ pattern)
 - **Confetti:** 40 particles, 12-color rainbow palette
+- **Streak pill badge:** inline in `page.tsx` Progress card — `🔥 N-Day Streak` with `var(--border)` border
+- **reorderTasks action:** `src/actions/plans.ts` — persists drag order via `sortOrder` updates on every drop
 
 ## UI — Academic Research Desk
 - **Design system:** Academic Editorial — full spec in [DESIGN.md](DESIGN.md); Stitch project `projects/1422762201768554961`
