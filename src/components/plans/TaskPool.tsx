@@ -40,6 +40,24 @@ export default function TaskPool({ templates }: TaskPoolProps) {
         <p className="mb-2 text-xs text-[var(--academic-red)]">{feedback}</p>
       )}
 
+      {/* Add template form at the top, matching left column */}
+      <form ref={formRef} action={handleCreate} className="mb-3 flex gap-2">
+        <input
+          name="title"
+          type="text"
+          placeholder="New preset task..."
+          required
+          className="min-w-0 flex-1 rounded-[var(--radius-control)] border bg-[var(--surface)] px-3 py-2 text-sm outline-none placeholder:text-[var(--text-soft)]"
+          style={{ borderColor: 'var(--border)' }}
+        />
+        <button
+          type="submit"
+          className="rounded-[var(--radius-control)] bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-white transition-colors hover:brightness-110"
+        >
+          Add
+        </button>
+      </form>
+
       <div className="space-y-1.5">
         {templates.length === 0 && (
           <p className="text-xs text-[var(--text-soft)]">No preset tasks yet. Add one below.</p>
@@ -77,23 +95,6 @@ export default function TaskPool({ templates }: TaskPoolProps) {
         ))}
       </div>
 
-      {/* Add new template form */}
-      <form ref={formRef} action={handleCreate} className="mt-3 flex gap-2">
-        <input
-          name="title"
-          type="text"
-          placeholder="New preset task..."
-          required
-          className="min-w-0 flex-1 rounded-[var(--radius-control)] border bg-[var(--surface)] px-3 py-2 text-sm outline-none placeholder:text-[var(--text-soft)]"
-          style={{ borderColor: 'var(--border)' }}
-        />
-        <button
-          type="submit"
-          className="rounded-[var(--radius-control)] bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-white transition-colors hover:brightness-110"
-        >
-          Add
-        </button>
-      </form>
     </div>
   )
 }
