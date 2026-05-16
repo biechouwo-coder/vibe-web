@@ -9,7 +9,9 @@ import {
   TouchSensor,
   useSensor,
   useSensors,
+  DragOverlay,
   type DragEndEvent,
+  type DragStartEvent,
 } from '@dnd-kit/core'
 import {
   SortableContext,
@@ -28,6 +30,7 @@ interface TaskListProps {
 
 export default function TaskList({ tasks: initialTasks }: TaskListProps) {
   const [tasks, setTasks] = useState(initialTasks)
+  const [activeTask, setActiveTask] = useState<TaskWithMeta | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
 
   const handleToggle = useCallback(async (taskId: string) => {
@@ -49,7 +52,12 @@ export default function TaskList({ tasks: initialTasks }: TaskListProps) {
     }
   }, [tasks])
 
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    setActiveTask(tasks.find((t) => t.id === event.active.id) ?? null)
+  }, [tasks])
+
   const handleDragEnd = useCallback((event: DragEndEvent) => {
+    setActiveTask(null)
     const { active, over } = event
     if (!over || active.id === over.id) return
 
@@ -83,7 +91,7 @@ export default function TaskList({ tasks: initialTasks }: TaskListProps) {
     <>
       <Confetti active={showConfetti} />
 
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
           <div className="space-y-2">
             <AnimatePresence>
@@ -93,6 +101,30 @@ export default function TaskList({ tasks: initialTasks }: TaskListProps) {
             </AnimatePresence>
           </div>
         </SortableContext>
+        <DragOverlay>
+          {activeTask ? (
+            <div className="flex items-center gap-2 rounded-[var(--radius-control)] border bg-[var(--surface)] p-3 shadow-lg" style={{ borderColor: 'var(--border-card)' }}>
+              <svg className="h-4 w-4 shrink-0 text-[var(--text-soft)]" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="8" cy="7" r="1.5" /><circle cx="16" cy="7" r="1.5" />
+                <circle cx="8" cy="12" r="1.5" /><circle cx="16" cy="12" r="1.5" />
+                <circle cx="8" cy="17" r="1.5" /><circle cx="16" cy="17" r="1.5" />
+              </svg>
+              <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded border" style={{ borderColor: 'var(--text-soft)' }}>
+                {activeTask.completed && (
+                  <svg className="h-3 w-3 text-[var(--academic-navy)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-[var(--text-main)]">{activeTask.title}</p>
+                {activeTask.description && (
+                  <p className="mt-0.5 text-xs text-[var(--text-muted)]">{activeTask.description}</p>
+                )}
+              </div>
+            </div>
+          ) : null}
+        </DragOverlay>
       </DndContext>
 
       {completedCount > 0 && completedCount === tasks.length && (
@@ -112,7 +144,7 @@ function SortableTaskItem({ task, onToggle }: { task: TaskWithMeta; onToggle: (i
   const style = useMemo(() => ({
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0 : 1,
   }), [transform, transition, isDragging])
 
   return (

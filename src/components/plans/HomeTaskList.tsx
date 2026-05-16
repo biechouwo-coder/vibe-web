@@ -9,7 +9,9 @@ import {
   TouchSensor,
   useSensor,
   useSensors,
+  DragOverlay,
   type DragEndEvent,
+  type DragStartEvent,
 } from '@dnd-kit/core'
 import {
   SortableContext,
@@ -29,6 +31,7 @@ interface HomeTaskListProps {
 
 export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps) {
   const [tasks, setTasks] = useState(initialTasks)
+  const [activeTask, setActiveTask] = useState<TaskWithMeta | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
 
   const handleToggle = useCallback(async (taskId: string) => {
@@ -50,7 +53,8 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
     await toggleTask(taskId)
   }, [tasks])
 
-  const handleDragEnd = useCallback(async (event: DragEndEvent) => {
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
+    setActiveTask(null)
     const { active, over } = event
     if (!over || active.id === over.id) return
 
@@ -63,6 +67,10 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
       return reordered
     })
   }, [])
+
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    setActiveTask(tasks.find((t) => t.id === event.active.id) ?? null)
+  }, [tasks])
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
@@ -97,7 +105,7 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
         <span className="text-xs text-[var(--text-soft)] shrink-0 tabular-nums">{completedCount}/{tasks.length}</span>
       </div>
 
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
           <div className="space-y-0.5">
             <AnimatePresence>
@@ -107,6 +115,19 @@ export default function HomeTaskList({ tasks: initialTasks }: HomeTaskListProps)
             </AnimatePresence>
           </div>
         </SortableContext>
+        <DragOverlay>
+          {activeTask ? (
+            <div className="flex items-center gap-2 rounded-[var(--radius-small)] border bg-[var(--surface)] px-1.5 py-2 shadow-lg" style={{ borderColor: 'var(--border)', width: 'var(--drag-width, auto)' }}>
+              <svg className="h-4 w-4 shrink-0 text-[var(--text-soft)]" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="8" cy="7" r="1.5" /><circle cx="16" cy="7" r="1.5" />
+                <circle cx="8" cy="12" r="1.5" /><circle cx="16" cy="12" r="1.5" />
+                <circle cx="8" cy="17" r="1.5" /><circle cx="16" cy="17" r="1.5" />
+              </svg>
+              <div className="flex h-4 w-4 shrink-0 rounded border" style={{ borderColor: 'var(--text-soft)' }} />
+              <span className="flex-1 truncate text-sm text-[var(--text-main)]">{activeTask.title}</span>
+            </div>
+          ) : null}
+        </DragOverlay>
       </DndContext>
     </>
   )
@@ -118,7 +139,7 @@ function SortableTaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id
   const style = useMemo(() => ({
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0 : 1,
   }), [transform, transition, isDragging])
 
   return (
