@@ -86,11 +86,11 @@ function TaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id: string
       animate={{ opacity: 1, y: 0 }}
       className="group flex items-center gap-2.5 rounded-[var(--radius-small)] border px-2.5 py-2 transition-colors"
       style={{
-        backgroundColor: task.completed ? 'var(--task-hover)' : '#e8e4dd',
+        backgroundColor: task.completed ? 'var(--task-hover)' : '#eeece6',
         borderColor: 'var(--border)',
       }}
       onMouseEnter={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = 'var(--task-hover)'; }}
-      onMouseLeave={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = ''; }}
+      onMouseLeave={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = '#eeece6'; }}
     >
       <button
         onClick={() => onToggle(task.id)}
