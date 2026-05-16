@@ -143,8 +143,10 @@ function SortableTaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id
         {...listeners}
         aria-label="Drag to reorder"
       >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h.01M12 7h.01M16 7h.01M8 12h.01M12 12h.01M16 12h.01M8 17h.01M12 17h.01M16 17h.01" />
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="8" cy="7" r="1.5" /><circle cx="16" cy="7" r="1.5" />
+          <circle cx="8" cy="12" r="1.5" /><circle cx="16" cy="12" r="1.5" />
+          <circle cx="8" cy="17" r="1.5" /><circle cx="16" cy="17" r="1.5" />
         </svg>
       </button>
 
