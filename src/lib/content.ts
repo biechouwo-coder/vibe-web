@@ -1,3 +1,4 @@
+import { pushContentDirectly } from './notion'
 import { prisma } from './prisma'
 import {
   getShanghaiDate,
@@ -233,6 +234,31 @@ export async function getAllTodaysContent() {
   const passage = await getDailyPassage(reading)
 
   await ensureLearningTasks(conversation, vocabulary, passage)
+
+  // Auto-push to Notion if configured (silent, non-blocking)
+  Promise.all([
+    pushContentDirectly({
+      title: conversation.title,
+      type: 'conversation',
+      content: conversation.content,
+      tags: conversation.tags,
+      date: getShanghaiDate(),
+    }).catch(() => {}),
+    pushContentDirectly({
+      title: vocabulary.title,
+      type: 'vocabulary',
+      content: vocabulary.content,
+      tags: vocabulary.tags,
+      date: getShanghaiDate(),
+    }).catch(() => {}),
+    pushContentDirectly({
+      title: passage.title,
+      type: 'passage',
+      content: passage.content,
+      tags: passage.tags,
+      date: getShanghaiDate(),
+    }).catch(() => {}),
+  ])
 
   return { conversation, vocabulary, passage }
 }

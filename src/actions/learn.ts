@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { getAllTodaysContent } from '@/lib/content'
-import { pushEnglishContent } from '@/lib/notion'
+import { getNotionConfig as getNotionConfigFromLib, getNotionClient, pushEnglishContent } from '@/lib/notion'
 import { prisma } from '@/lib/prisma'
 
 export async function fetchTodaysContent() {
@@ -15,8 +15,8 @@ export async function pushToNotion(contentId: string) {
     revalidatePath('/learn')
     revalidatePath('/learn/[id]')
     return result
-  } catch {
-    return { ok: false, message: 'Notion not configured. Go to Settings first.' }
+  } catch (e) {
+    return { ok: false, message: String(e) }
   }
 }
 
@@ -32,6 +32,10 @@ export async function getContentHistory(limit = 30) {
 }
 
 export async function getNotionConfig() {
+  // Try env vars first, fall back to DB (Settings page)
+  const envConfig = await getNotionConfigFromLib()
+  if (envConfig?.hasToken) return envConfig
+
   const config = await prisma.notionConfig.findFirst()
   if (!config) return null
   return {
