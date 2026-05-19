@@ -253,9 +253,9 @@ export async function getAllTodaysContent() {
     const seed = getShanghaiDateSeed()
     const convItem = pickBySeed(conversationContent, seed)
     const readingItem = getDailyReadingItem()
-    conversation = { id: 'conv-' + seed, title: convItem.title, content: formatConversationContent(convItem), tags: convItem.tags, date: getShanghaiDate() }
-    vocabulary = { id: 'vocab-' + seed, title: 'Key Terms: ' + readingItem.title, content: formatVocabularyFromReading(readingItem), tags: readingItem.tags, date: getShanghaiDate() }
-    passage = { id: 'passage-' + seed, title: readingItem.title, content: formatReadingContent(readingItem), tags: readingItem.tags, date: getShanghaiDate() }
+    conversation = { id: 'conv-' + seed, title: convItem.title, content: formatConversationContent(convItem), tags: convItem.tags, date: getShanghaiDate(), pushed: false }
+    vocabulary = { id: 'vocab-' + seed, title: 'Key Terms: ' + readingItem.title, content: formatVocabularyFromReading(readingItem), tags: readingItem.tags, date: getShanghaiDate(), pushed: false }
+    passage = { id: 'passage-' + seed, title: readingItem.title, content: formatReadingContent(readingItem), tags: readingItem.tags, date: getShanghaiDate(), pushed: false }
   }
 
   // Auto-push to Notion if configured (silent, non-blocking)
