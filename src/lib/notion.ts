@@ -109,7 +109,7 @@ export async function pushEnglishContent(contentId: string) {
   // Dedup check: skip if already pushed (DB available) or just push (no DB)
   if (content.pushed) return { ok: true, message: 'Already pushed' }
 
-  const notion = new Client({ auth: config.token })
+  const notion = new Client({ auth: config.token ?? undefined })
 
   const blocks = buildNotionPageBlocks(content)
   await notion.pages.create({
@@ -148,7 +148,7 @@ export async function pushContentDirectly(content: {
     if (existing?.pushed) return
   } catch { /* DB not available */ }
 
-  const notion = new Client({ auth: config.token })
+  const notion = new Client({ auth: config.token ?? undefined })
   await notion.pages.create({
     parent: { database_id: config.dbEnglish },
     properties: buildNotionProperties(content),
