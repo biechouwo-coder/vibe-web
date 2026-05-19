@@ -64,6 +64,11 @@ export default async function SettingsPage() {
               Copy the Database ID from the URL (the string after the workspace name and before the &quot;?&quot;)
             </li>
           </ol>
+          <p className="mt-2 text-xs text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">
+            💡 For Railway/production: set <code className="rounded bg-stone-200 px-1 dark:bg-stone-700">NOTION_TOKEN</code>,{' '}
+            <code className="rounded bg-stone-200 px-1 dark:bg-stone-700">NOTION_ENGLISH_DB_ID</code>,{' '}
+            <code className="rounded bg-stone-200 px-1 dark:bg-stone-700">NOTION_PLANS_DB_ID</code> in your Environment Variables.
+          </p>
         </div>
 
         <SettingsForm config={config} />

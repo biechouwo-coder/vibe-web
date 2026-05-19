@@ -4,10 +4,37 @@ import { Client } from '@notionhq/client'
 import { prisma } from './prisma'
 import { toShanghaiISODate } from './date'
 
+function getEnvNotionConfig() {
+  const token = process.env.NOTION_TOKEN
+  const dbEnglish = process.env.NOTION_ENGLISH_DB_ID
+  const dbPlans = process.env.NOTION_PLANS_DB_ID
+  if (token && dbEnglish) return { token, dbEnglish, dbPlans: dbPlans ?? null }
+  return null
+}
+
 export async function getNotionClient() {
+  // Try env vars first (persists across Railway deploys)
+  const env = getEnvNotionConfig()
+  if (env) return new Client({ auth: env.token })
+  // Fallback to DB (local dev via Settings page)
   const config = await prisma.notionConfig.findFirst()
   if (!config?.token) return null
   return new Client({ auth: config.token })
+}
+
+/** Get Notion config from env vars or DB. */
+export async function getNotionConfig() {
+  const env = getEnvNotionConfig()
+  if (env) return { ...env, enabled: true, hasToken: true }
+  const config = await prisma.notionConfig.findFirst()
+  if (!config) return null
+  return {
+    token: config.token ?? null,
+    dbEnglish: config.dbEnglish ?? null,
+    dbPlans: config.dbPlans ?? null,
+    enabled: config.enabled,
+    hasToken: Boolean(config.token),
+  }
 }
 
 // ── Content-to-Notion-blocks parser ──
@@ -70,63 +97,127 @@ function parseContentToBlocks(text: string) {
 
 // ── Push functions ──
 
+/** Push content to Notion by contentId (from DB). */
 export async function pushEnglishContent(contentId: string) {
-  const config = await prisma.notionConfig.findFirst()
+  const config = await getNotionConfig()
   if (!config?.enabled || !config.dbEnglish) {
     throw new Error('Notion not configured')
   }
 
   const content = await prisma.dailyContent.findUnique({ where: { id: contentId } })
   if (!content) throw new Error('Content not found')
+  // Dedup check: skip if already pushed (DB available) or just push (no DB)
   if (content.pushed) return { ok: true, message: 'Already pushed' }
 
-  const notion = new Client({ auth: config.token ?? undefined })
+  const notion = new Client({ auth: config.token })
 
-  const typeEmoji: Record<string, string> = {
-    conversation: '💬',
-    vocabulary: '📚',
-    passage: '📖',
-  }
+  const blocks = buildNotionPageBlocks(content)
+  await notion.pages.create({
+    parent: { database_id: config.dbEnglish },
+    properties: buildNotionProperties(content),
+    children: blocks,
+  })
 
+  // Mark as pushed (DB may not be available in production, catch silently)
+  try {
+    await prisma.dailyContent.update({
+      where: { id: contentId },
+      data: { pushed: true },
+    })
+  } catch { /* DB not available */ }
+
+  return { ok: true, message: 'Pushed to Notion' }
+}
+
+/** Push content directly from in-memory data (no DB lookup needed). Used by auto-push. */
+export async function pushContentDirectly(content: {
+  title: string
+  type: string
+  content: string
+  tags: string | null
+  date: Date
+}) {
+  const config = await getNotionConfig()
+  if (!config?.enabled || !config.dbEnglish) return
+
+  // Skip if already pushed (DB available)
+  try {
+    const existing = await prisma.dailyContent.findUnique({
+      where: { date_type: { date: content.date, type: content.type } },
+    })
+    if (existing?.pushed) return
+  } catch { /* DB not available */ }
+
+  const notion = new Client({ auth: config.token })
+  await notion.pages.create({
+    parent: { database_id: config.dbEnglish },
+    properties: buildNotionProperties(content),
+    children: [
+      {
+        object: 'block',
+        type: 'heading_2',
+        heading_2: {
+          rich_text: [{ text: { content: `${typeEmoji[content.type] ?? ''} ${content.title}` } }],
+        },
+      },
+      { object: 'block', type: 'divider', divider: {} },
+      ...parseContentToBlocks(content.content),
+    ],
+  })
+
+  // Mark as pushed
+  try {
+    await prisma.dailyContent.update({
+      where: { date_type: { date: content.date, type: content.type } },
+      data: { pushed: true },
+    })
+  } catch { /* DB not available */ }
+}
+
+const typeEmoji: Record<string, string> = {
+  conversation: '💬',
+  vocabulary: '📚',
+  passage: '📖',
+}
+
+function buildNotionProperties(content: {
+  title: string
+  type: string
+  tags: string | null
+  date: Date
+}) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const properties: Record<string, any> = {
     Date: { date: { start: toShanghaiISODate(content.date) } },
     Type: { select: { name: content.type } },
     Title: { title: [{ text: { content: content.title } }] },
   }
-
   if (content.tags) {
     properties.Tags = { multi_select: content.tags.split(',').map((t: string) => ({ name: t.trim() })) }
   }
+  return properties
+}
 
-  const contentBlocks = parseContentToBlocks(content.content)
-
-  await notion.pages.create({
-    parent: { database_id: config.dbEnglish },
-    properties,
-    children: [
-      {
-        object: 'block',
-        type: 'heading_2',
-        heading_2: {
-          rich_text: [{ text: { content: `${typeEmoji[content.type] ?? '📝'} ${content.title}` } }],
-        },
+function buildNotionPageBlocks(content: {
+  title: string
+  type: string
+  content: string
+}) {
+  return [
+    {
+      object: 'block',
+      type: 'heading_2',
+      heading_2: {
+        rich_text: [{ text: { content: `${typeEmoji[content.type] ?? '📝'} ${content.title}` } }],
       },
-      { object: 'block', type: 'divider', divider: {} },
-      ...contentBlocks,
-    ],
-  })
-
-  await prisma.dailyContent.update({
-    where: { id: contentId },
-    data: { pushed: true },
-  })
-
-  return { ok: true, message: 'Pushed to Notion' }
+    },
+    { object: 'block', type: 'divider', divider: {} },
+    ...parseContentToBlocks(content.content),
+  ]
 }
 
 export async function pushTaskToNotion(taskId: string) {
-  const config = await prisma.notionConfig.findFirst()
+  const config = await getNotionConfig()
   if (!config?.enabled || !config.dbPlans) return
 
   const task = await prisma.task.findUnique({ where: { id: taskId } })
