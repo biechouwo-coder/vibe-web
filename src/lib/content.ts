@@ -228,12 +228,22 @@ export async function getDailyPassage(reading?: ReadingContentItem) {
 }
 
 export async function getAllTodaysContent() {
-  const reading = getDailyReadingItem()
-  const conversation = await getDailyConversation()
-  const vocabulary = await getDailyVocabulary(reading)
-  const passage = await getDailyPassage(reading)
-
-  await ensureLearningTasks(conversation, vocabulary, passage)
+  let conversation, vocabulary, passage
+  try {
+    const reading = getDailyReadingItem()
+    conversation = await getDailyConversation()
+    vocabulary = await getDailyVocabulary(reading)
+    passage = await getDailyPassage(reading)
+    await ensureLearningTasks(conversation, vocabulary, passage)
+  } catch {
+    // DB unavailable (e.g. SQLite schema on Railway PostgreSQL) — use fallback
+    const seed = getShanghaiDateSeed()
+    const convItem = pickBySeed(conversationContent, seed)
+    const readingItem = getDailyReadingItem()
+    conversation = { id: 'conv-' + seed, title: convItem.title, content: formatConversationContent(convItem), tags: convItem.tags, date: getShanghaiDate() }
+    vocabulary = { id: 'vocab-' + seed, title: 'Key Terms: ' + readingItem.title, content: formatVocabularyFromReading(readingItem), tags: readingItem.tags, date: getShanghaiDate() }
+    passage = { id: 'passage-' + seed, title: readingItem.title, content: formatReadingContent(readingItem), tags: readingItem.tags, date: getShanghaiDate() }
+  }
 
   // Auto-push to Notion if configured (silent, non-blocking)
   Promise.all([
