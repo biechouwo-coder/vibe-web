@@ -229,24 +229,33 @@ export async function getDailyPassage(reading?: ReadingContentItem) {
 }
 
 export async function getAllTodaysContent() {
-  const date = getShanghaiDate()
-  const reading = getDailyReadingItem()
+  let conversation, vocabulary, passage
+  try {
+    const date = getShanghaiDate()
+    const reading = getDailyReadingItem()
 
-  // Decide whether to seed learning tasks BEFORE content upsert runs.
-  const needsSeed = await (async () => {
-    const anyTask = await prisma.task.findFirst({ where: { date } })
-    if (anyTask) return false
-    // No tasks — check if it's a fresh day (no content yet) or a revisit after delete.
-    const anyContent = await prisma.dailyContent.findFirst({ where: { date } })
-    return !anyContent // seed only on the very first visit of the day
-  })()
+    const needsSeed = await (async () => {
+      const anyTask = await prisma.task.findFirst({ where: { date } })
+      if (anyTask) return false
+      const anyContent = await prisma.dailyContent.findFirst({ where: { date } })
+      return !anyContent
+    })()
 
-  const conversation = await getDailyConversation()
-  const vocabulary = await getDailyVocabulary(reading)
-  const passage = await getDailyPassage(reading)
+    conversation = await getDailyConversation()
+    vocabulary = await getDailyVocabulary(reading)
+    passage = await getDailyPassage(reading)
 
-  if (needsSeed) {
-    await seedLearningTasks(conversation, vocabulary, passage)
+    if (needsSeed) {
+      await seedLearningTasks(conversation, vocabulary, passage)
+    }
+  } catch {
+    // DB unavailable (e.g. SQLite schema on Railway PostgreSQL) — use fallback
+    const seed = getShanghaiDateSeed()
+    const convItem = pickBySeed(conversationContent, seed)
+    const readingItem = getDailyReadingItem()
+    conversation = { id: 'conv-' + seed, title: convItem.title, content: formatConversationContent(convItem), tags: convItem.tags, date: getShanghaiDate() }
+    vocabulary = { id: 'vocab-' + seed, title: 'Key Terms: ' + readingItem.title, content: formatVocabularyFromReading(readingItem), tags: readingItem.tags, date: getShanghaiDate() }
+    passage = { id: 'passage-' + seed, title: readingItem.title, content: formatReadingContent(readingItem), tags: readingItem.tags, date: getShanghaiDate() }
   }
 
   // Auto-push to Notion if configured (silent, non-blocking)
