@@ -252,7 +252,8 @@ function formatConversationContent(item: typeof conversationContent[0]): string 
     const zh = transLines[i]?.replace(/^[^：]*：\s*/, '').trim() || ''
     lines.push(`
 ${d.speaker}: "${d.text}"`)
-    if (zh) lines.push(`**zh:** ${zh}`)
+    if (zh) lines.push(`
+**zh:** ${zh}`)
   }
   lines.push(`
 **Useful Expressions:**`)
