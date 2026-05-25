@@ -3,6 +3,8 @@ import { prisma } from './prisma'
 import {
   getShanghaiDate,
   getShanghaiDateSeed,
+  getShanghaiWeekOfYear,
+  getShanghaiDayOfWeek,
 } from '@/lib/date'
 
 // Static content library for business & green finance English
@@ -146,6 +148,84 @@ function pickBySeed<T>(arr: T[], seed: number): T {
   return arr[seed % arr.length]
 }
 
+// ── Weekly article chunk helpers ──
+
+const CHUNK_LABELS = ['Reading 1', 'Reading 2', 'Reading 3', 'Reading 4', 'Vocabulary', 'Discussion'] as const
+
+/**
+ * Determine today's chunk index for the weekly article.
+ * @returns 0-5 for Mon-Sat, -1 for Sunday (review day)
+ */
+function getChunkIndex(): number {
+  const d = getShanghaiDayOfWeek() // 0=Mon..6=Sun
+  return d === 6 ? -1 : d
+}
+
+/** Split text into sentences by . or ? or ! followed by space or end. */
+function splitSentences(text: string): string[] {
+  const result: string[] = []
+  // Match sentences ending with punctuation followed by a space or end-of-string.
+  // Handles common abbreviations by requiring the next word to start with a capital.
+  let remaining = text.trim()
+  const re = /[.?!](?:\s+|$)/g
+  let match: RegExpExecArray | null
+  let prevEnd = 0
+  while ((match = re.exec(remaining)) !== null) {
+    const end = match.index + match[0].length
+    const sentence = remaining.slice(prevEnd, end).trim()
+    if (sentence) result.push(sentence)
+    prevEnd = end
+  }
+  const tail = remaining.slice(prevEnd).trim()
+  if (tail) {
+    // Append to last sentence if it doesn't end with punctuation
+    if (result.length > 0 && !/[.?!]$/.test(tail)) {
+      result[result.length - 1] += ' ' + tail
+    } else if (tail) {
+      result.push(tail)
+    }
+  }
+  return result.filter(Boolean)
+}
+
+/** Distribute `count` items as evenly as possible across `days` buckets. */
+function distributeIndices(count: number, days: number): number[][] {
+  if (count === 0 || days === 0) return Array.from({ length: days }, () => [])
+  const buckets: number[][] = Array.from({ length: days }, () => [])
+  for (let i = 0; i < count; i++) {
+    const dayIndex = Math.floor((i * days) / count)
+    if (dayIndex < days) buckets[dayIndex].push(i)
+  }
+  return buckets
+}
+
+/** Chunk configuration for each day (Mon-Sat) and Sunday review. */
+interface ChunkConfig {
+  excerptChunk: number     // excerpt bucket index, -1 = none unless fullContent
+  writingFocus: boolean
+  vocabChunk: number       // vocab bucket index, -1 = none unless fullVocab
+  discussion: boolean
+  fullVocab: boolean
+  fullContent: boolean     // Sunday review — show everything
+}
+
+const CHUNK_CONFIGS: ChunkConfig[] = [
+  // Mon            excerpt  WF    vocab    disc  fullV  fullC
+  { excerptChunk: 0, writingFocus: false, vocabChunk: 0, discussion: false, fullVocab: false, fullContent: false },
+  // Tue
+  { excerptChunk: 1, writingFocus: false, vocabChunk: 1, discussion: false, fullVocab: false, fullContent: false },
+  // Wed
+  { excerptChunk: 2, writingFocus: true,  vocabChunk: 2, discussion: false, fullVocab: false, fullContent: false },
+  // Thu
+  { excerptChunk: -1, writingFocus: false, vocabChunk: -1, discussion: false, fullVocab: false, fullContent: false },
+  // Fri — full vocab
+  { excerptChunk: -1, writingFocus: false, vocabChunk: -1, discussion: false, fullVocab: true,  fullContent: false },
+  // Sat — discussion
+  { excerptChunk: -1, writingFocus: false, vocabChunk: -1, discussion: true,  fullVocab: true,  fullContent: false },
+  // Sun (index -1) — review
+  { excerptChunk: -1, writingFocus: true,  vocabChunk: -1, discussion: true,  fullVocab: true,  fullContent: true },
+]
+
 /** Upsert daily content by date+type (unique constraint ensures no duplicates). */
 async function upsertDailyContent(
   date: Date,
@@ -200,30 +280,35 @@ export async function getDailyConversation()
 }
 
 /**
- * Select today's reading item from readingContent.
- * Uses the same date seed as conversations for consistent pairing.
+ * Select this week's reading item from readingContent.
+ * Uses ISO week number so the same article persists Mon-Sun and
+ * changes on Monday.
  */
-function getDailyReadingItem(): ReadingContentItem {
-  const seed = getShanghaiDateSeed()
-  return pickBySeed(readingContent, seed)
+function getWeeklyReadingItem(): ReadingContentItem {
+  const week = getShanghaiWeekOfYear()
+  return pickBySeed(readingContent, week)
 }
 
 export async function getDailyVocabulary(reading?: ReadingContentItem) {
   const date = getShanghaiDate()
-  const r = reading ?? getDailyReadingItem()
+  const r = reading ?? getWeeklyReadingItem()
+  const ci = getChunkIndex() // 0-5 for Mon-Sat, -1 for Sun
+  const label = ci === -1 ? 'Review' : CHUNK_LABELS[ci]
   return upsertDailyContent(date, 'vocabulary', {
-    title: 'Key Terms: ' + r.title,
-    content: formatVocabularyFromReading(r),
+    title: 'Key Terms: ' + r.title + ' — ' + label,
+    content: formatWeeklyVocabularyContent(r, ci),
     tags: 'vocabulary,from-reading,' + r.tags,
   })
 }
 
 export async function getDailyPassage(reading?: ReadingContentItem) {
   const date = getShanghaiDate()
-  const r = reading ?? getDailyReadingItem()
+  const r = reading ?? getWeeklyReadingItem()
+  const ci = getChunkIndex() // 0-5 for Mon-Sat, -1 for Sun
+  const label = ci === -1 ? 'Review' : CHUNK_LABELS[ci]
   return upsertDailyContent(date, 'passage', {
-    title: r.title,
-    content: formatReadingContent(r),
+    title: r.title + ' — ' + label,
+    content: formatWeeklyPassageContent(r, ci),
     tags: r.tags,
   })
 }
@@ -232,7 +317,8 @@ export async function getAllTodaysContent() {
   let conversation, vocabulary, passage
   try {
     const date = getShanghaiDate()
-    const reading = getDailyReadingItem()
+    const reading = getWeeklyReadingItem()
+    const ci = getChunkIndex()
 
     const needsSeed = await (async () => {
       const anyTask = await prisma.task.findFirst({ where: { date } })
@@ -252,10 +338,12 @@ export async function getAllTodaysContent() {
     // DB unavailable (e.g. SQLite schema on Railway PostgreSQL) — use fallback
     const seed = getShanghaiDateSeed()
     const convItem = pickBySeed(conversationContent, seed)
-    const readingItem = getDailyReadingItem()
+    const readingItem = getWeeklyReadingItem()
+    const ci = getChunkIndex()
+    const label = ci === -1 ? 'Review' : CHUNK_LABELS[ci]
     conversation = { id: 'conv-' + seed, title: convItem.title, content: formatConversationContent(convItem), tags: convItem.tags, date: getShanghaiDate(), pushed: false }
-    vocabulary = { id: 'vocab-' + seed, title: 'Key Terms: ' + readingItem.title, content: formatVocabularyFromReading(readingItem), tags: readingItem.tags, date: getShanghaiDate(), pushed: false }
-    passage = { id: 'passage-' + seed, title: readingItem.title, content: formatReadingContent(readingItem), tags: readingItem.tags, date: getShanghaiDate(), pushed: false }
+    vocabulary = { id: 'vocab-' + seed, title: 'Key Terms: ' + readingItem.title + ' — ' + label, content: formatWeeklyVocabularyContent(readingItem, ci), tags: readingItem.tags, date: getShanghaiDate(), pushed: false }
+    passage = { id: 'passage-' + seed, title: readingItem.title + ' — ' + label, content: formatWeeklyPassageContent(readingItem, ci), tags: readingItem.tags, date: getShanghaiDate(), pushed: false }
   }
 
   // Auto-push to Notion if configured (silent, non-blocking)
@@ -392,6 +480,109 @@ export function formatVocabularyFromReading(item: ReadingContentItem): string {
   }).join('\n')
 }
 
+
+// ── Weekly chunked formatters ──
+
+function formatWeeklyPassageContent(item: ReadingContentItem, chunkIndex: number): string {
+  const cfg = chunkIndex === -1 ? CHUNK_CONFIGS[6] : CHUNK_CONFIGS[chunkIndex]
+  const lines: string[] = []
+
+  // Always show paper metadata
+  lines.push('**Paper:** ' + item.paperTitle)
+  lines.push('**Authors:** ' + item.authors)
+  lines.push('**Journal:** ' + item.journal)
+  lines.push('**Year:** ' + String(item.year))
+  lines.push('**DOI:** https://doi.org/' + item.doi)
+  lines.push('')
+
+  // Excerpt
+  const sentences = splitSentences(item.excerpt)
+  const excerptDays = Math.min(sentences.length, 3) // Mon-Wed for excerpt chunks
+  const excerptBuckets = distributeIndices(sentences.length, excerptDays)
+
+  if (cfg.fullContent) {
+    // Sunday review — show everything
+    lines.push('**Excerpt:**')
+    lines.push(item.excerpt)
+    lines.push('')
+    lines.push('**Writing Focus:**')
+    lines.push(item.writingFocus)
+    lines.push('')
+  } else if (cfg.excerptChunk >= 0 && cfg.excerptChunk < excerptBuckets.length) {
+    lines.push('**Excerpt:**')
+    for (const idx of excerptBuckets[cfg.excerptChunk]) {
+      lines.push(sentences[idx])
+    }
+    lines.push('')
+    if (cfg.writingFocus) {
+      lines.push('**Writing Focus:**')
+      lines.push(item.writingFocus)
+      lines.push('')
+    }
+  } else if (cfg.excerptChunk === -1 && !cfg.fullContent) {
+    // No excerpt on Thu (excerptChunk=-1) — show writing focus or vocab instead
+    if (chunkIndex === 3) {
+      // Thu — show remaining excerpt if any, plus full vocab (handled below)
+      const allDone = excerptDays >= 3 && excerptBuckets.flat().length >= sentences.length
+      if (!allDone) {
+        // Show any leftover sentences
+        const done = new Set(excerptBuckets.flat())
+        const remaining = sentences.filter((_, i) => !done.has(i))
+        if (remaining.length > 0) {
+          lines.push('**Excerpt:**')
+          for (const s of remaining) lines.push(s)
+          lines.push('')
+        }
+      }
+    }
+  }
+
+  // Key Vocabulary
+  if (cfg.fullVocab || cfg.fullContent) {
+    lines.push('**Key Vocabulary:**')
+    for (const v of item.vocabulary) {
+      const phonetic = v.phonetic ? '/' + v.phonetic + '/' : ''
+      lines.push('- ' + v.term + (phonetic ? ' ' + phonetic : '') + ': ' + v.chinese)
+    }
+    lines.push('')
+  }
+
+  // Discussion
+  if (cfg.discussion || cfg.fullContent) {
+    lines.push('**Discussion Questions:**')
+    item.discussionQuestions.forEach((q, i) => {
+      lines.push(String(i + 1) + '. ' + q)
+    })
+  }
+
+  return lines.join('\n')
+}
+
+function formatWeeklyVocabularyContent(item: ReadingContentItem, chunkIndex: number): string {
+  const cfg = chunkIndex === -1 ? CHUNK_CONFIGS[6] : CHUNK_CONFIGS[chunkIndex]
+
+  let termIndices: number[]
+  if (cfg.fullVocab || cfg.fullContent) {
+    termIndices = item.vocabulary.map((_, i) => i)
+  } else if (cfg.vocabChunk >= 0) {
+    const vocabBuckets = distributeIndices(item.vocabulary.length, 3)
+    termIndices = vocabBuckets[cfg.vocabChunk] ?? []
+  } else {
+    termIndices = []
+  }
+
+  return termIndices.map((idx) => {
+    const v = item.vocabulary[idx]
+    const parts: string[] = []
+    const num = idx + 1
+    const phonetic = v.phonetic ? ' /' + v.phonetic + '/' : ''
+    parts.push('## ' + String(num) + '. ' + v.term + phonetic + ' (' + v.chinese + ')')
+    parts.push('**Definition:** ' + v.definition)
+    parts.push('**Example:** "' + v.example + '"')
+    parts.push('**Chinese:** ' + v.chinese)
+    return parts.join('\n')
+  }).join('\n')
+}
 
 export const readingContent: ReadingContentItem[] = [
   {

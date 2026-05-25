@@ -58,6 +58,16 @@ export function getShanghaiWeekOfYear(): number {
 }
 
 /**
+ * Day-of-week index based on Shanghai timezone.
+ * @returns 0=Monday, 1=Tuesday, ..., 6=Sunday
+ */
+export function getShanghaiDayOfWeek(): number {
+  const { year, month, day } = shanghaiParts()
+  const date = new Date(`${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T00:00:00.000Z`)
+  return (date.getUTCDay() + 6) % 7
+}
+
+/**
  * Day-of-year index (0-based) based on Shanghai timezone.
  * Used for passage rotation (every 3 days).
  */

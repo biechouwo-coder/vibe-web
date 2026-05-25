@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { getAllTodaysContent } from '@/lib/content'
 import { getNotionConfig as getNotionConfigFromLib, getNotionClient, pushEnglishContent } from '@/lib/notion'
 import { prisma } from '@/lib/prisma'
+import { getShanghaiDate, getShanghaiDayOfWeek } from '@/lib/date'
 
 export async function fetchTodaysContent() {
   return getAllTodaysContent()
@@ -24,10 +25,28 @@ export async function getContentById(id: string) {
   return prisma.dailyContent.findUnique({ where: { id } })
 }
 
-export async function getContentHistory(limit = 30) {
-  return prisma.dailyContent.findMany({
+export async function getContentHistory(limit = 50) {
+  // Only show records from the current week (Monday onwards, Shanghai timezone)
+  const today = getShanghaiDate()
+  const dayOfWeek = getShanghaiDayOfWeek() // 0=Mon..6=Sun
+  const monday = new Date(today)
+  monday.setUTCDate(monday.getUTCDate() - dayOfWeek)
+
+  const entries = await prisma.dailyContent.findMany({
+    where: { date: { gte: monday } },
     orderBy: { date: 'desc' },
     take: limit,
+  })
+
+  // Deduplicate passage entries by base article title since weekly chunks
+  // create separate DB rows for each weekday (same article, different chunk label).
+  const seen = new Set<string>()
+  return entries.filter((e) => {
+    if (e.type !== 'passage') return true
+    const base = e.title.replace(/ — (Reading \d|Vocabulary|Discussion|Review)$/, '')
+    if (seen.has(base)) return false
+    seen.add(base)
+    return true
   })
 }
 

@@ -33,7 +33,7 @@ npx prisma studio    # DB GUI
 - **Background:** Warm Paper `#faf8f3` (outer), Pure White `#ffffff` (workspace) — tonal layering, not shadows
 - **Cards:** `rounded-2xl`, `border border-[var(--border)]`, ambient shadow `0_2px_4px_rgba(26,24,23,0.05)` on hover
 - **Color tokens:** `--academic-navy: #013E75` (primary), `--academic-red: #A42423` (destructive), `--paper: #faf8f3` (outer bg), `--muted: #706c67` (secondary text), `--border: #e8e4dd`
-- **Warm paper palette** — no `stone-*`, no `zinc-*`; all colors via CSS variables in `globals.css`
+- **Warm paper palette** — CSS variables in `globals.css` define the design palette; `stone-*`/`zinc-*` Tailwind classes remain in some legacy components (detail pages, history page) — prefer CSS variables for new code
 - **No emerald/green** in UI classes; no emoji; no gradients
 
 ## Color Usage
@@ -57,10 +57,18 @@ npx prisma studio    # DB GUI
 - VocabCards: `src/components/learn/VocabCards.tsx` (academic glossary, 40px slide, reduced-motion aware)
 
 ## Content Library (`src/lib/content.ts`)
-- **Conversations (8)**: topic-based with `formatConversationContent()` — outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation
-- **Readings (6)**: Journal-based `readingContent` array — paperTitle/authors/journal/year/doi/excerpt/writingFocus/vocabulary/discussionQuestions
-- Vocabulary and passage come from the **same** reading item via `getDailyReadingItem()`
-- Formatters: `formatReadingContent()` → passage DB, `formatVocabularyFromReading()` → vocabulary DB
+- **Conversations (8)**: topic-based with `formatConversationContent()` — outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation; **daily rotation** via `getShanghaiDateSeed()`
+- **Readings (6)**: Journal-based `readingContent` array — paperTitle/authors/journal/year/doi/excerpt/writingFocus/vocabulary/discussionQuestions; **weekly rotation** via `getShanghaiWeekOfYear()`
+- One article per week (Mon-Sat chunked progressive study, Sunday full review)
+- **Weekly chunk system**:
+  - `getWeeklyReadingItem()` — selects article by week number
+  - `getChunkIndex()` → 0-5 (Mon-Sat), -1 (Sun review)
+  - `CHUNK_CONFIGS[6]` — Mon=Reading 1, Tue=Reading 2, Wed=Reading 3+WF, Thu=extra, Fri=Vocab, Sat=Discussion
+  - `CHUNK_CONFIGS[6]` (Sun) — fullContent review mode
+  - `splitSentences()` + `distributeIndices()` — evenly splits excerpt across Mon-Wed
+- Vocabulary and passage come from the **same** reading item via `getWeeklyReadingItem()`
+- Formatters: `formatWeeklyPassageContent(item, chunkIndex)` → passage DB, `formatWeeklyVocabularyContent(item, chunkIndex)` → vocabulary DB
+- History (`getContentHistory()`) shows only current week's records (filtered by Monday, Shanghai timezone), deduplicates passage entries by base title
 
 ## DailyCard CTAs
 - Speaking Practice → **Practice**
