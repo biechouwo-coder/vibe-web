@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { getAllTodaysContent } from '@/lib/content'
 import { getNotionConfig as getNotionConfigFromLib, getNotionClient, pushEnglishContent } from '@/lib/notion'
 import { prisma } from '@/lib/prisma'
+import { getShanghaiDate, getShanghaiDayOfWeek } from '@/lib/date'
 
 export async function fetchTodaysContent() {
   return getAllTodaysContent()
@@ -25,13 +26,14 @@ export async function getContentById(id: string) {
 }
 
 export async function getContentHistory(limit = 50) {
-  // Show last 14 days of records (wide enough to cover a full article cycle)
-  const cutoff = new Date()
-  cutoff.setUTCDate(cutoff.getUTCDate() - 14)
-  cutoff.setUTCHours(0, 0, 0, 0)
+  // Only show records from the current week (Monday onwards, Shanghai timezone)
+  const today = getShanghaiDate()
+  const dayOfWeek = getShanghaiDayOfWeek() // 0=Mon..6=Sun
+  const monday = new Date(today)
+  monday.setUTCDate(monday.getUTCDate() - dayOfWeek)
 
   const entries = await prisma.dailyContent.findMany({
-    where: { date: { gte: cutoff } },
+    where: { date: { gte: monday } },
     orderBy: { date: 'desc' },
     take: limit,
   })
