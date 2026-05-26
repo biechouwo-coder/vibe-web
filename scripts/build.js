@@ -1,13 +1,21 @@
-// Build script: ensure DATABASE_URL is valid for SQLite
+// Build script: detect database type and run Prisma generate + Next build
 const { execSync } = require('child_process')
+const path = require('path')
 
-const url = process.env.DATABASE_URL
+const url = process.env.DATABASE_URL || ''
+const isPostgres = url.startsWith('postgresql://')
+const schemaFlag = isPostgres ? '--schema=prisma/schema.postgres.prisma' : ''
+const dbLabel = isPostgres ? 'PostgreSQL' : 'SQLite'
 
-// If DATABASE_URL is missing or not a file: URL (e.g. leftover PostgreSQL URL), force SQLite
-if (!url || !url.startsWith('file:')) {
-  process.env.DATABASE_URL = 'file:./dev.db'
-  console.log('[build] DATABASE_URL=' + process.env.DATABASE_URL + ' (was: ' + (url || '(unset)') + ')')
-}
+console.log(`[build] Detected ${dbLabel} (DATABASE_URL=${url ? url.slice(0, 30) + '...' : '(unset)'})`)
 
-execSync('npx prisma generate', { stdio: 'inherit', env: process.env })
-execSync('npx next build', { stdio: 'inherit', env: process.env })
+execSync(`npx prisma generate ${schemaFlag}`.trim(), {
+  stdio: 'inherit',
+  env: process.env,
+  cwd: path.resolve(__dirname, '..'),
+})
+execSync('npx next build', {
+  stdio: 'inherit',
+  env: process.env,
+  cwd: path.resolve(__dirname, '..'),
+})

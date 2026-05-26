@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model DailyContent {
+  id        String   @id @default(cuid())
+  date      DateTime
+  type      String   // "conversation" | "vocabulary" | "passage"
+  title     String
+  content   String   // Markdown content
+  source    String?
+  tags      String?  // comma-separated
+  pushed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@unique([date, type])
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  date        DateTime
+  title       String
+  description String?
+  contentId   String?   // links auto-generated tasks to DailyContent
+  templateId  String?   // links to TaskTemplate if copied from pool
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+
+  @@unique([date, contentId])
+}
+
+model TaskTemplate {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model Streak {
+  id            String    @id @default("default")
+  currentStreak Int       @default(0)
+  longestStreak Int       @default(0)
+  lastActive    DateTime?
+}
+
+model NotionConfig {
+  id        String  @id @default("default")
+  token     String? // Notion integration token (plain text — no encryption at rest)
+  dbEnglish String? // English learning database ID
+  dbPlans   String? // Daily plans database ID
+  enabled   Boolean @default(false)
+}
+
+model AiConfig {
+  id        String  @id @default("default")
+  apiKey    String? // DeepSeek API key (plain text — no encryption at rest)
+  enabled   Boolean @default(false)
+}
