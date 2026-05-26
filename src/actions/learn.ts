@@ -92,3 +92,24 @@ export async function saveNotionConfig(formData: FormData) {
 
   revalidatePath('/settings')
 }
+
+export async function getAiConfig() {
+  const envKey = process.env.DEEPSEEK_API_KEY
+  if (envKey) return { apiKey: envKey, enabled: true, hasEnvKey: true }
+
+  const config = await prisma.aiConfig.findFirst()
+  return config ?? { id: 'default', apiKey: null, enabled: false }
+}
+
+export async function saveAiConfig(formData: FormData) {
+  const apiKey = formData.get('apiKey')?.toString().trim() || null
+  const enabled = formData.get('enabled') === 'on'
+
+  await prisma.aiConfig.upsert({
+    where: { id: 'default' },
+    update: { apiKey, enabled },
+    create: { id: 'default', apiKey, enabled },
+  })
+
+  revalidatePath('/settings')
+}

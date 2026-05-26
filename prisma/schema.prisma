@@ -58,3 +58,9 @@ model NotionConfig {
   dbPlans   String? // Daily plans database ID
   enabled   Boolean @default(false)
 }
+
+model AiConfig {
+  id        String  @id @default("default")
+  apiKey    String? // DeepSeek API key (plain text — no encryption at rest)
+  enabled   Boolean @default(false)
+}

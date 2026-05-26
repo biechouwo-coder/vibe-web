@@ -1,12 +1,14 @@
 export const dynamic = 'force-dynamic'
 
-import { getNotionConfig } from '@/actions/learn'
+import { getNotionConfig, getAiConfig } from '@/actions/learn'
 import SettingsForm from './SettingsForm'
+import AiSettingsForm from './AiSettingsForm'
 import ThemeSelector from '@/components/theme/ThemeSelector'
 import StatsSection from './StatsSection'
 
 export default async function SettingsPage() {
   const config = await getNotionConfig()
+  const aiConfig = await getAiConfig()
 
   return (
     <div className="space-y-8">
@@ -77,11 +79,11 @@ export default async function SettingsPage() {
       <section className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
         <h2 className="font-serif text-lg font-semibold">AI Content Generation</h2>
         <p className="mt-1 text-sm text-stone-500">
-          Generate daily English conversations using AI via DeepSeek API.
+          Generate daily English conversations using DeepSeek API.
         </p>
 
         <div className="mt-4 rounded-[var(--radius-panel)] border border-stone-200 bg-stone-50 p-4 text-sm text-stone-700 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300">
-          <p className="font-medium">How to set up:</p>
+          <p className="font-medium">Get your API key:</p>
           <ol className="mt-2 list-inside list-decimal space-y-1 text-xs">
             <li>
               Go to{' '}
@@ -91,22 +93,15 @@ export default async function SettingsPage() {
                 rel="noopener noreferrer"
                 className="underline"
               >
-                DeepSeek API Keys
-              </a>{' '}
-              and create an API key
+                platform.deepseek.com/api_keys
+              </a>
             </li>
-            <li>Copy the API key</li>
-            <li>
-              Set it as the <code className="rounded bg-stone-200 px-1 dark:bg-stone-700">DEEPSEEK_API_KEY</code> environment variable
-            </li>
+            <li>Create a new API key and copy it</li>
+            <li>Paste it below and enable AI generation</li>
           </ol>
-          <p className="mt-2 text-xs text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">
-            💡 For local dev: add to <code className="rounded bg-stone-200 px-1 dark:bg-stone-700">.env.local</code> as <code className="rounded bg-stone-200 px-1 dark:bg-stone-700">DEEPSEEK_API_KEY=sk-xxxx</code>
-          </p>
-          <p className="mt-1 text-xs text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">
-            💡 For Railway: set <code className="rounded bg-stone-200 px-1 dark:bg-stone-700">DEEPSEEK_API_KEY</code> in Environment Variables
-          </p>
         </div>
+
+        <AiSettingsForm config={aiConfig} />
       </section>
 
       <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--surface)] p-5">

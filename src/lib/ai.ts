@@ -1,11 +1,16 @@
 import OpenAI from 'openai'
+import { prisma } from './prisma'
 
 const DEEPSEEK_BASE_URL = 'https://api.deepseek.com/v1'
 
-function getClient(): OpenAI | null {
-  const key = process.env.DEEPSEEK_API_KEY
-  if (!key) return null
-  return new OpenAI({ baseURL: DEEPSEEK_BASE_URL, apiKey: key })
+async function getClient(): Promise<OpenAI | null> {
+  // Try env var first (Railway/local), fall back to DB (Settings page)
+  const envKey = process.env.DEEPSEEK_API_KEY
+  if (envKey) return new OpenAI({ baseURL: DEEPSEEK_BASE_URL, apiKey: envKey })
+
+  const config = await prisma.aiConfig.findFirst()
+  if (!config?.apiKey || !config.enabled) return null
+  return new OpenAI({ baseURL: DEEPSEEK_BASE_URL, apiKey: config.apiKey })
 }
 
 interface AiConversation {
@@ -35,7 +40,7 @@ const TOPICS = [
 ]
 
 export async function generateConversation(seed: number): Promise<AiConversation | null> {
-  const client = getClient()
+  const client = await getClient()
   if (!client) return null
 
   const topic = TOPICS[seed % TOPICS.length]
