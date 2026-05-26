@@ -68,7 +68,7 @@ npx prisma studio    # DB GUI
   - `splitSentences()` + `distributeIndices()` — evenly splits excerpt across Mon-Wed
 - Vocabulary and passage come from the **same** reading item via `getWeeklyReadingItem()`
 - Formatters: `formatWeeklyPassageContent(item, chunkIndex)` → passage DB, `formatWeeklyVocabularyContent(item, chunkIndex)` → vocabulary DB
-- History (`getContentHistory()`) shows only current week's records (filtered by Monday, Shanghai timezone), deduplicates passage entries by base title
+- History (`getContentHistory()`) shows last 14 days, deduplicates passage entries by base title; ListClient groups by date under `weekday, month day` headers
 
 ## DailyCard CTAs
 - Speaking Practice → **Practice**
