@@ -3,19 +3,20 @@
 ## Build & Run
 ```bash
 npm run dev          # dev server (localhost:3000)
-npm run build        # node scripts/build.js (DATABASE_URL fallback → prisma generate + next build)
-npm start            # node scripts/start.js (DATABASE_URL fallback → prisma db push + next start)
+npm run build        # node scripts/build.js (auto-detects PostgreSQL or SQLite → prisma generate + next build)
+npm start            # node scripts/start.js (auto-detects → prisma db push + next start)
 npx prisma studio    # DB GUI
 ```
 
 ## Architecture
 - **Framework:** Next.js 16 (App Router), Server Components by default
-- **Database:** SQLite via Prisma (`prisma/dev.db`, not tracked in git), DATABASE_URL=`file:./dev.db`
+- **Database:** SQLite via Prisma locally (`prisma/dev.db`); PostgreSQL on Railway (auto-detected via DATABASE_URL)
 - **Schema unique constraints:** `DailyContent(date+type)`, `Task(date+contentId)`
+- **Prisma schemas:** `prisma/schema.prisma` (SQLite local dev), `prisma/schema.postgres.prisma` (Railway PostgreSQL)
 - **Migrations:** `prisma/migrations/20260507091401_init/` + `20260510091002_add_unique_constraints/`
 - **Styling:** Tailwind CSS 4, class-based dark mode via `@custom-variant dark` + `html.dark`
 - **Animations:** Framer Motion — `useReducedMotion()` used; cards use `initial={false}`; page transitions via `PageTransition.tsx` (AnimatePresence + key=pathname)
-- **Railway DATABASE_URL fix:** `scripts/build.js` + `scripts/start.js` force `file:./dev.db` if DATABASE_URL is missing or non-file (handles stale PostgreSQL URL)
+- **Database switching:** `scripts/build.js` + `scripts/start.js` + `postinstall` auto-detect: `postgresql://` URL → use `prisma/schema.postgres.prisma`, otherwise use default SQLite schema
 - **Deploy:** Railway (auto-deploy from GitHub `master`)
 
 ## UI Components
