@@ -1,4 +1,5 @@
 import { pushContentDirectly } from './notion'
+import { generateConversation } from './ai'
 import { prisma } from './prisma'
 import {
   getShanghaiDate,
@@ -272,6 +273,18 @@ export async function getDailyConversation()
  {
   const date = getShanghaiDate()
   const seed = getShanghaiDateSeed()
+
+  // Try AI-generated conversation first
+  const aiItem = await generateConversation(seed)
+  if (aiItem) {
+    return upsertDailyContent(date, 'conversation', {
+      title: aiItem.title,
+      content: formatConversationContent(aiItem as typeof conversationContent[0]),
+      tags: 'conversation,speaking,' + aiItem.topic.toLowerCase().replace(/\s+/g, '-'),
+    })
+  }
+
+  // Fall back to static content
   const item = pickBySeed(conversationContent, seed)
   return upsertDailyContent(date, 'conversation', {
     title: item.title,
