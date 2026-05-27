@@ -55,36 +55,39 @@ export default function Navbar() {
         {/* Brand */}
         <div className="sm:pt-8 sm:pb-6">
           <Link href="/" className="block text-center transition-colors hover:text-[var(--accent)]" aria-label="Home">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="mx-auto text-[var(--text-main)]">
-              {/* Top jaw + snout */}
-              <path d="M2 15 L6 13 L10 12 L14 10 L18 8 L22 7 C24 7 26 8 27 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-              {/* Bottom jaw */}
-              <path d="M2 15 L6 16 L10 16 L14 15 L18 14 L22 14 C24 14 26 14 27 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-              {/* Teeth */}
-              <line x1="4" y1="15" x2="4" y2="16" stroke="currentColor" strokeWidth="0.8" />
-              <line x1="6" y1="14.5" x2="6" y2="16" stroke="currentColor" strokeWidth="0.8" />
-              <line x1="8" y1="14" x2="8" y2="15.5" stroke="currentColor" strokeWidth="0.8" />
-              <line x1="10" y1="14" x2="10" y2="15.5" stroke="currentColor" strokeWidth="0.8" />
-              {/* Eye bump */}
-              <path d="M11 11 C12 9 13 9 13 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-              <circle cx="12" cy="10.5" r="0.8" fill="currentColor" />
-              {/* Nostril bump */}
-              <circle cx="3" cy="14" r="0.6" fill="currentColor" />
-              {/* Back ridges along body */}
-              <path d="M15 9 L15.5 7 L16 9" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
-              <path d="M17 8.5 L17.5 6.5 L18 8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
-              <path d="M19 8 L19.5 6 L20 8" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
-              <path d="M21 7.5 L21.5 5.5 L22 7.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
-              <path d="M23 7.5 L23.5 5.5 L24 7.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
-              {/* Body outline */}
-              <path d="M27 10 C29 12 30 16 28 20 C26 24 22 27 18 28 L14 28" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-              <path d="M27 12 C29 14 29 18 27 22 C25 26 21 28 18 29 L14 29" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-              {/* Front leg */}
-              <path d="M16 22 L15 26 L16 28" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-              {/* Hind leg */}
-              <path d="M22 22 L21 26 L22 28" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+            <svg width="32" height="32" viewBox="0 0 32 32" className="mx-auto" fill="currentColor">
+              {/* Pixel-style cute alligator — 3px grid blocks */}
               {/* Tail */}
-              <path d="M14 28 C10 28 6 26 4 24 C3 23 3 22 4 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+              <rect x="2" y="22" width="3" height="3" rx="0.5" />
+              <rect x="5" y="24" width="3" height="3" rx="0.5" />
+              <rect x="8" y="24" width="3" height="3" rx="0.5" />
+              {/* Body */}
+              <rect x="11" y="22" width="3" height="3" rx="0.5" />
+              <rect x="14" y="20" width="3" height="3" rx="0.5" />
+              <rect x="17" y="20" width="3" height="3" rx="0.5" />
+              <rect x="11" y="25" width="3" height="3" rx="0.5" />
+              <rect x="14" y="23" width="3" height="3" rx="0.5" />
+              <rect x="17" y="23" width="3" height="3" rx="0.5" />
+              <rect x="20" y="22" width="3" height="3" rx="0.5" />
+              <rect x="20" y="25" width="3" height="3" rx="0.5" />
+              {/* Back ridges */}
+              <rect x="14" y="18" width="3" height="2" rx="0.5" />
+              <rect x="17" y="18" width="3" height="2" rx="0.5" />
+              <rect x="20" y="20" width="3" height="2" rx="0.5" />
+              {/* Legs */}
+              <rect x="11" y="28" width="3" height="3" rx="0.5" />
+              <rect x="17" y="28" width="3" height="3" rx="0.5" />
+              {/* Head */}
+              <rect x="8" y="14" width="3" height="3" rx="0.5" />
+              <rect x="5" y="15" width="3" height="3" rx="0.5" />
+              <rect x="8" y="17" width="3" height="3" rx="0.5" />
+              <rect x="11" y="16" width="3" height="3" rx="0.5" />
+              {/* Snout */}
+              <rect x="2" y="17" width="3" height="3" rx="0.5" />
+              <rect x="5" y="18" width="3" height="3" rx="0.5" />
+              {/* Eye */}
+              <rect x="10" y="14" width="2" height="2" rx="0.5" />
+              <rect x="10" y="14" width="1" height="1" rx="0.3" fill="var(--sidebar-bg, #faf8f3)" />
             </svg>
           </Link>
         </div>
