@@ -55,7 +55,7 @@ export default function Navbar() {
         {/* Brand */}
         <div className="sm:pt-8 sm:pb-6">
           <Link href="/" className="block text-center transition-colors hover:text-[var(--accent)]" aria-label="Home">
-            <svg width="32" height="32" viewBox="0 0 32 32" className="mx-auto">
+            <svg width="48" height="48" viewBox="0 0 32 32" className="mx-auto">
               {/* Pixel art alligator — 2px sprites, facing right */}
               <g fill="currentColor">
                 {/* Tail — staircase */}
