@@ -55,39 +55,46 @@ export default function Navbar() {
         {/* Brand */}
         <div className="sm:pt-8 sm:pb-6">
           <Link href="/" className="block text-center transition-colors hover:text-[var(--accent)]" aria-label="Home">
-            <svg width="32" height="32" viewBox="0 0 32 32" className="mx-auto" fill="currentColor">
-              {/* Pixel-style cute alligator — 3px grid blocks */}
-              {/* Tail */}
-              <rect x="2" y="22" width="3" height="3" rx="0.5" />
-              <rect x="5" y="24" width="3" height="3" rx="0.5" />
-              <rect x="8" y="24" width="3" height="3" rx="0.5" />
-              {/* Body */}
-              <rect x="11" y="22" width="3" height="3" rx="0.5" />
-              <rect x="14" y="20" width="3" height="3" rx="0.5" />
-              <rect x="17" y="20" width="3" height="3" rx="0.5" />
-              <rect x="11" y="25" width="3" height="3" rx="0.5" />
-              <rect x="14" y="23" width="3" height="3" rx="0.5" />
-              <rect x="17" y="23" width="3" height="3" rx="0.5" />
-              <rect x="20" y="22" width="3" height="3" rx="0.5" />
-              <rect x="20" y="25" width="3" height="3" rx="0.5" />
-              {/* Back ridges */}
-              <rect x="14" y="18" width="3" height="2" rx="0.5" />
-              <rect x="17" y="18" width="3" height="2" rx="0.5" />
-              <rect x="20" y="20" width="3" height="2" rx="0.5" />
-              {/* Legs */}
-              <rect x="11" y="28" width="3" height="3" rx="0.5" />
-              <rect x="17" y="28" width="3" height="3" rx="0.5" />
-              {/* Head */}
-              <rect x="8" y="14" width="3" height="3" rx="0.5" />
-              <rect x="5" y="15" width="3" height="3" rx="0.5" />
-              <rect x="8" y="17" width="3" height="3" rx="0.5" />
-              <rect x="11" y="16" width="3" height="3" rx="0.5" />
-              {/* Snout */}
-              <rect x="2" y="17" width="3" height="3" rx="0.5" />
-              <rect x="5" y="18" width="3" height="3" rx="0.5" />
-              {/* Eye */}
-              <rect x="10" y="14" width="2" height="2" rx="0.5" />
-              <rect x="10" y="14" width="1" height="1" rx="0.3" fill="var(--sidebar-bg, #faf8f3)" />
+            <svg width="32" height="32" viewBox="0 0 32 32" className="mx-auto">
+              {/* Pixel art alligator — 2px sprites, facing right */}
+              <g fill="currentColor">
+                {/* Tail — staircase */}
+                <rect x="3" y="6" width="2" height="2" rx="0.3" />
+                <rect x="5" y="8" width="2" height="2" rx="0.3" />
+                <rect x="7" y="8" width="2" height="2" rx="0.3" />
+                <rect x="9" y="10" width="2" height="2" rx="0.3" />
+                {/* Body */}
+                <rect x="11" y="8" width="14" height="2" rx="0.3" />
+                <rect x="9" y="10" width="18" height="2" rx="0.3" />
+                <rect x="7" y="12" width="20" height="2" rx="0.3" />
+                <rect x="7" y="14" width="16" height="2" rx="0.3" />
+                <rect x="9" y="16" width="12" height="2" rx="0.3" />
+                {/* Back ridges */}
+                <rect x="13" y="6" width="2" height="2" rx="0.3" />
+                <rect x="17" y="6" width="2" height="2" rx="0.3" />
+                <rect x="21" y="6" width="2" height="2" rx="0.3" />
+                {/* Head */}
+                <rect x="25" y="8" width="2" height="2" rx="0.3" />
+                <rect x="27" y="10" width="4" height="2" rx="0.3" />
+                <rect x="27" y="12" width="4" height="2" rx="0.3" />
+                <rect x="27" y="14" width="2" height="2" rx="0.3" />
+                {/* Front leg */}
+                <rect x="11" y="18" width="4" height="2" rx="0.3" />
+                <rect x="11" y="20" width="2" height="2" rx="0.3" />
+                {/* Hind leg */}
+                <rect x="17" y="18" width="4" height="2" rx="0.3" />
+                <rect x="19" y="20" width="2" height="2" rx="0.3" />
+              </g>
+              {/* Eye (white) */}
+              <rect x="24" y="10" width="2" height="2" rx="0.3" fill="var(--sidebar-bg, #faf8f3)" />
+              {/* Eye pupil */}
+              <rect x="24" y="10" width="1" height="1" rx="0.2" fill="currentColor" />
+              {/* Eye highlight */}
+              <rect x="24" y="10" width="1" height="1" rx="0.2" />
+              {/* Smile (white cutout) */}
+              <rect x="28" y="14" width="2" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
+              {/* Nostril */}
+              <rect x="30" y="12" width="1" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
             </svg>
           </Link>
         </div>
