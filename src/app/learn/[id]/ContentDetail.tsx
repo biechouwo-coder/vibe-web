@@ -147,7 +147,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
             {usefulExpressions.map((ue, i) => (
               <div key={i} className="border-l-2 border-stone-200 pl-3 dark:border-stone-700">
                 <p className="text-sm font-medium text-stone-800 dark:text-stone-200">{ue.expr}</p>
-                {ue.note && <p className="mt-0.5 text-xs text-stone-500">{ue.note}</p>}
+                <UsefulExprNote note={ue.note || ''} />
               </div>
             ))}
           </div>
@@ -238,6 +238,18 @@ function VocabularyDetail({ content, handlePush }: { content: DailyContentWithMe
         {content.source && <span className="text-xs text-stone-400">Source: {content.source}</span>}
       </div>
     </div>
+  )
+}
+
+function UsefulExprNote({ note }: { note: string }) {
+  const parts = note.split(' || ')
+  const usageNote = parts[0] || ''
+  const trans = parts[1] || ''
+  return (
+    <>
+      {usageNote && <p className="mt-0.5 text-xs text-stone-500">{usageNote}</p>}
+      {trans && <p className="mt-0.5 text-xs text-stone-400">{trans}</p>}
+    </>
   )
 }
 

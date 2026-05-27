@@ -60,9 +60,9 @@ Return ONLY valid JSON (no markdown, no code blocks) matching this structure:
     {"speaker": "Classmate", "text": "..."}
   ],
   "usefulExpressions": [
-    {"phrase": "Expression 1", "usage": "When to use this expression (context/situation)"},
-    {"phrase": "Expression 2", "usage": "When to use this expression"},
-    {"phrase": "Expression 3", "usage": "When to use this expression"}
+    {"phrase": "Expression 1", "usage": "When to use this expression (context/situation)", "translation": "中文翻译"},
+    {"phrase": "Expression 2", "usage": "When to use this expression", "translation": "中文翻译"},
+    {"phrase": "Expression 3", "usage": "When to use this expression", "translation": "中文翻译"}
   ],
   "toneNote": "Tone description",
   "practicePrompt": "Practice prompt for the student",

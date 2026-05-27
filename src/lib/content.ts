@@ -21,9 +21,9 @@ const conversationContent = [
       { speaker: 'You', text: 'Not alone. Carbon pricing works best alongside investment incentives, regulation, and technology policy.' },
     ],
     usefulExpressions: [
-      { phrase: 'I studied ... as an undergraduate', usage: 'Use this to introduce your academic background at the start of a self-introduction.' },
-      { phrase: 'I became interested in how ...', usage: 'Use this to explain what sparked your interest in a particular topic.' },
-      { phrase: 'Not alone — ... works best alongside ...', usage: 'Use this to politely disagree while acknowledging complexity by suggesting complementary factors.' },
+      { phrase: 'I studied ... as an undergraduate', usage: 'Use this to introduce your academic background at the start of a self-introduction.', translation: '我本科学习……' },
+      { phrase: 'I became interested in how ...', usage: 'Use this to explain what sparked your interest in a particular topic.', translation: '我开始对……如何……产生了兴趣' },
+      { phrase: 'Not alone — ... works best alongside ...', usage: 'Use this to politely disagree while acknowledging complexity by suggesting complementary factors.', translation: '不能单靠……——……需要配合……' },
     ],
     toneNote: 'Polite and enthusiastic.',
     practicePrompt: 'Introduce yourself in 3 sentences: background, interests, goals.',
@@ -41,8 +41,8 @@ const conversationContent = [
       { speaker: 'You', text: 'Thank you. Would more granular data also affect how we model transition risk?' },
     ],
     usefulExpressions: [
-      { phrase: 'Yes — when companies report ..., do they use ... or ...?', usage: 'Use this to ask a clarifying question with specific alternatives.' },
-      { phrase: 'Thank you. Would ... also affect how we model ...?', usage: 'Use this to acknowledge an answer and build on it with a follow-up question.' },
+      { phrase: 'Yes — when companies report ..., do they use ... or ...?', usage: 'Use this to ask a clarifying question with specific alternatives.', translation: '是的——当公司报告……时，他们使用的是……还是……？' },
+      { phrase: 'Thank you. Would ... also affect how we model ...?', usage: 'Use this to acknowledge an answer and build on it with a follow-up question.', translation: '谢谢。……也会影响我们建模……的方式吗？' },
     ],
     toneNote: 'Curious and respectful.',
     practicePrompt: 'Ask a clarifying question about carbon accounting starting with "When companies report..."',
@@ -60,9 +60,9 @@ const conversationContent = [
       { speaker: 'You', text: 'That works. Let\'s share a reading list by tomorrow and set a checkpoint for Friday.' },
     ],
     usefulExpressions: [
-      { phrase: 'I can take the ... section.', usage: 'Use this to volunteer for a specific task during group work.' },
-      { phrase: 'Maybe you could cover ... ?', usage: 'Use this to suggest a task for a teammate politely.' },
-      { phrase: 'Let\'s share a reading list by ... and set a checkpoint for ...', usage: 'Use this to propose concrete deadlines and next steps.' },
+      { phrase: 'I can take the ... section.', usage: 'Use this to volunteer for a specific task during group work.', translation: '我可以负责……部分。' },
+      { phrase: 'Maybe you could cover ... ?', usage: 'Use this to suggest a task for a teammate politely.', translation: '也许你可以负责……？' },
+      { phrase: 'Let\'s share a reading list by ... and set a checkpoint for ...', usage: 'Use this to propose concrete deadlines and next steps.', translation: '我们……前共享阅读清单，并设定……为检查点。' },
     ],
     toneNote: 'Collaborative and organised.',
     practicePrompt: 'Propose a task division for a group project on ESG investing.',
@@ -81,9 +81,9 @@ const conversationContent = [
       { speaker: 'You', text: 'The premium appears persistent across market cycles from 2019 to 2024, suggesting structural demand.' },
     ],
     usefulExpressions: [
-      { phrase: 'To summarise, I found that ...', usage: 'Use this to present your key finding confidently during a presentation.' },
-      { phrase: 'That\'s a good point. I controlled for ... by ...', usage: 'Use this to acknowledge feedback and explain your methodology in response.' },
-      { phrase: 'Based on data from ..., the ... appears persistent across ...', usage: 'Use this to argue that your finding is robust by citing the time span or scope of your evidence.' },
+      { phrase: 'To summarise, I found that ...', usage: 'Use this to present your key finding confidently during a presentation.', translation: '总而言之，我发现……' },
+      { phrase: 'That\'s a good point. I controlled for ... by ...', usage: 'Use this to acknowledge feedback and explain your methodology in response.', translation: '说得好。我通过……控制了……' },
+      { phrase: 'Based on data from ..., the ... appears persistent across ...', usage: 'Use this to argue that your finding is robust by citing the time span or scope of your evidence.', translation: '基于……的数据，……在……范围内持续存在' },
     ],
     toneNote: 'Confident but open to feedback.',
     practicePrompt: 'Answer a Q&A question: acknowledge the point, explain your approach, suggest improvement.',
@@ -102,9 +102,9 @@ const conversationContent = [
       { speaker: 'You', text: 'That\'s helpful. I\'ll strengthen that section. Would you recommend a specific modelling approach?' },
     ],
     usefulExpressions: [
-      { phrase: 'Thank you for seeing me. I wanted feedback on ...', usage: 'Use this to start an office hour conversation politely and state your purpose clearly.' },
-      { phrase: 'I\'m arguing that ... because ...', usage: 'Use this to concisely summarise your research argument when asked.' },
-      { phrase: 'Would you recommend a specific ...?', usage: 'Use this to ask for targeted advice after receiving initial feedback.' },
+      { phrase: 'Thank you for seeing me. I wanted feedback on ...', usage: 'Use this to start an office hour conversation politely and state your purpose clearly.', translation: '谢谢您见我。我想请您对……提意见。' },
+      { phrase: 'I\'m arguing that ... because ...', usage: 'Use this to concisely summarise your research argument when asked.', translation: '我的论点是……，因为……' },
+      { phrase: 'Would you recommend a specific ...?', usage: 'Use this to ask for targeted advice after receiving initial feedback.', translation: '您推荐特定的……吗？' },
     ],
     toneNote: 'Respectful of the professor\'s time. Come prepared.',
     practicePrompt: 'Summarise your research argument in 2 sentences for office hours.',
@@ -123,9 +123,9 @@ const conversationContent = [
       { speaker: 'You', text: 'That would be incredibly helpful. I\'ll follow up by email.' },
     ],
     usefulExpressions: [
-      { phrase: 'Your talk on ... was really insightful.', usage: 'Use this to start a networking conversation by complimenting the other person\'s work.' },
-      { phrase: 'I\'m exploring how ... affects ...', usage: 'Use this to introduce your own research and find common ground.' },
-      { phrase: 'I\'ll follow up by email.', usage: 'Use this to end a conversation professionally and signal your intention to stay in touch.' },
+      { phrase: 'Your talk on ... was really insightful.', usage: 'Use this to start a networking conversation by complimenting the other person\'s work.', translation: '你关于……的演讲真的很有见地。' },
+      { phrase: 'I\'m exploring how ... affects ...', usage: 'Use this to introduce your own research and find common ground.', translation: '我在探索……如何影响……' },
+      { phrase: 'I\'ll follow up by email.', usage: 'Use this to end a conversation professionally and signal your intention to stay in touch.', translation: '我会通过邮件跟进。' },
     ],
     toneNote: 'Friendly and genuine. Show interest in their work first.',
     practicePrompt: 'Introduce yourself at a networking event in 2 sentences.',
@@ -144,8 +144,8 @@ const conversationContent = [
       { speaker: 'Staff', text: 'The add-drop period ends next Friday.' },
     ],
     usefulExpressions: [
-      { phrase: 'I\'d like to confirm my enrolment in ...', usage: 'Use this to state your request clearly when speaking to administrative staff.' },
-      { phrase: 'Also, is there a deadline for ... ?', usage: 'Use this to ask a follow-up question about procedures or deadlines.' },
+      { phrase: 'I\'d like to confirm my enrolment in ...', usage: 'Use this to state your request clearly when speaking to administrative staff.', translation: '我想确认……的注册。' },
+      { phrase: 'Also, is there a deadline for ... ?', usage: 'Use this to ask a follow-up question about procedures or deadlines.', translation: '另外，……有截止日期吗？' },
     ],
     toneNote: 'Clear and polite.',
     practicePrompt: 'Ask an admin staff to confirm course registration and inquire about deadlines.',
@@ -164,8 +164,8 @@ const conversationContent = [
       { speaker: 'Advisor', text: 'Submit CV and cover letter by next Friday. I can review a draft.' },
     ],
     usefulExpressions: [
-      { phrase: 'I\'d like something where I can work with ...', usage: 'Use this to describe the type of role or skills you are looking for.' },
-      { phrase: 'What\'s the application process and timeline?', usage: 'Use this to get practical details after a career advisor suggests an opportunity.' },
+      { phrase: 'I\'d like something where I can work with ...', usage: 'Use this to describe the type of role or skills you are looking for.', translation: '我想做能和……打交道的工作。' },
+      { phrase: 'What\'s the application process and timeline?', usage: 'Use this to get practical details after a career advisor suggests an opportunity.', translation: '申请流程和时间线是怎样的？' },
     ],
     toneNote: 'Professional and proactive.',
     practicePrompt: 'Tell a career advisor what kind of green finance internship you\'re looking for in 2-3 sentences.',
@@ -290,8 +290,10 @@ ${d.speaker}: "${d.text}"`)
   for (const e of item.usefulExpressions) {
     const expr = typeof e === 'string' ? e : e.phrase
     const usage = typeof e === 'string' ? '' : e.usage
+    const trans = (typeof e !== 'string' && 'translation' in e) ? (e as { translation?: string }).translation || '' : ''
+    const note = usage + (trans ? ' || ' + trans : '')
     lines.push(`
-- ${expr}${usage ? ': ' + usage : ''}`)
+- ${expr}${note ? ': ' + note : ''}`)
   }
   lines.push(`
 **Tone Note:** ${item.toneNote}`)
