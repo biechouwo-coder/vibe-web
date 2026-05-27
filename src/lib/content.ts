@@ -307,6 +307,12 @@ export async function getDailyConversation()
   const date = getShanghaiDate()
   const seed = getShanghaiDateSeed()
 
+  // Skip API if today's conversation already exists in DB
+  const existing = await prisma.dailyContent.findUnique({
+    where: { date_type: { date, type: 'conversation' } },
+  })
+  if (existing) return existing
+
   // Try AI-generated conversation first
   const aiItem = await generateConversation(seed)
   if (aiItem) {
