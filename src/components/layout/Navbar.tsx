@@ -54,8 +54,29 @@ export default function Navbar() {
       <aside className="hidden sm:flex sm:flex-col sm:w-16 md:w-20 lg:w-24 sm:h-full sm:shrink-0 sm:items-center" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
         {/* Brand */}
         <div className="sm:pt-8 sm:pb-6">
-          <Link href="/" className="block text-center font-serif text-lg font-semibold tracking-tight text-[var(--text-main)] transition-colors hover:text-[var(--accent)]">
-            v<span className="text-[var(--accent)]">.</span>w
+          <Link href="/" className="block text-center transition-colors hover:text-[var(--accent)]" aria-label="Home">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="mx-auto text-[var(--text-main)]">
+              {/* Body curve */}
+              <path d="M6 20 C6 14 9 8 14 6 C19 4 24 6 26 10 C28 14 27 20 24 24 C21 28 17 30 14 30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+              {/* Head / snout */}
+              <path d="M6 20 C4 19 2 18 2 16 C2 14 4 13 6 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+              {/* Eye bump */}
+              <path d="M7 15 C8 14 9 14 9 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+              {/* Eye dot */}
+              <circle cx="8" cy="14.5" r="0.8" fill="currentColor" />
+              {/* Back ridges */}
+              <path d="M10 7 L11 5 L12 7" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
+              <path d="M13 5.5 L14 3.5 L15 5.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
+              <path d="M16 5 L17 3 L18 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
+              <path d="M19 5.5 L20 3.5 L21 5.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
+              <path d="M22 7 L23 5 L24 7" stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
+              {/* Front leg */}
+              <path d="M11 18 L10 22 L12 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+              {/* Hind leg */}
+              <path d="M20 20 L19 24 L21 26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+              {/* Tail tip */}
+              <path d="M14 30 C12 31 10 31 8 29" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+            </svg>
           </Link>
         </div>
 
