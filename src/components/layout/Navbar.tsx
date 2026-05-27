@@ -56,45 +56,45 @@ export default function Navbar() {
         <div className="sm:pt-8 sm:pb-6">
           <Link href="/" className="block text-center transition-colors hover:text-[var(--accent)]" aria-label="Home">
             <svg width="48" height="48" viewBox="0 0 32 32" className="mx-auto">
-              {/* Pixel art alligator — 2px sprites, facing right */}
+              {/* Pixel art Chinese alligator (扬子鳄) — short snout, chunky body, armored back */}
               <g fill="currentColor">
-                {/* Tail — staircase */}
-                <rect x="3" y="6" width="2" height="2" rx="0.3" />
-                <rect x="5" y="8" width="2" height="2" rx="0.3" />
-                <rect x="7" y="8" width="2" height="2" rx="0.3" />
-                <rect x="9" y="10" width="2" height="2" rx="0.3" />
-                {/* Body */}
-                <rect x="11" y="8" width="14" height="2" rx="0.3" />
-                <rect x="9" y="10" width="18" height="2" rx="0.3" />
-                <rect x="7" y="12" width="20" height="2" rx="0.3" />
-                <rect x="7" y="14" width="16" height="2" rx="0.3" />
-                <rect x="9" y="16" width="12" height="2" rx="0.3" />
-                {/* Back ridges */}
-                <rect x="13" y="6" width="2" height="2" rx="0.3" />
-                <rect x="17" y="6" width="2" height="2" rx="0.3" />
-                <rect x="21" y="6" width="2" height="2" rx="0.3" />
-                {/* Head */}
-                <rect x="25" y="8" width="2" height="2" rx="0.3" />
-                <rect x="27" y="10" width="4" height="2" rx="0.3" />
-                <rect x="27" y="12" width="4" height="2" rx="0.3" />
-                <rect x="27" y="14" width="2" height="2" rx="0.3" />
+                {/* Tail */}
+                <rect x="2" y="10" width="4" height="2" rx="0.3" />
+                <rect x="4" y="12" width="4" height="2" rx="0.3" />
+                <rect x="6" y="10" width="2" height="2" rx="0.3" />
+                {/* Body — wide and chunky */}
+                <rect x="8" y="8" width="14" height="2" rx="0.3" />
+                <rect x="6" y="10" width="18" height="2" rx="0.3" />
+                <rect x="4" y="12" width="22" height="2" rx="0.3" />
+                <rect x="4" y="14" width="20" height="2" rx="0.3" />
+                <rect x="6" y="16" width="16" height="2" rx="0.3" />
+                <rect x="8" y="18" width="12" height="2" rx="0.3" />
+                {/* Armor plates (osteoderms) — raised bumps on back */}
+                <rect x="10" y="6" width="2" height="2" rx="0.3" />
+                <rect x="14" y="6" width="2" height="2" rx="0.3" />
+                <rect x="18" y="6" width="2" height="2" rx="0.3" />
+                {/* Head — short broad snout (扬子鳄特征) */}
+                <rect x="22" y="10" width="4" height="2" rx="0.3" />
+                <rect x="24" y="12" width="6" height="2" rx="0.3" />
+                <rect x="24" y="14" width="4" height="2" rx="0.3" />
+                <rect x="26" y="16" width="2" height="2" rx="0.3" />
                 {/* Front leg */}
-                <rect x="11" y="18" width="4" height="2" rx="0.3" />
-                <rect x="11" y="20" width="2" height="2" rx="0.3" />
+                <rect x="10" y="20" width="4" height="2" rx="0.3" />
+                <rect x="10" y="22" width="2" height="2" rx="0.3" />
                 {/* Hind leg */}
-                <rect x="17" y="18" width="4" height="2" rx="0.3" />
-                <rect x="19" y="20" width="2" height="2" rx="0.3" />
+                <rect x="16" y="20" width="4" height="2" rx="0.3" />
+                <rect x="18" y="22" width="2" height="2" rx="0.3" />
               </g>
-              {/* Eye (white) */}
-              <rect x="24" y="10" width="2" height="2" rx="0.3" fill="var(--sidebar-bg, #faf8f3)" />
-              {/* Eye pupil */}
-              <rect x="24" y="10" width="1" height="1" rx="0.2" fill="currentColor" />
+              {/* Big cute eye on top of head */}
+              <rect x="23" y="12" width="2" height="3" rx="0.3" fill="var(--sidebar-bg, #faf8f3)" />
+              {/* Pupil */}
+              <rect x="23" y="12" width="1" height="1.5" rx="0.2" fill="currentColor" />
               {/* Eye highlight */}
-              <rect x="24" y="10" width="1" height="1" rx="0.2" />
-              {/* Smile (white cutout) */}
-              <rect x="28" y="14" width="2" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
-              {/* Nostril */}
-              <rect x="30" y="12" width="1" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
+              <rect x="23" y="12" width="0.8" height="0.8" rx="0.1" />
+              {/* Nostril — on top of blunt snout */}
+              <rect x="28" y="12" width="1" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
+              {/* Smile line */}
+              <rect x="26" y="16" width="4" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
             </svg>
           </Link>
         </div>
