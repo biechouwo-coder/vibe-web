@@ -56,42 +56,44 @@ export default function Navbar() {
         <div className="sm:pt-8 sm:pb-6">
           <Link href="/" className="block text-center transition-colors hover:text-[var(--accent)]" aria-label="Home">
             <svg width="48" height="48" viewBox="0 0 32 32" className="mx-auto">
-              {/* Pixel art Chinese alligator (扬子鳄) */}
+              {/* Chibi pixel art alligator — big head, big eye, tiny body */}
               <g fill="currentColor">
-                {/* Tail */}
-                <rect x="3" y="8" width="2" height="2" rx="0.3" />
-                <rect x="5" y="10" width="2" height="2" rx="0.3" />
-                <rect x="7" y="10" width="2" height="2" rx="0.3" />
-                {/* Body */}
-                <rect x="9" y="8" width="12" height="2" rx="0.3" />
-                <rect x="7" y="10" width="14" height="2" rx="0.3" />
-                <rect x="7" y="12" width="14" height="2" rx="0.3" />
-                <rect x="9" y="14" width="14" height="2" rx="0.3" />
-                <rect x="9" y="16" width="10" height="2" rx="0.3" />
-                {/* Back ridges */}
-                <rect x="11" y="6" width="2" height="2" rx="0.3" />
-                <rect x="15" y="6" width="2" height="2" rx="0.3" />
-                {/* Head — short broad snout */}
-                <rect x="21" y="10" width="4" height="2" rx="0.3" />
-                <rect x="23" y="12" width="6" height="2" rx="0.3" />
-                <rect x="23" y="14" width="4" height="2" rx="0.3" />
+                {/* Tail — tiny stub */}
+                <rect x="2" y="14" width="2" height="2" rx="0.3" />
+                <rect x="4" y="14" width="2" height="2" rx="0.3" />
+                {/* Body — small and compact */}
+                <rect x="6" y="12" width="4" height="2" rx="0.3" />
+                <rect x="6" y="14" width="8" height="2" rx="0.3" />
+                <rect x="6" y="16" width="8" height="2" rx="0.3" />
+                <rect x="8" y="18" width="4" height="2" rx="0.3" />
+                {/* Head — big, chibi style */}
+                <rect x="8" y="6" width="12" height="2" rx="0.3" />
+                <rect x="6" y="8" width="16" height="2" rx="0.3" />
+                <rect x="6" y="10" width="16" height="2" rx="0.3" />
+                <rect x="8" y="12" width="12" height="2" rx="0.3" />
+                {/* Short snout */}
+                <rect x="20" y="8" width="4" height="2" rx="0.3" />
+                <rect x="22" y="10" width="4" height="2" rx="0.3" />
+                {/* Back ridge bumps */}
+                <rect x="10" y="4" width="2" height="2" rx="0.3" />
+                <rect x="14" y="4" width="2" height="2" rx="0.3" />
                 {/* Front leg */}
-                <rect x="11" y="18" width="4" height="2" rx="0.3" />
-                <rect x="11" y="20" width="2" height="2" rx="0.3" />
+                <rect x="8" y="20" width="4" height="2" rx="0.3" />
+                <rect x="8" y="22" width="2" height="2" rx="0.3" />
                 {/* Hind leg */}
-                <rect x="17" y="18" width="4" height="2" rx="0.3" />
-                <rect x="19" y="20" width="2" height="2" rx="0.3" />
+                <rect x="12" y="20" width="4" height="2" rx="0.3" />
+                <rect x="14" y="22" width="2" height="2" rx="0.3" />
               </g>
-              {/* Eye on top of head */}
-              <rect x="22" y="10" width="2" height="2" rx="0.3" fill="var(--sidebar-bg, #faf8f3)" />
+              {/* Big cute eye */}
+              <rect x="14" y="8" width="4" height="4" rx="0.5" fill="var(--sidebar-bg, #faf8f3)" />
               {/* Pupil */}
-              <rect x="22" y="10" width="1" height="1" rx="0.2" fill="currentColor" />
+              <rect x="15" y="9" width="2" height="2" rx="0.3" fill="currentColor" />
               {/* Eye highlight */}
-              <rect x="22" y="10" width="0.6" height="0.6" rx="0.1" />
+              <rect x="15" y="9" width="1" height="1" rx="0.2" />
               {/* Nostril */}
-              <rect x="28" y="12" width="1" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
-              {/* Smile */}
-              <rect x="25" y="16" width="3" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
+              <rect x="23" y="8" width="2" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
+              {/* Cute smile */}
+              <rect x="18" y="12" width="4" height="1" rx="0.2" fill="var(--sidebar-bg, #faf8f3)" />
             </svg>
           </Link>
         </div>
