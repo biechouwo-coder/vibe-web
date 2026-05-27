@@ -115,8 +115,20 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
           <div className="space-y-2.5">
             {(dialogueLines.length > 0 ? dialogueLines : legacyDialog).map((dl, i) => (
               <div key={i} className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] rounded-[var(--radius-control)] px-3.5 py-2.5 text-sm leading-relaxed ${dl.isYou ? 'bg-[var(--academic-navy)] text-white dark:bg-[var(--academic-navy)]' : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'}`}>
-                  {!dl.isYou && <span className="mb-0.5 block text-[10px] font-semibold uppercase tracking-wider text-stone-500">{dl.speaker}</span>}
+                <div className={`max-w-[85%] rounded-[var(--radius-control)] px-3.5 py-2.5 text-sm leading-relaxed ${
+                  dl.isYou
+                    ? 'bg-[var(--academic-navy)] text-white dark:bg-[var(--academic-navy)]'
+                    : dl.speaker === 'Professor'
+                      ? 'border-l-2 border-[var(--academic-navy)] bg-stone-50 text-stone-700 dark:border-[var(--academic-navy)] dark:bg-stone-800/50 dark:text-stone-300'
+                      : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'
+                }`}>
+                  {!dl.isYou && (
+                    <span className={`mb-0.5 block text-[10px] font-semibold uppercase tracking-wider ${
+                      dl.speaker === 'Professor' ? 'text-[var(--academic-navy)]' : 'text-stone-500'
+                    }`}>
+                      {dl.speaker}
+                    </span>
+                  )}
                   <span>{dl.message}</span>
                   {dl.chinese && (
                     <p className="mt-1.5 text-xs leading-relaxed opacity-75" style={{ color: dl.isYou ? 'rgba(255,255,255,0.75)' : 'var(--muted)' }}>{dl.chinese}</p>

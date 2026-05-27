@@ -20,7 +20,11 @@ const conversationContent = [
       { speaker: 'Classmate', text: 'Do you think carbon pricing alone can drive the transition?' },
       { speaker: 'You', text: 'Not alone. Carbon pricing works best alongside investment incentives, regulation, and technology policy.' },
     ],
-    usefulExpressions: ['I studied ... as an undergraduate', 'I became interested in how ...', 'Not alone — ... works best alongside ...'],
+    usefulExpressions: [
+      { phrase: 'I studied ... as an undergraduate', usage: 'Use this to introduce your academic background at the start of a self-introduction.' },
+      { phrase: 'I became interested in how ...', usage: 'Use this to explain what sparked your interest in a particular topic.' },
+      { phrase: 'Not alone — ... works best alongside ...', usage: 'Use this to politely disagree while acknowledging complexity by suggesting complementary factors.' },
+    ],
     toneNote: 'Polite and enthusiastic.',
     practicePrompt: 'Introduce yourself in 3 sentences: background, interests, goals.',
     translation: '教授：欢迎。我们轮流介绍一下——请分享你的姓名、背景以及你为什么来到这里。\n你：早上好。我本科学习经济学，后来对金融工具如何支持气候目标产生了兴趣。我选择这个项目是因为它连接了政策分析和金融决策。\n同学：你认为单靠碳定价就能推动转型吗？\n你：不能单靠它。碳定价只有与投资激励、监管和技术政策相结合才能发挥最佳效果。',
@@ -36,7 +40,10 @@ const conversationContent = [
       { speaker: 'Professor', text: 'Most use industry averages. The CSRD is pushing toward supplier-specific data. Verification remains a challenge.' },
       { speaker: 'You', text: 'Thank you. Would more granular data also affect how we model transition risk?' },
     ],
-    usefulExpressions: ['Yes — when companies report ..., do they use ... or ...?', 'Thank you. Would ... also affect how we model ...?'],
+    usefulExpressions: [
+      { phrase: 'Yes — when companies report ..., do they use ... or ...?', usage: 'Use this to ask a clarifying question with specific alternatives.' },
+      { phrase: 'Thank you. Would ... also affect how we model ...?', usage: 'Use this to acknowledge an answer and build on it with a follow-up question.' },
+    ],
     toneNote: 'Curious and respectful.',
     practicePrompt: 'Ask a clarifying question about carbon accounting starting with "When companies report..."',
     translation: '教授：Scope 3排放通常占碳足迹的最大部分，但也是最难测量的。有问题吗？\n你：是的——当公司报告Scope 3时，他们使用的是估算数据还是实际供应商数据？审计师如何验证？\n教授：大多数使用行业平均值。CSRD正在推动供应商特定数据。验证仍然是一个挑战。\n你：谢谢。更细粒度的数据也会影响我们建模转型风险的方式吗？',
@@ -52,7 +59,11 @@ const conversationContent = [
       { speaker: 'Team Member', text: 'Sure. How about using "how do design features affect reductions" as our research question?' },
       { speaker: 'You', text: 'That works. Let\'s share a reading list by tomorrow and set a checkpoint for Friday.' },
     ],
-    usefulExpressions: ['I can take the ... section.', 'Maybe you could cover ... ?', 'Let\'s share a reading list by ...'],
+    usefulExpressions: [
+      { phrase: 'I can take the ... section.', usage: 'Use this to volunteer for a specific task during group work.' },
+      { phrase: 'Maybe you could cover ... ?', usage: 'Use this to suggest a task for a teammate politely.' },
+      { phrase: 'Let\'s share a reading list by ... and set a checkpoint for ...', usage: 'Use this to propose concrete deadlines and next steps.' },
+    ],
     toneNote: 'Collaborative and organised.',
     practicePrompt: 'Propose a task division for a group project on ESG investing.',
     translation: '队友：我们需要涵盖EU ETS、中国ETS和行业分析。我们应该怎么分工？\n你：我可以做EU ETS部分。也许你可以负责中国的政策时间线？\n队友：好的。用"设计特征如何影响减排"作为我们的研究问题怎么样？\n你：可以。我们明天前共享阅读清单，并设定周五为检查点。',
@@ -69,7 +80,11 @@ const conversationContent = [
       { speaker: 'Classmate', text: 'Does the premium reflect genuine demand or a temporary trend?' },
       { speaker: 'You', text: 'The premium appears persistent across market cycles from 2019 to 2024, suggesting structural demand.' },
     ],
-    usefulExpressions: ['To summarise, I found that ...', 'That\'s a good point. I controlled for ... by ...', 'Based on data from ..., the ... appears persistent across ...'],
+    usefulExpressions: [
+      { phrase: 'To summarise, I found that ...', usage: 'Use this to present your key finding confidently during a presentation.' },
+      { phrase: 'That\'s a good point. I controlled for ... by ...', usage: 'Use this to acknowledge feedback and explain your methodology in response.' },
+      { phrase: 'Based on data from ..., the ... appears persistent across ...', usage: 'Use this to argue that your finding is robust by citing the time span or scope of your evidence.' },
+    ],
     toneNote: 'Confident but open to feedback.',
     practicePrompt: 'Answer a Q&A question: acknowledge the point, explain your approach, suggest improvement.',
     translation: '你：我发现亚洲绿色债券在控制了信用评级和期限后，提供了10-15个基点的收益率溢价。\n教授：你控制了汇率风险吗？有些债券以不同货币计价。\n你：我把样本限制在美元计价债券。我可以使用汇率对冲后的回报来扩展分析。\n同学：这种溢价反映的是真实需求还是暂时趋势？\n你：从2019到2024年，这种溢价在整个市场周期中持续存在，表明这是结构性需求。',
@@ -86,7 +101,11 @@ const conversationContent = [
       { speaker: 'Professor', text: 'Compelling angle. Make sure your methodology explains how you operationalise Knightian uncertainty.' },
       { speaker: 'You', text: 'That\'s helpful. I\'ll strengthen that section. Would you recommend a specific modelling approach?' },
     ],
-    usefulExpressions: ['Thank you for seeing me. I wanted feedback on ...', 'I\'m arguing that ... because ...', 'Would you recommend a specific ...?'],
+    usefulExpressions: [
+      { phrase: 'Thank you for seeing me. I wanted feedback on ...', usage: 'Use this to start an office hour conversation politely and state your purpose clearly.' },
+      { phrase: 'I\'m arguing that ... because ...', usage: 'Use this to concisely summarise your research argument when asked.' },
+      { phrase: 'Would you recommend a specific ...?', usage: 'Use this to ask for targeted advice after receiving initial feedback.' },
+    ],
     toneNote: 'Respectful of the professor\'s time. Come prepared.',
     practicePrompt: 'Summarise your research argument in 2 sentences for office hours.',
     translation: '你：谢谢您见我。我想在截止日期前请您给我的研究提案提意见。\n教授：给我讲讲你的核心论点。\n你：标准信用风险模型低估了碳密集型企业的违约概率，因为它们忽略了未来碳定价方面的奈特不确定性。\n教授：有说服力的角度。确保你的方法论解释了如何将奈特不确定性操作化。\n你：这很有帮助。我会加强那部分。您推荐特定的建模方法吗？',
@@ -103,7 +122,11 @@ const conversationContent = [
       { speaker: 'Other Student', text: 'I use CDS spreads and NGFS scenarios. Happy to share the dataset.' },
       { speaker: 'You', text: 'That would be incredibly helpful. I\'ll follow up by email.' },
     ],
-    usefulExpressions: ['Your talk on ... was really insightful.', 'I\'m exploring how ... affects ...', 'I\'ll follow up by email.'],
+    usefulExpressions: [
+      { phrase: 'Your talk on ... was really insightful.', usage: 'Use this to start a networking conversation by complimenting the other person\'s work.' },
+      { phrase: 'I\'m exploring how ... affects ...', usage: 'Use this to introduce your own research and find common ground.' },
+      { phrase: 'I\'ll follow up by email.', usage: 'Use this to end a conversation professionally and signal your intention to stay in touch.' },
+    ],
     toneNote: 'Friendly and genuine. Show interest in their work first.',
     practicePrompt: 'Introduce yourself at a networking event in 2 sentences.',
     translation: '你：嗨，我是Raye——CNGF硕士生。你关于气候转型风险的演讲真的很有见地。\n其他学生：谢谢！很高兴它引起了共鸣。你在做相关的研究吗？\n你：我在探索碳定价不确定性如何影响信用风险建模。\n其他学生：我用CDS利差和NGFS情景数据。很乐意分享数据集。\n你：那会非常有帮助。我会通过邮件跟进。',
@@ -120,7 +143,10 @@ const conversationContent = [
       { speaker: 'You', text: 'Thank you. Also, is there a deadline for dropping electives without a fee?' },
       { speaker: 'Staff', text: 'The add-drop period ends next Friday.' },
     ],
-    usefulExpressions: ['I\'d like to confirm my enrolment in ...', 'Also, is there a deadline for ... ?'],
+    usefulExpressions: [
+      { phrase: 'I\'d like to confirm my enrolment in ...', usage: 'Use this to state your request clearly when speaking to administrative staff.' },
+      { phrase: 'Also, is there a deadline for ... ?', usage: 'Use this to ask a follow-up question about procedures or deadlines.' },
+    ],
     toneNote: 'Clear and polite.',
     practicePrompt: 'Ask an admin staff to confirm course registration and inquire about deadlines.',
     translation: '工作人员：今天有什么可以帮你？\n你：我想确认碳核算课程的注册。系统显示我在候补名单上，但我有讲师的批准。\n工作人员：让我查一下。我看到了批准邮件。现在更新你的状态。\n你：谢谢。另外，退选选修课有没有免费的截止日期？\n工作人员：加退选期到下周五结束。',
@@ -137,7 +163,10 @@ const conversationContent = [
       { speaker: 'You', text: 'Definitely. What\'s the application process and timeline?' },
       { speaker: 'Advisor', text: 'Submit CV and cover letter by next Friday. I can review a draft.' },
     ],
-    usefulExpressions: ['I\'d like something where I can work with ...', 'What\'s the application process and timeline?'],
+    usefulExpressions: [
+      { phrase: 'I\'d like something where I can work with ...', usage: 'Use this to describe the type of role or skills you are looking for.' },
+      { phrase: 'What\'s the application process and timeline?', usage: 'Use this to get practical details after a career advisor suggests an opportunity.' },
+    ],
     toneNote: 'Professional and proactive.',
     practicePrompt: 'Tell a career advisor what kind of green finance internship you\'re looking for in 2-3 sentences.',
     translation: '顾问：哪种角色最让你感兴趣？\n你：我想做碳市场数据相关的工作——数据分析或可持续发展报告。\n顾问：有一个绿色科技咨询职位，专注于供应链的碳足迹核查。\n你：当然。申请流程和时间线是怎样的？\n顾问：下周五前提交简历和求职信。我可以帮你审阅草稿。',
@@ -259,8 +288,10 @@ ${d.speaker}: "${d.text}"`)
   lines.push(`
 **Useful Expressions:**`)
   for (const e of item.usefulExpressions) {
+    const expr = typeof e === 'string' ? e : e.phrase
+    const usage = typeof e === 'string' ? '' : e.usage
     lines.push(`
-- ${e}`)
+- ${expr}${usage ? ': ' + usage : ''}`)
   }
   lines.push(`
 **Tone Note:** ${item.toneNote}`)

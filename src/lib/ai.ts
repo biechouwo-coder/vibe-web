@@ -18,7 +18,7 @@ interface AiConversation {
   topic: string
   scenario: string
   dialogue: { speaker: string; text: string }[]
-  usefulExpressions: string[]
+  usefulExpressions: { phrase: string; usage: string }[]
   toneNote: string
   practicePrompt: string
   translation: string
@@ -59,7 +59,11 @@ Return ONLY valid JSON (no markdown, no code blocks) matching this structure:
     {"speaker": "You", "text": "Response..."},
     {"speaker": "Classmate", "text": "..."}
   ],
-  "usefulExpressions": ["Expression 1", "Expression 2", "Expression 3"],
+  "usefulExpressions": [
+    {"phrase": "Expression 1", "usage": "When to use this expression (context/situation)"},
+    {"phrase": "Expression 2", "usage": "When to use this expression"},
+    {"phrase": "Expression 3", "usage": "When to use this expression"}
+  ],
   "toneNote": "Tone description",
   "practicePrompt": "Practice prompt for the student",
   "translation": "Speaker1：中文翻译\\nSpeaker2：中文翻译\\n..."
