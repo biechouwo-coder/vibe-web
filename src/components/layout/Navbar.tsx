@@ -32,31 +32,29 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* Left page — stationary */}
-          <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
-          {/* Spine */}
+          {/* Left page — rotates open from spine */}
+          <motion.g
+            style={{ originX: 1, originY: 0.5 }}
+            animate={active ? { rotate: -14, x: -1 } : { rotate: 0, x: 0 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+          >
+            <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
+            <line x1="6" y1="9" x2="11" y2="9" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="6" y1="12" x2="10" y2="12" strokeWidth={1} strokeOpacity={0.4} />
+          </motion.g>
+          {/* Right page — rotates open from spine */}
+          <motion.g
+            style={{ originX: 0, originY: 0.5 }}
+            animate={active ? { rotate: 14, x: 1 } : { rotate: 0, x: 0 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+          >
+            <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
+            <line x1="13" y1="9" x2="18" y2="9" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="13" y1="12" x2="17" y2="12" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="13" y1="15" x2="16" y2="15" strokeWidth={1} strokeOpacity={0.4} />
+          </motion.g>
+          {/* Spine — always visible */}
           <path d="M12 4v16" strokeWidth={2} />
-          {/* Right page — front (flips away when active) */}
-          <motion.g
-            style={{ originX: 0, originY: 0.5 }}
-            animate={active ? { scaleX: 0 } : { scaleX: 1 }}
-            transition={{ duration: 0.18, ease: 'easeIn' }}
-          >
-            <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
-            <line x1="14.5" y1="9" x2="19" y2="9" strokeWidth={1} strokeOpacity={0.4} />
-            <line x1="14.5" y1="12" x2="18" y2="12" strokeWidth={1} strokeOpacity={0.4} />
-            <line x1="14.5" y1="15" x2="17" y2="15" strokeWidth={1} strokeOpacity={0.4} />
-          </motion.g>
-          {/* Right page — back (appears after flip) */}
-          <motion.g
-            style={{ originX: 0, originY: 0.5 }}
-            animate={active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
-            transition={{ duration: 0.18, ease: 'easeOut', delay: active ? 0.18 : 0 }}
-          >
-            <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
-            <line x1="14.5" y1="10" x2="19" y2="10" strokeWidth={1} strokeOpacity={0.25} />
-            <line x1="14.5" y1="13" x2="17" y2="13" strokeWidth={1} strokeOpacity={0.25} />
-          </motion.g>
         </motion.svg>
       )
     case 'list':
