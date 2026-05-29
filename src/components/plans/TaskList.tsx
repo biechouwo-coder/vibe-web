@@ -125,7 +125,7 @@ function SortableTaskItem({ task, onToggle }: { task: TaskWithMeta; onToggle: (i
       style={{
         ...style,
         borderColor: 'var(--border-card)',
-        backgroundColor: task.completed ? 'var(--task-surface)' : '#ffffff',
+        backgroundColor: task.completed ? 'var(--task-surface)' : 'var(--card-bg)',
       }}
     >
       {/* Drag handle */}
