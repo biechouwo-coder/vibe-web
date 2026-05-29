@@ -6,6 +6,27 @@ import { getAcademicKeywords } from '@/lib/academic-keywords'
 import { formatStoredDate } from '@/lib/date'
 import type { DailyContentWithMeta } from '@/types'
 
+interface SceneStyle { emoji: string; bg: string; label: string }
+const SCENE_STYLES: Record<string, SceneStyle> = {
+  classroom:       { emoji: '📖', bg: '#eef0fc', label: 'Classroom' },
+  gym:             { emoji: '💪', bg: '#eef7ee', label: 'Gym' },
+  cafeteria:       { emoji: '🍽️', bg: '#fef5e6', label: 'Cafeteria' },
+  dormitory:       { emoji: '🛏️', bg: '#f5edfc', label: 'Dormitory' },
+  'class-activity':{ emoji: '🌿', bg: '#e8f7f0', label: 'Class Activity' },
+  'company-visit': { emoji: '🏭', bg: '#eef2f6', label: 'Company Visit' },
+  entertainment:   { emoji: '🎤', bg: '#fce8f0', label: 'Entertainment' },
+}
+
+function getSceneStyle(tags: string | null, topic: string | null): SceneStyle {
+  if (tags) {
+    const p = tags.split(',').map(t => t.trim())
+    for (const key of Object.keys(SCENE_STYLES)) {
+      if (p.includes(key)) return SCENE_STYLES[key]
+    }
+  }
+  return { emoji: '💬', bg: '#f0f0f4', label: topic || 'Speaking' }
+}
+
 interface ContentDetailProps {
   content: DailyContentWithMeta
   pushAction: (id: string) => Promise<{ ok: boolean; message: string }>
@@ -92,15 +113,25 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
     legacyTrans = t ? t[1].trim() : ''
   }
 
+  const scene = getSceneStyle(content.tags, topic)
+
   return (
     <div className="mx-auto max-w-2xl space-y-5">
       <BackLink href="/learn" />
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">Speaking Practice</p>
-        <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight">{content.title}</h1>
-        {topic && <p className="mt-1 text-xs text-stone-500">{topic}</p>}
-        <p className="mt-0.5 text-xs text-stone-400">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
+      {/* Scene banner */}
+      <div
+        className="flex items-center gap-3 rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--scene-bg)] px-4 py-3 transition-colors dark:border-stone-700 dark:bg-[var(--surface)]"
+        style={{ '--scene-bg': scene.bg } as React.CSSProperties}
+      >
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-control)] border border-[var(--border)] bg-white/90 text-base shadow-sm dark:border-stone-700 dark:bg-stone-800">
+          {scene.emoji}
+        </span>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">{scene.label}</p>
+          <h1 className="font-serif text-xl font-semibold tracking-tight text-[var(--foreground)]">{content.title}</h1>
+        </div>
       </div>
+      {topic && <p className="-mt-3 text-xs text-[var(--text-soft)]">{topic}</p>}
 
       {scenario && (
         <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
