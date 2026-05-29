@@ -52,7 +52,7 @@ npx prisma studio    # DB GUI
 - Components: `src/components/{layout,learn,plans,ui,theme}/`
 - Content: `src/lib/content.ts` — uses `findFirst+create` for learning tasks (not upsert); tasks seed once per day, deleted tasks stay deleted
 - Task sort: `orderBy: [{ completed: 'asc' }, { sortOrder: 'asc' }]` — completed sink to bottom (both HomeTaskList sorted client-side too)
-- Sidebar nav: active item = `text-sm font-bold` + navy underline spring; inactive = `text-xs text-muted`
+- Sidebar nav: active item = `text-[10px] font-semibold` + navy left bar spring (`layoutId="nav-bar"`, `w-0.5`); inactive = `text-[10px] text-[var(--text-muted)]`
 - Academic keywords: `src/lib/academic-keywords.ts` — shared by DailyCard and ContentDetail
 - Notion API: `src/lib/notion.ts`; config returns `hasToken: boolean`, never raw token
 - VocabCards: `src/components/learn/VocabCards.tsx` (academic glossary, 40px slide, reduced-motion aware)

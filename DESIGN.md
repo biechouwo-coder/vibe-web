@@ -98,7 +98,7 @@ The emotional response is one of **intellectual clarity** and **archival permane
 ## 5. Component Stylings
 
 ### Layout Shell
-- **Sidebar:** 80px wide, dark charcoal (`#1a1817`) background. Icon-only navigation (no text labels). Active item marked by navy underline indicator. Brand mark "v.w" at top.
+- **Sidebar:** Responsive width (`w-16 md:w-20 lg:w-24`), warm paper (`--sidebar-bg`) background matching the outer desk surface. Icon + short-label navigation. Active item marked by navy left bar indicator (`layoutId="nav-bar"`, spring animation). Chibi alligator pixel-art brand icon at top.
 - **Workspace Panel:** Rounded-28px white container centered on warm paper background. Inner content max-width ~960px with 48px desktop margins.
 
 ### Cards

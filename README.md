@@ -34,7 +34,7 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 |------|------|----------|
 | 💬 日常对话 | 港科广校园场景（课堂讨论、小组项目、展示汇报） | 每日 |
 | 📝 专业词汇 | 碳市场、绿色金融、ESG、学术研究术语 | 每日 |
-| 📄 文献段落 | 经济学人/HBR 风格的专业文章 + 讨论问题 | 每 3 天 |
+| 📄 文献段落 | 经济学人/HBR 风格的专业文章 + 讨论问题 | 每周（每日分块学习） |
 
 每篇内容包括：
 - 英文原文
@@ -119,7 +119,7 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 ## 💻 本地开发
 
 ### 环境要求
-- Node.js ≥ 18
+- Node.js ≥ 20.9
 - npm 或 yarn
 
 ### 快速开始
@@ -154,8 +154,8 @@ NOTION_INTEGRATION_TOKEN=ntn_xxx
 NOTION_ENGLISH_DB_ID=xxx
 NOTION_PLANS_DB_ID=xxx
 
-# Anthropic（可选，AI 内容生成用）
-ANTHROPIC_API_KEY=sk-ant-xxx
+# DeepSeek（可选，AI 对话内容生成用）
+DEEPSEEK_API_KEY=sk-xxx
 ```
 
 ---
@@ -203,8 +203,8 @@ src/
 ## 🗺️ 后续规划
 
 - [x] **暗色/亮色模式** — 已支持三种主题：Light / Dark / System
-- [ ] **AI 内容生成** — 接入 Claude API 每日自动生成个性化英语内容
-- [ ] **PostgreSQL 迁移** — 用 Railway 内置 PostgreSQL 替代 SQLite，数据持久化
+- [x] **AI 内容生成** — 接入 DeepSeek API 每日自动生成对话内容（Settings 页面配置密钥）
+- [x] **PostgreSQL 迁移** — 已用 Railway 内置 PostgreSQL 替代 SQLite，数据持久化
 - [ ] **定时推送** — 每天自动推送到 Notion（无需手动点击）
 - [ ] **自定义学习内容** — 用户可上传自己的学习材料
 
