@@ -53,7 +53,7 @@ Return ONLY valid JSON (no markdown, no code blocks) matching this structure:
 {
   "title": "Short engaging title (max 6 words)",
   "topic": "${topic}",
-  "scenario": "One-sentence scene description (classroom, office hour, group project, etc.)",
+  "scenario": "One-sentence scene description (classroom, gym, cafeteria, dormitory, class activity, company visit, entertainment, etc.)",
   "dialogue": [
     {"speaker": "Professor", "text": "First line..."},
     {"speaker": "You", "text": "Response..."},

@@ -58,7 +58,7 @@ npx prisma studio    # DB GUI
 - VocabCards: `src/components/learn/VocabCards.tsx` (academic glossary, 40px slide, reduced-motion aware)
 
 ## Content Library (`src/lib/content.ts`)
-- **Conversations (8)**: topic-based with `formatConversationContent()` — outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation; **daily rotation** via `getShanghaiDateSeed()`
+- **Conversations (7)**: scene-based — Classroom, Gym, Cafeteria, Dormitory, Class Activity, Company Visit, Entertainment; each with `formatConversationContent()` — outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation; **daily rotation** via `getShanghaiDateSeed()`
 - **Readings (6)**: Journal-based `readingContent` array — paperTitle/authors/journal/year/doi/excerpt/writingFocus/vocabulary/discussionQuestions; **weekly rotation** via `getShanghaiWeekOfYear()`
 - One article per week (Mon-Sat chunked progressive study, Sunday full review)
 - **Weekly chunk system**:
@@ -79,7 +79,7 @@ npx prisma studio    # DB GUI
 ## Important Rules
 - Vocabulary entries include IPA phonetic where available
 - Vocabulary uses card-carousel display (VocabCards component) with left/right navigation
-- Daily conversation cards show scenario preview on Home, full speaking practice note on detail page
+- Daily conversation cards show scene label + scenario preview (navy left-border card) on Home, full speaking practice note on detail page
 - Daily learning content auto-creates 3 tasks inline (findFirst+create, seeded once per day; **not** upsert — so deleted tasks stay deleted)
 - Db dates displayed via `formatStoredDate()` in Asia/Shanghai, not browser local timezone
 - Never commit `.env*` files (in `.gitignore`); `prisma/dev.db` also in `.gitignore`

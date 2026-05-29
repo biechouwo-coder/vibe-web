@@ -127,11 +127,11 @@ function SortableTaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id
       className="group flex items-center gap-2 rounded-[var(--radius-small)] border px-1.5 py-2 transition-colors"
       style={{
         ...style,
-        backgroundColor: task.completed ? 'var(--task-hover)' : '#eeece6',
+        backgroundColor: task.completed ? 'var(--task-hover)' : 'var(--soft-panel-bg)',
         borderColor: 'var(--border)',
       }}
       onMouseEnter={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = 'var(--task-hover)'; }}
-      onMouseLeave={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = '#eeece6'; }}
+      onMouseLeave={(e) => { if (!task.completed) e.currentTarget.style.backgroundColor = 'var(--soft-panel-bg)'; }}
     >
       {/* Drag handle */}
       <button

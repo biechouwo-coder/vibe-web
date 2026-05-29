@@ -22,14 +22,13 @@ const NAV_LINK_CLASS =
 
 function getConversationTopicKeywords(title: string, tags: string | null): string[] {
   const t = title.toLowerCase()
-  if (t.includes('research interest') || t.includes('introducing')) return ['Self Introduction']
-  if (t.includes('question') || t.includes('classroom') || t.includes('class')) return ['Classroom Participation']
-  if (t.includes('group project') || t.includes('dividing')) return ['Group Project']
-  if (t.includes('presentation') || t.includes('qa') || t.includes('q&a')) return ['Presentation & Q&A']
-  if (t.includes('office hour') || t.includes('feedback')) return ['Office Hour']
-  if (t.includes('networking') || t.includes('chatting') || t.includes('conference')) return ['Networking']
-  if (t.includes('register') || t.includes('campus') || t.includes('admin')) return ['Campus Life']
-  if (t.includes('career') || t.includes('internship')) return ['Career']
+  if (t.includes('debating') || t.includes('carbon tax')) return ['Classroom']
+  if (t.includes('gym') || t.includes('between sets')) return ['Gym']
+  if (t.includes('what is good') || t.includes('cafeteria')) return ['Cafeteria']
+  if (t.includes('weekend plans') || t.includes('dorm')) return ['Dormitory']
+  if (t.includes('beach cleanup') || t.includes('class bonding')) return ['Class Activity']
+  if (t.includes('solar') || t.includes('manufacturing plant')) return ['Company Visit']
+  if (t.includes('karaoke') || t.includes('post-exam')) return ['Entertainment']
   if (tags) {
     const ignore = new Set(['daily', 'conversation', 'speaking', 'vocabulary', 'passage', 'journal', 'core', 'cnf', 'academic'])
     const topic = tags.split(',').map(t => t.trim().toLowerCase()).find(t => !ignore.has(t))
@@ -96,6 +95,7 @@ function getPassagePreview(content: string): string {
 function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: Omit<DailyCardProps, 'type'>) {
   const summary = parseConversationContent(content)
   const keywords = getConversationTopicKeywords(title, tags)
+  const sceneLabel = keywords[0] || 'Speaking'
 
   return (
     <motion.div initial={false} animate={{ opacity: 1, y: 0 }}
@@ -103,7 +103,12 @@ function ConversationCard({ title, content, tags, pushed, onPush, detailHref }: 
       style={{ borderColor: 'var(--border-card)', backgroundColor: 'var(--card-bg)' }}>
       <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">Speaking Practice</span>
       <h3 className="mt-1.5 font-medium text-[var(--text-main)]">{title}</h3>
-      {summary && <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)] line-clamp-2">{summary}</p>}
+      {summary && (
+        <div className="mt-2 rounded-[var(--radius-control)] border-l-2 border-[var(--accent)] bg-[var(--soft-panel-bg)] px-3 py-2">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--accent)]">{sceneLabel}</p>
+          <p className="mt-0.5 text-xs leading-relaxed text-[var(--text-muted)]">{summary}</p>
+        </div>
+      )}
       {keywords.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1">
           {keywords.map((kw) => (<span key={kw} className="rounded px-1.5 py-0.5 text-[10px] text-[var(--text-muted)]" style={{ backgroundColor: 'var(--task-hover)' }}>{kw}</span>))}
