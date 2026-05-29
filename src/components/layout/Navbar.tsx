@@ -23,9 +23,41 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
       )
     case 'book':
       return (
-        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-        </svg>
+        <motion.svg
+          className={className}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          {/* Left page — stationary */}
+          <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
+          {/* Spine */}
+          <path d="M12 4v16" strokeWidth={2} />
+          {/* Right page — front (flips away when active) */}
+          <motion.g
+            style={{ originX: 0, originY: 0.5 }}
+            animate={active ? { scaleX: 0 } : { scaleX: 1 }}
+            transition={{ duration: 0.18, ease: 'easeIn' }}
+          >
+            <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
+            <line x1="14.5" y1="9" x2="19" y2="9" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="14.5" y1="12" x2="18" y2="12" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="14.5" y1="15" x2="17" y2="15" strokeWidth={1} strokeOpacity={0.4} />
+          </motion.g>
+          {/* Right page — back (appears after flip) */}
+          <motion.g
+            style={{ originX: 0, originY: 0.5 }}
+            animate={active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+            transition={{ duration: 0.18, ease: 'easeOut', delay: active ? 0.18 : 0 }}
+          >
+            <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
+            <line x1="14.5" y1="10" x2="19" y2="10" strokeWidth={1} strokeOpacity={0.25} />
+            <line x1="14.5" y1="13" x2="17" y2="13" strokeWidth={1} strokeOpacity={0.25} />
+          </motion.g>
+        </motion.svg>
       )
     case 'list':
       return (
