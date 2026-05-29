@@ -35,7 +35,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Left page — rotates open from spine */}
           <motion.g
             style={{ originX: 1, originY: 0.5 }}
-            animate={active ? { rotate: -14, x: -1 } : { rotate: 0, x: 0 }}
+            animate={active ? { rotate: -6 } : { rotate: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           >
             <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
@@ -45,7 +45,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Right page — rotates open from spine */}
           <motion.g
             style={{ originX: 0, originY: 0.5 }}
-            animate={active ? { rotate: 14, x: 1 } : { rotate: 0, x: 0 }}
+            animate={active ? { rotate: 6 } : { rotate: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           >
             <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />

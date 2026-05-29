@@ -118,20 +118,19 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
   return (
     <div className="mx-auto max-w-2xl space-y-5">
       <BackLink href="/learn" />
-      {/* Scene banner */}
-      <div
-        className="flex items-center gap-3 rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--scene-bg)] px-4 py-3 transition-colors dark:border-stone-700 dark:bg-[var(--surface)]"
-        style={{ '--scene-bg': scene.bg } as React.CSSProperties}
-      >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-control)] border border-[var(--border)] bg-white/90 text-base shadow-sm dark:border-stone-700 dark:bg-stone-800">
-          {scene.emoji}
-        </span>
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">{scene.label}</p>
-          <h1 className="font-serif text-xl font-semibold tracking-tight text-[var(--foreground)]">{content.title}</h1>
-        </div>
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-widest text-stone-500 dark:text-stone-400">
+          Speaking Practice
+          {scene.label !== 'Speaking' && (
+            <span className="ml-2 rounded bg-[var(--task-hover)] px-1.5 py-0.5 text-[10px] font-normal tracking-normal text-[var(--muted)]">
+              {scene.emoji} {scene.label}
+            </span>
+          )}
+        </p>
+        <h1 className="mt-1 font-serif text-2xl font-semibold tracking-tight text-[var(--foreground)]">{content.title}</h1>
+        {topic && <p className="mt-1 text-xs text-[var(--text-soft)]">{topic}</p>}
+        <p className="mt-0.5 text-xs text-[var(--text-soft)]">{formatStoredDate(content.date)}{formatTags(content.title, content.tags)}</p>
       </div>
-      {topic && <p className="-mt-3 text-xs text-[var(--text-soft)]">{topic}</p>}
 
       {scenario && (
         <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
