@@ -5,6 +5,9 @@
       "name": "dev",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
+      "env": {
+        "NODE_PATH": "D:/vibe_web/node_modules"
+      },
       "port": 3000,
       "autoPort": true
     }

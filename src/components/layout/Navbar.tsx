@@ -32,20 +32,62 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* Left page — rotates open from spine */}
+          {/* Flipping pages — right side (cascade outward from spine) */}
+          {[0, 1, 2].map((i) => (
+            <motion.g
+              key={`fr${i}`}
+              style={{ originX: 0, originY: 0.5 }}
+              animate={active
+                ? { rotate: 16 + i * 12 }
+                : { rotate: 0 }}
+              transition={{
+                type: 'spring', stiffness: 200, damping: 18,
+                delay: 0.04 + i * 0.07,
+              }}
+            >
+              <rect
+                x={12} y={5.5 + i * 0.3}
+                width={7.5 - i * 0.5} height={13 - i * 0.4}
+                rx={0.3} strokeWidth={0.5}
+                strokeOpacity={0.5 - i * 0.12}
+              />
+            </motion.g>
+          ))}
+          {/* Flipping pages — left side (cascade outward from spine) */}
+          {[0, 1, 2].map((i) => (
+            <motion.g
+              key={`fl${i}`}
+              style={{ originX: 1, originY: 0.5 }}
+              animate={active
+                ? { rotate: -(16 + i * 12) }
+                : { rotate: 0 }}
+              transition={{
+                type: 'spring', stiffness: 200, damping: 18,
+                delay: 0.04 + i * 0.07,
+              }}
+            >
+              <rect
+                x={4.5 - i * 0.3} y={5.5 + i * 0.3}
+                width={7.5 - i * 0.5} height={13 - i * 0.4}
+                rx={0.3} strokeWidth={0.5}
+                strokeOpacity={0.5 - i * 0.12}
+              />
+            </motion.g>
+          ))}
+          {/* Left cover page */}
           <motion.g
             style={{ originX: 1, originY: 0.5 }}
-            animate={active ? { rotate: -6 } : { rotate: 0 }}
+            animate={active ? { rotate: -10 } : { rotate: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           >
             <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
             <line x1="6" y1="9" x2="11" y2="9" strokeWidth={1} strokeOpacity={0.4} />
             <line x1="6" y1="12" x2="10" y2="12" strokeWidth={1} strokeOpacity={0.4} />
           </motion.g>
-          {/* Right page — rotates open from spine */}
+          {/* Right cover page */}
           <motion.g
             style={{ originX: 0, originY: 0.5 }}
-            animate={active ? { rotate: 6 } : { rotate: 0 }}
+            animate={active ? { rotate: 10 } : { rotate: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           >
             <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
