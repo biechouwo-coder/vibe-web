@@ -321,10 +321,17 @@ function highlightTerms(text: string, terms: string[]): React.ReactNode {
   if (!terms.length) return text
   const sorted = [...terms].sort((a, b) => b.length - a.length)
   const escaped = sorted.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-  const regex = new RegExp(`\\b(${escaped.join('|')})\\b`, 'gi')
+  // Allow common English suffixes (s, es, ed, ing) for plural/inflected forms
+  const suffixes = '(?:s|es|ed|ing)?'
+  const regex = new RegExp(`\\b(${escaped.join('|')})${suffixes}\\b`, 'gi')
   const parts = text.split(regex)
+  const matchTerm = (word: string) => sorted.some(t => {
+    const w = word.toLowerCase()
+    const stem = t.toLowerCase()
+    return w === stem || w === stem + 's' || w === stem + 'es' || w === stem + 'ed' || w === stem + 'ing'
+  })
   return parts.map((part, i) =>
-    sorted.some(t => t.toLowerCase() === part.toLowerCase())
+    matchTerm(part)
       ? <strong key={i} className="font-semibold text-[var(--foreground)]">{part}</strong>
       : part
   )
