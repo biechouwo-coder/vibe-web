@@ -72,20 +72,15 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* Document outline — fades in when active */}
-          <motion.rect
-            x="3" y="3" width="18" height="18" rx="1.5"
-            initial={{ opacity: 0 }}
-            animate={active ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.15 }}
-          />
+          {/* Document outline */}
+          <rect x="3" y="3" width="18" height="18" rx="1.5" />
           {/* Row 1 */}
           <circle cx="7" cy="7.5" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
             d="M9.5 7.5h8"
             strokeWidth={1.8}
-            initial={{ pathLength: 0 }}
-            animate={active ? { pathLength: 1 } : { pathLength: 0 }}
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
             transition={{ duration: 0.22, delay: 0 }}
           />
           {/* Row 2 */}
@@ -93,8 +88,8 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           <motion.path
             d="M9.5 11h7"
             strokeWidth={1.8}
-            initial={{ pathLength: 0 }}
-            animate={active ? { pathLength: 1 } : { pathLength: 0 }}
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
             transition={{ duration: 0.22, delay: 0.08 }}
           />
           {/* Row 3 */}
@@ -102,8 +97,8 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           <motion.path
             d="M9.5 14.5h7.5"
             strokeWidth={1.8}
-            initial={{ pathLength: 0 }}
-            animate={active ? { pathLength: 1 } : { pathLength: 0 }}
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
             transition={{ duration: 0.22, delay: 0.16 }}
           />
           {/* Row 4 */}
@@ -111,8 +106,8 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           <motion.path
             d="M9.5 18h6.5"
             strokeWidth={1.8}
-            initial={{ pathLength: 0 }}
-            animate={active ? { pathLength: 1 } : { pathLength: 0 }}
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
             transition={{ duration: 0.22, delay: 0.24 }}
           />
         </motion.svg>
