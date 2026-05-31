@@ -72,10 +72,13 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* Document outline */}
-          <rect x="3" y="3" width="18" height="18" rx="1.5" />
-          {/* Folded corner */}
-          <path d="M14 3v3h3" strokeWidth={1.2} strokeOpacity={0.35} />
+          {/* Document outline — fades in when active */}
+          <motion.rect
+            x="3" y="3" width="18" height="18" rx="1.5"
+            initial={{ opacity: 0 }}
+            animate={active ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.15 }}
+          />
           {/* Row 1 */}
           <circle cx="7" cy="7.5" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
