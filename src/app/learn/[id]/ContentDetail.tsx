@@ -337,7 +337,7 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
   const excerptBody = extractSection(content.content, '**Excerpt:**', ['**Writing Focus:**', '**Key Vocabulary:**', '**Discussion Questions:**'])
   const writingFocus = extractSection(content.content, '**Writing Focus:**', ['**Key Vocabulary:**', '**Discussion Questions:**'])
   const vocabLines = extractSection(content.content, '**Key Vocabulary:**', ['**Discussion Questions:**'])
-  const discussionLines = extractSection(content.content, '**Discussion Questions:**', [])
+  const discussionLines = extractSection(content.content, '**Discussion Questions:**', ['**Translation:**'])
   const translationBody = extractSection(content.content, '**Translation:**', [])
   const vocabTerms = vocabLines.map(line => {
     const m = line.match(/-\s*([^/]+?)\s*(?:\/(.+?)\/)?\s*:\s*(.+)/)
