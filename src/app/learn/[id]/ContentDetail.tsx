@@ -321,20 +321,24 @@ function highlightTerms(text: string, terms: string[]): React.ReactNode {
   if (!terms.length) return text
   const sorted = [...terms].sort((a, b) => b.length - a.length)
   const escaped = sorted.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-  // Allow common English suffixes (s, es, ed, ing) for plural/inflected forms
   const suffixes = '(?:s|es|ed|ing)?'
   const regex = new RegExp(`\\b(${escaped.join('|')})${suffixes}\\b`, 'gi')
   const parts = text.split(regex)
-  const matchTerm = (word: string) => sorted.some(t => {
-    const w = word.toLowerCase()
-    const stem = t.toLowerCase()
-    return w === stem || w === stem + 's' || w === stem + 'es' || w === stem + 'ed' || w === stem + 'ing'
+  return parts.map((part, i) => {
+    const idx = terms.findIndex(t => {
+      const w = part.toLowerCase()
+      const stem = t.toLowerCase()
+      return w === stem || w === stem + 's' || w === stem + 'es' || w === stem + 'ed' || w === stem + 'ing'
+    })
+    if (idx !== -1) {
+      return (
+        <strong key={i} className="font-semibold text-[var(--foreground)]">
+          {part}<sup className="text-[10px] text-[var(--accent)] font-normal">[{idx + 1}]</sup>
+        </strong>
+      )
+    }
+    return part
   })
-  return parts.map((part, i) =>
-    matchTerm(part)
-      ? <strong key={i} className="font-semibold text-[var(--foreground)]">{part}</strong>
-      : part
-  )
 }
 
 function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
