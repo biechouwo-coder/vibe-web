@@ -436,8 +436,11 @@ export default function ContentDetail({ content, pushAction, tocItems }: Content
   const router = useRouter()
   const [flipping, setFlipping] = useState(false)
 
-  // Reset flip state after navigation completes
-  useEffect(() => { setFlipping(false) }, [content.id])
+  // Keep flip visible briefly after navigation completes, then hide
+  useEffect(() => {
+    const timer = setTimeout(() => setFlipping(false), 100)
+    return () => clearTimeout(timer)
+  }, [content.id])
 
   const handlePush = async () => {
     const result = await pushAction(content.id)
@@ -448,7 +451,7 @@ export default function ContentDetail({ content, pushAction, tocItems }: Content
   const handleTocNavigate = (href: string) => {
     if (href === `/learn/${content.id}`) return
     setFlipping(true)
-    setTimeout(() => router.push(href), 280)
+    router.push(href)
   }
 
   const renderDetail = () => {
