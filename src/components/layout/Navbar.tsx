@@ -32,52 +32,10 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* Flipping pages — right side (cascade outward from spine) */}
-          {[0, 1, 2].map((i) => (
-            <motion.g
-              key={`fr${i}`}
-              style={{ originX: 0, originY: 0.5 }}
-              animate={active
-                ? { rotate: 16 + i * 12 }
-                : { rotate: 0 }}
-              transition={{
-                type: 'spring', stiffness: 200, damping: 18,
-                delay: 0.04 + i * 0.07,
-              }}
-            >
-              <rect
-                x={12} y={5.5 + i * 0.3}
-                width={7.5 - i * 0.5} height={13 - i * 0.4}
-                rx={0.3} strokeWidth={0.5}
-                strokeOpacity={0.5 - i * 0.12}
-              />
-            </motion.g>
-          ))}
-          {/* Flipping pages — left side (cascade outward from spine) */}
-          {[0, 1, 2].map((i) => (
-            <motion.g
-              key={`fl${i}`}
-              style={{ originX: 1, originY: 0.5 }}
-              animate={active
-                ? { rotate: -(16 + i * 12) }
-                : { rotate: 0 }}
-              transition={{
-                type: 'spring', stiffness: 200, damping: 18,
-                delay: 0.04 + i * 0.07,
-              }}
-            >
-              <rect
-                x={4.5 - i * 0.3} y={5.5 + i * 0.3}
-                width={7.5 - i * 0.5} height={13 - i * 0.4}
-                rx={0.3} strokeWidth={0.5}
-                strokeOpacity={0.5 - i * 0.12}
-              />
-            </motion.g>
-          ))}
           {/* Left cover page */}
           <motion.g
             style={{ originX: 1, originY: 0.5 }}
-            animate={active ? { rotate: -10 } : { rotate: 0 }}
+            animate={active ? { rotate: -12 } : { rotate: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           >
             <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
@@ -87,7 +45,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Right cover page */}
           <motion.g
             style={{ originX: 0, originY: 0.5 }}
-            animate={active ? { rotate: 10 } : { rotate: 0 }}
+            animate={active ? { rotate: 12 } : { rotate: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           >
             <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
@@ -95,6 +53,48 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
             <line x1="13" y1="12" x2="17" y2="12" strokeWidth={1} strokeOpacity={0.4} />
             <line x1="13" y1="15" x2="16" y2="15" strokeWidth={1} strokeOpacity={0.4} />
           </motion.g>
+          {/* Flipping pages — right side, flip over to the left (on top of covers) */}
+          {[0, 1, 2].map((i) => (
+            <motion.g
+              key={`fr${i}`}
+              style={{ originX: 0, originY: 0.5 }}
+              animate={active
+                ? { scaleX: -1, rotate: 2 + i * 2 }
+                : { scaleX: 1, rotate: 0 }}
+              transition={{
+                type: 'spring', stiffness: 260, damping: 16,
+                delay: 0.08 + i * 0.1,
+              }}
+            >
+              <rect
+                x={12} y={5.5 + i * 0.3}
+                width={7.5 - i * 0.5} height={13 - i * 0.4}
+                rx={0.3} strokeWidth={0.5}
+                strokeOpacity={0.5 - i * 0.1}
+              />
+            </motion.g>
+          ))}
+          {/* Flipping pages — left side, flip over to the right (on top of covers) */}
+          {[0, 1, 2].map((i) => (
+            <motion.g
+              key={`fl${i}`}
+              style={{ originX: 1, originY: 0.5 }}
+              animate={active
+                ? { scaleX: -1, rotate: -(2 + i * 2) }
+                : { scaleX: 1, rotate: 0 }}
+              transition={{
+                type: 'spring', stiffness: 260, damping: 16,
+                delay: 0.08 + i * 0.1,
+              }}
+            >
+              <rect
+                x={4.5 - i * 0.3} y={5.5 + i * 0.3}
+                width={7.5 - i * 0.5} height={13 - i * 0.4}
+                rx={0.3} strokeWidth={0.5}
+                strokeOpacity={0.5 - i * 0.1}
+              />
+            </motion.g>
+          ))}
           {/* Spine — always visible */}
           <path d="M12 4v16" strokeWidth={2} />
         </motion.svg>
