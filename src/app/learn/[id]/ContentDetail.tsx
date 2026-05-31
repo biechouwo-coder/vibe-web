@@ -398,8 +398,16 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
       {translationBody.length > 0 && (
         <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-stone-50 p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-800/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-500">Translation</p>
-          <div className="space-y-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
-            {translationBody.map((para, i) => <p key={i}>{para}</p>)}
+          <div className="space-y-4 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
+            {(() => {
+              const cnSentences = translationBody.join('').split(/[。！？]/).map(s => s.trim()).filter(Boolean)
+              return excerptBody.slice(0, Math.max(cnSentences.length, 1)).map((en, i) => (
+                <div key={i} className="space-y-1">
+                  <p className="text-stone-800 dark:text-stone-200">{en}</p>
+                  {cnSentences[i] && <p className="text-stone-500 dark:text-stone-400">{cnSentences[i]}。</p>}
+                </div>
+              ))
+            })()}
           </div>
         </div>
       )}
