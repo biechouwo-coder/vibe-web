@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { getDailyStats } from '@/actions/plans'
 
 const navItems = [
   { href: '/', label: 'Study Desk', shortLabel: 'Desk', icon: 'desk' },
@@ -134,18 +136,18 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
   }
 }
 
-function ReadingMini({ label, href }: { label: string; href: string }) {
-  return (
-    <Link href={href} className="group flex items-center justify-center gap-1.5 rounded py-1 transition-colors hover:bg-[var(--task-hover)]">
-      <span className="h-1 w-1 rounded-full bg-[var(--accent)] opacity-60 shrink-0" />
-      <span className="text-[9px] font-medium text-[var(--text-muted)] group-hover:text-[var(--accent)]">{label}</span>
-    </Link>
-  )
-}
-
 export default function Navbar() {
   const pathname = usePathname()
   const isReadingActive = pathname === '/learn' || pathname.startsWith('/learn/')
+  const [taskStats, setTaskStats] = useState<{
+    totalTasks: number; completedTasks: number; streak: { currentStreak: number }
+  } | null>(null)
+
+  useEffect(() => {
+    if (isReadingActive && !taskStats) {
+      getDailyStats().then(s => setTaskStats(s))
+    }
+  }, [isReadingActive, taskStats])
 
   return (
     <>
@@ -253,23 +255,50 @@ export default function Navbar() {
               <div className="mx-auto mb-2.5 w-8 h-px" style={{ backgroundColor: 'var(--border)' }} />
 
               {/* Content phases */}
-              <motion.p
-                className="text-[9px] font-semibold text-center uppercase tracking-[0.1em] text-[var(--accent)]"
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.22, duration: 0.35, ease: 'easeOut' }}
-              >
-                Library
-              </motion.p>
               <motion.div
-                className="mt-2 space-y-1.5"
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.28, duration: 0.35, ease: 'easeOut' }}
+                transition={{ delay: 0.2, duration: 0.35, ease: 'easeOut' }}
               >
-                <ReadingMini label="Speaking" href="/learn" />
-                <ReadingMini label="Vocabulary" href="/learn" />
-                <ReadingMini label="Reading" href="/learn" />
+                {/* Progress */}
+                <p className="text-[8px] font-semibold text-center uppercase tracking-[0.1em] text-[var(--muted)]">
+                  Progress
+                </p>
+                <div className="mt-1.5 flex items-center justify-center gap-[3px]">
+                  {taskStats
+                    ? Array.from({ length: Math.max(taskStats.totalTasks, 1) }).map((_, i) => (
+                        <span
+                          key={i}
+                          className="block h-[5px] w-[5px] rounded-full"
+                          style={{
+                            backgroundColor: i < taskStats.completedTasks
+                              ? 'var(--accent)'
+                              : 'var(--border)',
+                          }}
+                        />
+                      ))
+                    : Array.from({ length: 3 }).map((_, i) => (
+                        <span key={i} className="block h-[5px] w-[5px] rounded-full" style={{ backgroundColor: 'var(--border)' }} />
+                      ))}
+                  <span className="ml-1 text-[8px] font-medium tabular-nums text-[var(--muted)]">
+                    {taskStats ? `${taskStats.completedTasks}/${taskStats.totalTasks}` : '-'}
+                  </span>
+                </div>
+              </motion.div>
+
+              {/* Streak */}
+              <motion.div
+                className="mt-3"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.26, duration: 0.35, ease: 'easeOut' }}
+              >
+                <p className="text-[8px] font-semibold text-center uppercase tracking-[0.1em] text-[var(--muted)]">
+                  Streak
+                </p>
+                <p className="mt-0.5 text-center text-[11px] font-bold tabular-nums text-[var(--accent)]">
+                  {taskStats ? `${taskStats.streak.currentStreak} day${taskStats.streak.currentStreak !== 1 ? 's' : ''}` : '-'}
+                </p>
               </motion.div>
             </motion.div>
           )}
