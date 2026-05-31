@@ -1,9 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import VocabCards from '@/components/learn/VocabCards'
 import BackLink from '@/components/ui/BackLink'
 import { getAcademicKeywords } from '@/lib/academic-keywords'
@@ -394,7 +391,7 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
 
 interface TocItem { type: string; title: string; id: string }
 
-function TocSidebar({ items, currentId, onNavigate }: { items: TocItem[]; currentId: string; onNavigate: (href: string) => void }) {
+function TocSidebar({ items, currentId }: { items: TocItem[]; currentId: string }) {
   const labelMap: Record<string, string> = { conversation: 'Speaking', vocabulary: 'Vocabulary', passage: 'Reading' }
 
   return (
@@ -406,10 +403,10 @@ function TocSidebar({ items, currentId, onNavigate }: { items: TocItem[]; curren
         {items.map((item) => {
           const isActive = item.id === currentId
           return (
-            <button
+            <Link
               key={item.id}
-              onClick={() => onNavigate(`/learn/${item.id}`)}
-              className={`group relative w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+              href={`/learn/${item.id}`}
+              className={`group relative block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
                 isActive
                   ? 'bg-[var(--soft-panel-bg)] font-medium text-[var(--accent)]'
                   : 'text-[var(--muted)] hover:bg-[var(--task-hover)] hover:text-[var(--foreground)]'
@@ -420,7 +417,7 @@ function TocSidebar({ items, currentId, onNavigate }: { items: TocItem[]; curren
               )}
               <p className="text-xs">{labelMap[item.type] || item.type}</p>
               <p className="mt-0.5 truncate text-[10px] text-inherit opacity-60">{item.title}</p>
-            </button>
+            </Link>
           )
         })}
       </nav>
@@ -439,25 +436,11 @@ function TocSidebar({ items, currentId, onNavigate }: { items: TocItem[]; curren
 }
 
 export default function ContentDetail({ content, pushAction, tocItems }: ContentDetailProps & { tocItems: TocItem[] }) {
-  const router = useRouter()
-  const [flipping, setFlipping] = useState(false)
-
-  // Keep flip visible briefly after navigation completes, then hide
-  useEffect(() => {
-    const timer = setTimeout(() => setFlipping(false), 100)
-    return () => clearTimeout(timer)
-  }, [content.id])
 
   const handlePush = async () => {
     const result = await pushAction(content.id)
     if (result.ok) window.location.reload()
     else alert(result.message)
-  }
-
-  const handleTocNavigate = (href: string) => {
-    if (href === `/learn/${content.id}`) return
-    setFlipping(true)
-    router.push(href)
   }
 
   const renderDetail = () => {
@@ -468,32 +451,8 @@ export default function ContentDetail({ content, pushAction, tocItems }: Content
 
   return (
     <div className="flex gap-8 relative">
-      <TocSidebar items={tocItems} currentId={content.id} onNavigate={handleTocNavigate} />
-
+      <TocSidebar items={tocItems} currentId={content.id} />
       <div className="flex-1 min-w-0 relative">
-        {/* Page-flip overlay */}
-        {flipping && (
-          <div className="absolute inset-0 z-40" style={{ perspective: '800px', backgroundColor: 'var(--surface)' }}>
-            {[0, 1, 2].map((i) => (
-              <motion.div
-                key={i}
-                className="absolute inset-y-0 right-0"
-                style={{
-                  width: `${85 - i * 3}%`,
-                  backgroundColor: 'var(--surface, #ffffff)',
-                  transformOrigin: '0 50%',
-                  zIndex: 10 - i,
-                  boxShadow: '-1px 0 3px rgba(26,24,23,0.07)',
-                  borderRight: '1px solid var(--border, #e8e4dd)',
-                }}
-                initial={{ rotateY: 0 }}
-                animate={{ rotateY: -180 }}
-                transition={{ duration: 0.22, delay: i * 0.05, ease: [0.4, 0, 0.2, 1] }}
-              />
-            ))}
-          </div>
-        )}
-
         {renderDetail()}
       </div>
     </div>
