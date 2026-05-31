@@ -79,7 +79,7 @@ function parseDialogueLines(text: string) {
     const line = raw[i].trim()
     const speaker = speakers.find(s => line.startsWith(`${s}:`))
     if (speaker) {
-      const message = line.replace(`${speaker}:`, '').replace(/^["']|["']$/g, '').trim()
+      const message = line.replace(`${speaker}:`, '').trim().replace(/^["']|["']$/g, '')
       const isYou = speaker === 'You'
       // Look ahead for **zh:** marker on the next line
       let chinese = ''
