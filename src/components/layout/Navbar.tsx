@@ -78,27 +78,35 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           <path d="M14 3v3h3" strokeWidth={1.2} strokeOpacity={0.35} />
           {/* Line 1 — draws in from left */}
           <motion.path
-            d="M6 8h12"
+            d="M6 7h12"
             strokeWidth={2.5}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.25, delay: 0 }}
+            transition={{ duration: 0.2, delay: 0 }}
           />
           {/* Line 2 */}
           <motion.path
-            d="M6 12h10"
+            d="M6 10.5h10"
             strokeWidth={2.5}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.25, delay: 0.08 }}
+            transition={{ duration: 0.2, delay: 0.06 }}
           />
           {/* Line 3 */}
           <motion.path
-            d="M6 16h11"
+            d="M6 14h11"
             strokeWidth={2.5}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.25, delay: 0.16 }}
+            transition={{ duration: 0.2, delay: 0.12 }}
+          />
+          {/* Line 4 */}
+          <motion.path
+            d="M6 17.5h9"
+            strokeWidth={2.5}
+            initial={{ pathLength: 0 }}
+            animate={active ? { pathLength: 1 } : { pathLength: 0 }}
+            transition={{ duration: 0.2, delay: 0.18 }}
           />
         </motion.svg>
       )
