@@ -76,37 +76,41 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           <rect x="3" y="3" width="18" height="18" rx="1.5" />
           {/* Folded corner */}
           <path d="M14 3v3h3" strokeWidth={1.2} strokeOpacity={0.35} />
-          {/* Line 1 — draws in from left */}
+          {/* Row 1 */}
+          <circle cx="7" cy="7.5" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
-            d="M6 7h12"
+            d="M9.5 7.5h8"
             strokeWidth={1.8}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.2, delay: 0 }}
+            transition={{ duration: 0.22, delay: 0 }}
           />
-          {/* Line 2 */}
+          {/* Row 2 */}
+          <circle cx="7" cy="11" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
-            d="M6 10.5h10"
+            d="M9.5 11h7"
             strokeWidth={1.8}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.2, delay: 0.06 }}
+            transition={{ duration: 0.22, delay: 0.08 }}
           />
-          {/* Line 3 */}
+          {/* Row 3 */}
+          <circle cx="7" cy="14.5" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
-            d="M6 14h11"
+            d="M9.5 14.5h7.5"
             strokeWidth={1.8}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.2, delay: 0.12 }}
+            transition={{ duration: 0.22, delay: 0.16 }}
           />
-          {/* Line 4 */}
+          {/* Row 4 */}
+          <circle cx="7" cy="18" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
-            d="M6 17.5h9"
+            d="M9.5 18h6.5"
             strokeWidth={1.8}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
-            transition={{ duration: 0.2, delay: 0.18 }}
+            transition={{ duration: 0.22, delay: 0.24 }}
           />
         </motion.svg>
       )
