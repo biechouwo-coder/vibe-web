@@ -194,6 +194,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
               if (!m) return null
               return (
                 <div key={i} className="flex items-baseline gap-2 text-sm">
+                  <sup className="text-[10px] text-[var(--accent)] font-medium tabular-nums">[{i + 1}]</sup>
                   <span className="font-medium text-stone-800 dark:text-stone-200">{m[1].trim()}</span>
                   {m[2] && <span className="text-xs text-stone-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>[{m[2].trim()}]</span>}
                   <span className="text-xs text-stone-500">— {m[3].trim()}</span>
@@ -384,6 +385,7 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
               if (!m) return <p key={i} className="text-sm text-stone-500">{line}</p>
               return (
                 <div key={i} className="flex items-baseline gap-2 text-sm">
+                  <sup className="text-[10px] text-[var(--accent)] font-medium tabular-nums">[{i + 1}]</sup>
                   <span className="font-medium text-stone-800 dark:text-stone-200">{m[1].trim()}</span>
                   {m[2] && <span className="text-xs text-stone-400" style={{ fontFamily: 'var(--font-noto-sans)' }}>[{m[2].trim()}]</span>}
                   <span className="text-xs text-stone-500">— {m[3].trim()}</span>
