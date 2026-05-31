@@ -5,6 +5,9 @@ import ContentDetail from './ContentDetail'
 
 export default async function LearnDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+
+  // Regenerate today's content first so the DB has the latest format
+  const today = await fetchTodaysContent()
   const content = await getContentById(id)
 
   if (!content) {
@@ -16,8 +19,6 @@ export default async function LearnDetailPage({ params }: { params: Promise<{ id
       </div>
     )
   }
-
-  const today = await fetchTodaysContent()
   const tocItems = [
     { type: 'conversation', title: today.conversation.title, id: today.conversation.id },
     { type: 'vocabulary', title: today.vocabulary.title, id: today.vocabulary.id },
