@@ -1,5 +1,5 @@
 import BackLink from '@/components/ui/BackLink'
-import { getContentById } from '@/actions/learn'
+import { getContentById, fetchTodaysContent } from '@/actions/learn'
 import { pushToNotion } from '@/actions/learn'
 import ContentDetail from './ContentDetail'
 
@@ -17,5 +17,12 @@ export default async function LearnDetailPage({ params }: { params: Promise<{ id
     )
   }
 
-  return <ContentDetail content={content} pushAction={pushToNotion} />
+  const today = await fetchTodaysContent()
+  const tocItems = [
+    { type: 'conversation', title: today.conversation.title, id: today.conversation.id },
+    { type: 'vocabulary', title: today.vocabulary.title, id: today.vocabulary.id },
+    { type: 'passage', title: today.passage.title, id: today.passage.id },
+  ]
+
+  return <ContentDetail content={content} pushAction={pushToNotion} tocItems={tocItems} />
 }

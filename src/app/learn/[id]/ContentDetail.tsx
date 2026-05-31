@@ -1,5 +1,9 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
 import VocabCards from '@/components/learn/VocabCards'
 import BackLink from '@/components/ui/BackLink'
 import { getAcademicKeywords } from '@/lib/academic-keywords'
@@ -388,14 +392,101 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
 
 // ── Main ──
 
-export default function ContentDetail({ content, pushAction }: ContentDetailProps) {
+interface TocItem { type: string; title: string; id: string }
+
+function TocSidebar({ items, currentId, onNavigate }: { items: TocItem[]; currentId: string; onNavigate: (href: string) => void }) {
+  const labelMap: Record<string, string> = { conversation: 'Speaking', vocabulary: 'Vocabulary', passage: 'Reading' }
+
+  return (
+    <aside className="w-48 shrink-0 hidden lg:block pt-2">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--muted)] px-3 mb-3">
+        Contents
+      </p>
+      <nav className="space-y-0.5">
+        {items.map((item) => {
+          const isActive = item.id === currentId
+          return (
+            <button
+              key={item.id}
+              onClick={() => onNavigate(`/learn/${item.id}`)}
+              className={`group relative w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                isActive
+                  ? 'bg-[var(--soft-panel-bg)] font-medium text-[var(--accent)]'
+                  : 'text-[var(--muted)] hover:bg-[var(--task-hover)] hover:text-[var(--foreground)]'
+              }`}
+            >
+              {isActive && (
+                <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-full bg-[var(--accent)]" />
+              )}
+              <p className="text-xs">{labelMap[item.type] || item.type}</p>
+              <p className="mt-0.5 truncate text-[10px] text-inherit opacity-60">{item.title}</p>
+            </button>
+          )
+        })}
+      </nav>
+      <div className="mx-3 mt-4 h-px" style={{ backgroundColor: 'var(--border)' }} />
+      <Link href="/learn" className="mx-3 mt-3 block text-[10px] font-medium text-[var(--muted)] transition-colors hover:text-[var(--accent)]">
+        &larr; Back to all
+      </Link>
+    </aside>
+  )
+}
+
+export default function ContentDetail({ content, pushAction, tocItems }: ContentDetailProps & { tocItems: TocItem[] }) {
+  const router = useRouter()
+  const [flipping, setFlipping] = useState(false)
+
+  // Reset flip state after navigation completes
+  useEffect(() => { setFlipping(false) }, [content.id])
+
   const handlePush = async () => {
     const result = await pushAction(content.id)
     if (result.ok) window.location.reload()
     else alert(result.message)
   }
 
-  if (content.type === 'conversation') return <ConversationDetail content={content} handlePush={handlePush} />
-  if (content.type === 'vocabulary') return <VocabularyDetail content={content} handlePush={handlePush} />
-  return <PassageDetail content={content} handlePush={handlePush} />
+  const handleTocNavigate = (href: string) => {
+    if (href === `/learn/${content.id}`) return
+    setFlipping(true)
+    setTimeout(() => router.push(href), 280)
+  }
+
+  const renderDetail = () => {
+    if (content.type === 'conversation') return <ConversationDetail content={content} handlePush={handlePush} />
+    if (content.type === 'vocabulary') return <VocabularyDetail content={content} handlePush={handlePush} />
+    return <PassageDetail content={content} handlePush={handlePush} />
+  }
+
+  return (
+    <div className="flex gap-8 relative">
+      <TocSidebar items={tocItems} currentId={content.id} onNavigate={handleTocNavigate} />
+
+      <div className="flex-1 min-w-0 relative">
+        {/* Page-flip overlay */}
+        {flipping && (
+          <div className="absolute inset-0 z-40" style={{ perspective: '800px', backgroundColor: 'var(--surface)' }}>
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                className="absolute inset-y-0 right-0"
+                style={{
+                  width: `${85 - i * 3}%`,
+                  backgroundColor: 'var(--surface, #ffffff)',
+                  transformOrigin: '0 50%',
+                  zIndex: 10 - i,
+                  boxShadow: '-1px 0 3px rgba(26,24,23,0.07)',
+                  borderRight: '1px solid var(--border, #e8e4dd)',
+                }}
+                initial={{ rotateY: 0 }}
+                animate={{ rotateY: -180 }}
+                transition={{ duration: 0.22, delay: i * 0.05, ease: [0.4, 0, 0.2, 1] }}
+              />
+            ))}
+          </div>
+        )}
+
+        {renderDetail()}
+      </div>
+    </div>
+  )
 }
