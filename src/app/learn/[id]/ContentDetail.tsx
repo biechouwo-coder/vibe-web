@@ -338,6 +338,7 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
   const writingFocus = extractSection(content.content, '**Writing Focus:**', ['**Key Vocabulary:**', '**Discussion Questions:**'])
   const vocabLines = extractSection(content.content, '**Key Vocabulary:**', ['**Discussion Questions:**'])
   const discussionLines = extractSection(content.content, '**Discussion Questions:**', [])
+  const translationBody = extractSection(content.content, '**Translation:**', [])
   const vocabTerms = vocabLines.map(line => {
     const m = line.match(/-\s*([^/]+?)\s*(?:\/(.+?)\/)?\s*:\s*(.+)/)
     return m ? m[1].trim() : null
@@ -391,6 +392,14 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
                 <span className="text-stone-600 dark:text-stone-400">{line.replace(/^\d+\.\s*/, '')}</span>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+      {translationBody.length > 0 && (
+        <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-stone-50 p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-800/30">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-500">Translation</p>
+          <div className="space-y-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">
+            {translationBody.map((para, i) => <p key={i}>{para}</p>)}
           </div>
         </div>
       )}

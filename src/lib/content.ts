@@ -472,6 +472,7 @@ interface ReadingContentItem {
   vocabulary: ReadingVocabularyItem[]
   discussionQuestions: string[]
   tags: string
+  translation: string
 }
 
 
@@ -602,6 +603,11 @@ function formatWeeklyPassageContent(item: ReadingContentItem, chunkIndex: number
     })
   }
 
+  // Translation
+  lines.push('')
+  lines.push('**Translation:**')
+  lines.push(item.translation)
+
   return lines.join('\n')
 }
 
@@ -654,6 +660,7 @@ export const readingContent: ReadingContentItem[] = [
       'What policy implications follow from the finding that 17 of 21 schemes reduced emissions?',
     ],
     tags: 'carbon-pricing,meta-analysis,policy',
+    translation: '碳定价被广泛认为是实现气候缓解目标的核心工具。然而，关于其有效性的事后实证证据长期分散在不同的学科、方法和政策背景中。本研究对全球21个碳定价方案的80项因果事后评估中的483个效应量进行了系统综述和荟萃分析。结果表明，碳定价在不同政策和背景下可带来5%至21%的统计显著减排。在纠正出版偏倚后，平均减排效果估计为4%至15%。值得注意的是，在所评估的21项政策中，至少有17项产生了即时且显著的减排效果。',
   },
   {
     title: 'EU ETS Firm-Level Evidence',
@@ -677,6 +684,7 @@ export const readingContent: ReadingContentItem[] = [
       'How might these results differ for carbon pricing in developing economies?',
     ],
     tags: 'eu-ets,carbon-pricing,firm-level',
+    translation: '欧盟排放交易体系（EU ETS）是全球最大的碳市场，也是欧盟气候政策的基石。本文提供了关于EU ETS对二氧化碳排放和经济绩效影响的企业层面严格证据。作者利用覆盖受监管制造企业的行政数据发现，EU ETS促使企业相对于未受监管企业减少了14%至16%的二氧化碳排放。这些减排是在未检测到经济活动收缩的情况下实现的。',
   },
   {
     title: 'Quasi-Experimental Carbon Pricing',
@@ -700,6 +708,7 @@ export const readingContent: ReadingContentItem[] = [
       'How could researchers improve the evidence base for developing countries?',
     ],
     tags: 'carbon-pricing,quasi-experimental,identification',
+    translation: '碳定价文献中的一个核心挑战是，能否将观察到的减排效果因果地归因于该政策而非同期其他趋势。准实验方法通过构建可信的反事实——即没有该政策情况下会发生什么——来解决这一问题。对EU ETS、不列颠哥伦比亚省碳税和北欧碳税方案的研究一致发现，碳定价带来了显著减排，效果从温和到显著不等，具体取决于行业覆盖范围和配套政策。然而，关于就业和竞争力等经济结果的证据仍然不一，部分原因是效果具有情境依赖性，部分原因是现有研究的识别策略不同。',
   },
   {
     title: 'Carbon-Linked Bond Design',
@@ -723,6 +732,7 @@ export const readingContent: ReadingContentItem[] = [
       'How might carbon-linked bonds affect investor behaviour in carbon-intensive sectors?',
     ],
     tags: 'green-bond,carbon-finance,bond-pricing',
+    translation: '传统绿色债券为环境项目筹集资金，但未能将投资者的财务回报与这些项目的环境绩效挂钩。本文通过提出一种碳联结债券来填补这一空白，其票息支付直接与碳价格挂钩。当碳价上涨——表明环境稀缺性加剧或监管趋严——债券支付更高的票息，从而补偿投资者增加的风险，并奖励他们支持减排活动。作者证明，这种债券可以在标准的期限结构框架内定价，票息校准可以根据不同政策情景下的当前碳价和预期未来碳价路径进行调整。',
   },
   {
     title: 'ESG Differentiated Pricing',
@@ -746,6 +756,7 @@ export const readingContent: ReadingContentItem[] = [
       'Why is time-varying calibration essential for the long-term effectiveness of the framework?',
     ],
     tags: 'esg,risk-management,loan-pricing',
+    translation: '寻求使其贷款组合与气候目标对齐的金融机构面临着盈利性与可持续性之间的张力。本文开发了一个三层框架，通过以动态、可校准的方式将ESG评分整合到贷款定价中来解决这一张力。第一层，借款人级别的ESG评分被纳入标准信用风险评估，使环境表现较好的企业获得更优惠的利率。第二层根据转型风险暴露在行业层面调整定价——高排放行业面临反映未来监管收紧可能性的溢价。第三层引入了一个时变校准机制，随着经济转型调整这些定价参数，确保框架即使在基准条件变化时仍然有效。',
   },
   {
     title: 'Carbon Pricing & Credit Risk',
@@ -769,6 +780,7 @@ export const readingContent: ReadingContentItem[] = [
       'What implications does this study have for financial regulators assessing systemic risk?',
     ],
     tags: 'credit-risk,carbon-pricing,uncertainty',
+    translation: '标准信用风险模型假设未来成本的概率分布是已知的或可以合理精确地估计。然而，碳定价引入了一种奈特不确定性：碳成本的未来路径取决于政治决策、技术突破和国际协调——这些因素的概率无法有意义地分配。本文开发了一个动态行为信用风险模型，放宽了标准假设，允许决策者在模糊性下运作。模型表明，当企业面临碳成本的奈特不确定性时，它们的行为会更加谨慎，这提高了超出标准模型预测的违约概率。这种效应在碳密集型行业中尤为显著，因为碳成本在总运营支出中占比较大。',
   },
 ]
 
