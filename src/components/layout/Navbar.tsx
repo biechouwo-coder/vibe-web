@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const navItems = [
   { href: '/', label: 'Study Desk', shortLabel: 'Desk', icon: 'desk' },
@@ -134,13 +134,23 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
   }
 }
 
+function ReadingCard({ label, desc, href }: { label: string; desc: string; href: string }) {
+  return (
+    <Link href={href} className="group block rounded-lg border border-[var(--border)] p-3 transition-colors hover:border-[var(--accent)] hover:bg-[var(--soft-panel-bg)]">
+      <p className="text-xs font-medium text-[var(--foreground)] group-hover:text-[var(--accent)]">{label}</p>
+      <p className="mt-0.5 text-[11px] text-[var(--muted)]">{desc}</p>
+    </Link>
+  )
+}
+
 export default function Navbar() {
   const pathname = usePathname()
+  const isReadingActive = pathname === '/learn' || pathname.startsWith('/learn/')
 
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden sm:flex sm:flex-col sm:w-16 md:w-20 lg:w-24 sm:h-full sm:shrink-0 sm:items-center" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
+      <aside className="hidden sm:flex sm:flex-col sm:w-16 md:w-20 lg:w-24 sm:h-full sm:shrink-0 sm:items-center relative z-10" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
         {/* Brand */}
         <div className="sm:pt-8 sm:pb-6">
           <Link href="/" className="block text-center transition-colors hover:text-[var(--accent)]" aria-label="Home">
@@ -216,6 +226,86 @@ export default function Navbar() {
             )
           })}
         </nav>
+
+        {/* Reading Space — opens from sidebar like a book page */}
+        <AnimatePresence>
+          {isReadingActive && (
+            <motion.div
+              className="absolute left-full top-0 h-full w-60 overflow-hidden"
+              style={{
+                perspective: '1000px',
+                transformOrigin: '0 50%',
+                transformStyle: 'preserve-3d',
+              }}
+              initial={{ rotateY: -92, opacity: 0 }}
+              animate={{
+                rotateY: 0,
+                opacity: 1,
+                transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+              }}
+              exit={{
+                rotateY: -92,
+                opacity: 0,
+                transition: { duration: 0.3, ease: [0.55, 0, 1, 0.45] },
+              }}
+            >
+              {/* Paper background with subtle depth */}
+              <div
+                className="absolute inset-0 border-r border-[var(--border)]"
+                style={{
+                  backgroundColor: 'var(--surface)',
+                  boxShadow: '4px 0 20px rgba(26,24,23,0.06), inset 1px 0 0 rgba(255,255,255,0.5)',
+                }}
+              />
+
+              {/* Content */}
+              <div className="relative flex h-full flex-col p-5 pt-14">
+                {/* Phase 3a: Header */}
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.26, duration: 0.4, ease: 'easeOut' }}
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">
+                    Library
+                  </p>
+                  <div className="mt-2 h-px w-8" style={{ backgroundColor: 'var(--border)' }} />
+                </motion.div>
+
+                {/* Phase 3b: Reading type cards */}
+                <motion.div
+                  className="mt-6 space-y-2"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.32, duration: 0.4, ease: 'easeOut' }}
+                >
+                  <ReadingCard label="Speaking Practice" desc="Daily conversation" href="/learn" />
+                  <ReadingCard label="Vocabulary" desc="Key terms & definitions" href="/learn" />
+                  <ReadingCard label="Reading" desc="Today's article" href="/learn" />
+                </motion.div>
+
+                {/* Phase 3c: Bottom footer */}
+                <motion.div
+                  className="mt-auto pt-6"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.38, duration: 0.4, ease: 'easeOut' }}
+                >
+                  <div className="h-px w-full" style={{ backgroundColor: 'var(--border)' }} />
+                  <Link
+                    href="/learn"
+                    className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
+                  >
+                    Browse all
+                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </aside>
 
