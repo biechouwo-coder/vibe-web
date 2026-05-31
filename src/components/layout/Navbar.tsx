@@ -134,11 +134,11 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
   }
 }
 
-function ReadingCard({ label, desc, href }: { label: string; desc: string; href: string }) {
+function ReadingMini({ label, href }: { label: string; href: string }) {
   return (
-    <Link href={href} className="group block rounded-lg border border-[var(--border)] p-3 transition-colors hover:border-[var(--accent)] hover:bg-[var(--soft-panel-bg)]">
-      <p className="text-xs font-medium text-[var(--foreground)] group-hover:text-[var(--accent)]">{label}</p>
-      <p className="mt-0.5 text-[11px] text-[var(--muted)]">{desc}</p>
+    <Link href={href} className="group flex items-center justify-center gap-1.5 rounded py-1 transition-colors hover:bg-[var(--task-hover)]">
+      <span className="h-1 w-1 rounded-full bg-[var(--accent)] opacity-60 shrink-0" />
+      <span className="text-[9px] font-medium text-[var(--text-muted)] group-hover:text-[var(--accent)]">{label}</span>
     </Link>
   )
 }
@@ -227,82 +227,50 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Reading Space — opens from sidebar like a book page */}
+        {/* Reading Space — page flips up from bottom of sidebar */}
         <AnimatePresence>
           {isReadingActive && (
             <motion.div
-              className="absolute left-full top-0 h-full w-60 overflow-hidden"
+              className="w-full shrink-0 overflow-hidden px-2 pb-3"
               style={{
-                perspective: '1000px',
-                transformOrigin: '0 50%',
+                perspective: '600px',
+                transformOrigin: '50% 100%',
                 transformStyle: 'preserve-3d',
               }}
-              initial={{ rotateY: -92, opacity: 0 }}
+              initial={{ rotateX: 92, opacity: 0 }}
               animate={{
-                rotateY: 0,
+                rotateX: 0,
                 opacity: 1,
-                transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+                transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
               }}
               exit={{
-                rotateY: -92,
+                rotateX: 92,
                 opacity: 0,
-                transition: { duration: 0.3, ease: [0.55, 0, 1, 0.45] },
+                transition: { duration: 0.25, ease: [0.55, 0, 1, 0.45] },
               }}
             >
-              {/* Paper background with subtle depth */}
-              <div
-                className="absolute inset-0 border-r border-[var(--border)]"
-                style={{
-                  backgroundColor: 'var(--surface)',
-                  boxShadow: '4px 0 20px rgba(26,24,23,0.06), inset 1px 0 0 rgba(255,255,255,0.5)',
-                }}
-              />
+              {/* Divider */}
+              <div className="mx-auto mb-2.5 w-8 h-px" style={{ backgroundColor: 'var(--border)' }} />
 
-              {/* Content */}
-              <div className="relative flex h-full flex-col p-5 pt-14">
-                {/* Phase 3a: Header */}
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.26, duration: 0.4, ease: 'easeOut' }}
-                >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">
-                    Library
-                  </p>
-                  <div className="mt-2 h-px w-8" style={{ backgroundColor: 'var(--border)' }} />
-                </motion.div>
-
-                {/* Phase 3b: Reading type cards */}
-                <motion.div
-                  className="mt-6 space-y-2"
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.32, duration: 0.4, ease: 'easeOut' }}
-                >
-                  <ReadingCard label="Speaking Practice" desc="Daily conversation" href="/learn" />
-                  <ReadingCard label="Vocabulary" desc="Key terms & definitions" href="/learn" />
-                  <ReadingCard label="Reading" desc="Today's article" href="/learn" />
-                </motion.div>
-
-                {/* Phase 3c: Bottom footer */}
-                <motion.div
-                  className="mt-auto pt-6"
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.38, duration: 0.4, ease: 'easeOut' }}
-                >
-                  <div className="h-px w-full" style={{ backgroundColor: 'var(--border)' }} />
-                  <Link
-                    href="/learn"
-                    className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
-                  >
-                    Browse all
-                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </motion.div>
-              </div>
+              {/* Content phases */}
+              <motion.p
+                className="text-[9px] font-semibold text-center uppercase tracking-[0.1em] text-[var(--accent)]"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.22, duration: 0.35, ease: 'easeOut' }}
+              >
+                Library
+              </motion.p>
+              <motion.div
+                className="mt-2 space-y-1.5"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.28, duration: 0.35, ease: 'easeOut' }}
+              >
+                <ReadingMini label="Speaking" href="/learn" />
+                <ReadingMini label="Vocabulary" href="/learn" />
+                <ReadingMini label="Reading" href="/learn" />
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
