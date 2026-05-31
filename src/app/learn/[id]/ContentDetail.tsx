@@ -317,6 +317,19 @@ function extractSection(content: string, startMarker: string, endMarkers: string
   return result
 }
 
+function highlightTerms(text: string, terms: string[]): React.ReactNode {
+  if (!terms.length) return text
+  const sorted = [...terms].sort((a, b) => b.length - a.length)
+  const escaped = sorted.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const regex = new RegExp(`\\b(${escaped.join('|')})\\b`, 'gi')
+  const parts = text.split(regex)
+  return parts.map((part, i) =>
+    sorted.some(t => t.toLowerCase() === part.toLowerCase())
+      ? <strong key={i} className="font-semibold text-[var(--foreground)]">{part}</strong>
+      : part
+  )
+}
+
 function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
   const metaKeys = ['Paper', 'Authors', 'Journal', 'Year', 'DOI']
   const lines = content.content.split('\n')
@@ -325,6 +338,10 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
   const writingFocus = extractSection(content.content, '**Writing Focus:**', ['**Key Vocabulary:**', '**Discussion Questions:**'])
   const vocabLines = extractSection(content.content, '**Key Vocabulary:**', ['**Discussion Questions:**'])
   const discussionLines = extractSection(content.content, '**Discussion Questions:**', [])
+  const vocabTerms = vocabLines.map(line => {
+    const m = line.match(/-\s*([^/]+?)\s*(?:\/(.+?)\/)?\s*:\s*(.+)/)
+    return m ? m[1].trim() : null
+  }).filter(Boolean) as string[]
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -337,7 +354,7 @@ function PassageDetail({ content, handlePush }: { content: DailyContentWithMeta;
       {excerptBody.length > 0 && (
         <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Excerpt</p>
-          <div className="space-y-3 font-serif text-base leading-relaxed text-stone-800 dark:text-stone-200">{excerptBody.map((para, i) => <p key={i}>{para}</p>)}</div>
+          <div className="space-y-3 font-serif text-base leading-relaxed text-stone-800 dark:text-stone-200">{excerptBody.map((para, i) => <p key={i}>{highlightTerms(para, vocabTerms)}</p>)}</div>
         </div>
       )}
       {writingFocus.length > 0 && (
