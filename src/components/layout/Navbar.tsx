@@ -79,7 +79,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Line 1 — draws in from left */}
           <motion.path
             d="M6 7h12"
-            strokeWidth={2.5}
+            strokeWidth={1.8}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
             transition={{ duration: 0.2, delay: 0 }}
@@ -87,7 +87,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Line 2 */}
           <motion.path
             d="M6 10.5h10"
-            strokeWidth={2.5}
+            strokeWidth={1.8}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
             transition={{ duration: 0.2, delay: 0.06 }}
@@ -95,7 +95,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Line 3 */}
           <motion.path
             d="M6 14h11"
-            strokeWidth={2.5}
+            strokeWidth={1.8}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
             transition={{ duration: 0.2, delay: 0.12 }}
@@ -103,7 +103,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Line 4 */}
           <motion.path
             d="M6 17.5h9"
-            strokeWidth={2.5}
+            strokeWidth={1.8}
             initial={{ pathLength: 0 }}
             animate={active ? { pathLength: 1 } : { pathLength: 0 }}
             transition={{ duration: 0.2, delay: 0.18 }}
