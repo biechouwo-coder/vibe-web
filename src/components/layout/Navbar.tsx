@@ -72,8 +72,10 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* Document outline */}
+          {/* Clipboard border */}
           <rect x="3" y="3" width="18" height="18" rx="1.5" />
+          {/* Binder clip at top */}
+          <rect x="9.5" y="1.5" width="5" height="2.5" rx="0.8" />
           {/* Row 1 */}
           <circle cx="7" cy="7.5" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
@@ -86,7 +88,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Row 2 */}
           <circle cx="7" cy="11" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
-            d="M9.5 11h7"
+            d="M9.5 11h8"
             strokeWidth={1.8}
             initial={{ pathLength: 0, opacity: 0 }}
             animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
@@ -95,7 +97,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Row 3 */}
           <circle cx="7" cy="14.5" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
-            d="M9.5 14.5h7.5"
+            d="M9.5 14.5h8"
             strokeWidth={1.8}
             initial={{ pathLength: 0, opacity: 0 }}
             animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
@@ -104,7 +106,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           {/* Row 4 */}
           <circle cx="7" cy="18" r="1.2" fill="currentColor" stroke="none" />
           <motion.path
-            d="M9.5 18h6.5"
+            d="M9.5 18h8"
             strokeWidth={1.8}
             initial={{ pathLength: 0, opacity: 0 }}
             animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
