@@ -63,9 +63,50 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
       )
     case 'list':
       return (
-        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
-        </svg>
+        <motion.svg
+          className={className}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          {/* Board */}
+          <rect x="4" y="3" width="16" height="18" rx="1.5" />
+          {/* Clip */}
+          <rect x="10" y="2" width="4" height="2" rx="0.5" />
+          {/* Row 1 */}
+          <rect x="7" y="8" width="2.5" height="2.5" rx="0.5" strokeWidth={1.2} />
+          <line x1="11.2" y1="9.25" x2="18" y2="9.25" strokeWidth={1} strokeOpacity={0.35} />
+          <motion.path
+            d="M7.6 9.3l.6.7 1.2-1.2"
+            strokeWidth={1.5}
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+            transition={{ duration: 0.25, delay: 0 }}
+          />
+          {/* Row 2 */}
+          <rect x="7" y="13" width="2.5" height="2.5" rx="0.5" strokeWidth={1.2} />
+          <line x1="11.2" y1="14.25" x2="18" y2="14.25" strokeWidth={1} strokeOpacity={0.35} />
+          <motion.path
+            d="M7.6 14.3l.6.7 1.2-1.2"
+            strokeWidth={1.5}
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+            transition={{ duration: 0.25, delay: 0.1 }}
+          />
+          {/* Row 3 */}
+          <rect x="7" y="18" width="2.5" height="2.5" rx="0.5" strokeWidth={1.2} />
+          <line x1="11.2" y1="19.25" x2="16" y2="19.25" strokeWidth={1} strokeOpacity={0.35} />
+          <motion.path
+            d="M7.6 19.3l.6.7 1.2-1.2"
+            strokeWidth={1.5}
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+            transition={{ duration: 0.25, delay: 0.2 }}
+          />
+        </motion.svg>
       )
     case 'settings':
       return (
