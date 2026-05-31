@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { getDailyStats } from '@/actions/plans'
 
@@ -138,16 +138,13 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
 
 export default function Navbar() {
   const pathname = usePathname()
-  const isReadingActive = pathname === '/learn' || pathname.startsWith('/learn/')
   const [taskStats, setTaskStats] = useState<{
     totalTasks: number; completedTasks: number; streak: { currentStreak: number }
   } | null>(null)
 
   useEffect(() => {
-    if (isReadingActive && !taskStats) {
-      getDailyStats().then(s => setTaskStats(s))
-    }
-  }, [isReadingActive, taskStats])
+    getDailyStats().then(s => setTaskStats(s))
+  }, [])
 
   return (
     <>
@@ -229,80 +226,39 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Reading Space — page flips up from bottom of sidebar */}
-        <AnimatePresence>
-          {isReadingActive && (
-            <motion.div
-              className="w-full shrink-0 overflow-hidden px-2 pb-3"
-              style={{
-                perspective: '600px',
-                transformOrigin: '50% 100%',
-                transformStyle: 'preserve-3d',
-              }}
-              initial={{ rotateX: 92, opacity: 0 }}
-              animate={{
-                rotateX: 0,
-                opacity: 1,
-                transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
-              }}
-              exit={{
-                rotateX: 92,
-                opacity: 0,
-                transition: { duration: 0.25, ease: [0.55, 0, 1, 0.45] },
-              }}
-            >
-              {/* Divider */}
-              <div className="mx-auto mb-2.5 w-8 h-px" style={{ backgroundColor: 'var(--border)' }} />
-
-              {/* Content phases */}
-              <motion.div
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.35, ease: 'easeOut' }}
-              >
-                {/* Progress */}
-                <p className="text-[8px] font-semibold text-center uppercase tracking-[0.1em] text-[var(--muted)]">
-                  Progress
-                </p>
-                <div className="mt-1.5 flex items-center justify-center gap-[3px]">
-                  {taskStats
-                    ? Array.from({ length: Math.max(taskStats.totalTasks, 1) }).map((_, i) => (
-                        <span
-                          key={i}
-                          className="block h-[5px] w-[5px] rounded-full"
-                          style={{
-                            backgroundColor: i < taskStats.completedTasks
-                              ? 'var(--accent)'
-                              : 'var(--border)',
-                          }}
-                        />
-                      ))
-                    : Array.from({ length: 3 }).map((_, i) => (
-                        <span key={i} className="block h-[5px] w-[5px] rounded-full" style={{ backgroundColor: 'var(--border)' }} />
-                      ))}
-                  <span className="ml-1 text-[8px] font-medium tabular-nums text-[var(--muted)]">
-                    {taskStats ? `${taskStats.completedTasks}/${taskStats.totalTasks}` : '-'}
-                  </span>
-                </div>
-              </motion.div>
-
-              {/* Streak */}
-              <motion.div
-                className="mt-3"
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.26, duration: 0.35, ease: 'easeOut' }}
-              >
-                <p className="text-[8px] font-semibold text-center uppercase tracking-[0.1em] text-[var(--muted)]">
-                  Streak
-                </p>
-                <p className="mt-0.5 text-center text-[11px] font-bold tabular-nums text-[var(--accent)]">
-                  {taskStats ? `${taskStats.streak.currentStreak} day${taskStats.streak.currentStreak !== 1 ? 's' : ''}` : '-'}
-                </p>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Bottom dashboard — always visible */}
+        <div className="w-full shrink-0 px-2 pb-3">
+          <div className="mx-auto mb-2.5 w-8 h-px" style={{ backgroundColor: 'var(--border)' }} />
+          {/* Progress */}
+          <p className="text-[8px] font-semibold text-center uppercase tracking-[0.1em] text-[var(--muted)]">
+            Progress
+          </p>
+          <div className="mt-1.5 flex items-center justify-center gap-[3px]">
+            {taskStats
+              ? Array.from({ length: Math.max(taskStats.totalTasks, 1) }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="block h-[5px] w-[5px] rounded-full"
+                    style={{
+                      backgroundColor: i < taskStats.completedTasks ? 'var(--accent)' : 'var(--border)',
+                    }}
+                  />
+                ))
+              : Array.from({ length: 3 }).map((_, i) => (
+                  <span key={i} className="block h-[5px] w-[5px] rounded-full" style={{ backgroundColor: 'var(--border)' }} />
+                ))}
+            <span className="ml-1 text-[8px] font-medium tabular-nums text-[var(--muted)]">
+              {taskStats ? `${taskStats.completedTasks}/${taskStats.totalTasks}` : '-'}
+            </span>
+          </div>
+          {/* Streak */}
+          <p className="mt-3 text-[8px] font-semibold text-center uppercase tracking-[0.1em] text-[var(--muted)]">
+            Streak
+          </p>
+          <p className="mt-0.5 text-center text-[11px] font-bold tabular-nums text-[var(--accent)]">
+            {taskStats ? `${taskStats.streak.currentStreak} day${taskStats.streak.currentStreak !== 1 ? 's' : ''}` : '-'}
+          </p>
+        </div>
 
       </aside>
 
