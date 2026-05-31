@@ -14,7 +14,7 @@ export default async function LearnPage() {
     <div className="space-y-8">
       {/* Header */}
       <section>
-        <h1 className="font-serif text-2xl font-semibold tracking-tight">Today&apos;s Readings</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight">Today&apos;s Study</h1>
         <p className="mt-1 text-sm text-stone-500">
           {formatShanghaiDate('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
         </p>

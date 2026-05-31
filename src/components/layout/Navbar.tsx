@@ -8,7 +8,7 @@ import { getDailyStats } from '@/actions/plans'
 
 const navItems = [
   { href: '/', label: 'Study Desk', shortLabel: 'Desk', icon: 'desk' },
-  { href: '/learn', label: 'Readings', shortLabel: 'Readings', icon: 'book' },
+  { href: '/learn', label: 'Learn', shortLabel: 'Learn', icon: 'book' },
   { href: '/plans', label: 'Plans', shortLabel: 'Plans', icon: 'list' },
   { href: '/settings', label: 'Settings', shortLabel: 'Settings', icon: 'settings' },
 ]
