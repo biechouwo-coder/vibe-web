@@ -38,8 +38,9 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
             transition={{ duration: 0.12 }}
           >
             <rect x="3" y="4" width="18" height="16" rx="1" />
-            <line x1="19" y1="7" x2="19" y2="17" strokeWidth={1} strokeOpacity={0.3} />
-            <line x1="18" y1="8" x2="18" y2="16" strokeWidth={1} strokeOpacity={0.2} />
+            <line x1="6" y1="5" x2="6" y2="19" strokeWidth={1} strokeOpacity={0.35} />
+            <line x1="19" y1="7" x2="19" y2="17" strokeWidth={1} strokeOpacity={0.35} />
+            <line x1="20" y1="6" x2="20" y2="18" strokeWidth={1} strokeOpacity={0.2} />
           </motion.g>
           {/* Open book — springs from spine when active */}
           <motion.g
