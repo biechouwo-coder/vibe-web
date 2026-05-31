@@ -23,7 +23,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
       )
     case 'book':
       return (
-        <svg
+        <motion.svg
           className={className}
           fill="none"
           viewBox="0 0 24 24"
@@ -32,15 +32,33 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
-          <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
-          <line x1="6" y1="9" x2="11" y2="9" strokeWidth={1} strokeOpacity={0.4} />
-          <line x1="6" y1="12" x2="10" y2="12" strokeWidth={1} strokeOpacity={0.4} />
-          <line x1="13" y1="9" x2="18" y2="9" strokeWidth={1} strokeOpacity={0.4} />
-          <line x1="13" y1="12" x2="17" y2="12" strokeWidth={1} strokeOpacity={0.4} />
-          <line x1="13" y1="15" x2="16" y2="15" strokeWidth={1} strokeOpacity={0.4} />
-          <line x1="12" y1="4" x2="12" y2="20" strokeWidth={2} />
-        </svg>
+          {/* Closed book — visible when inactive */}
+          <motion.g
+            animate={active ? { opacity: 0, scale: 0.8 } : { opacity: 1, scale: 1 }}
+            transition={{ duration: 0.12 }}
+          >
+            <rect x="3" y="4" width="18" height="16" rx="1" />
+            <line x1="19" y1="7" x2="19" y2="17" strokeWidth={1} strokeOpacity={0.3} />
+            <line x1="18" y1="8" x2="18" y2="16" strokeWidth={1} strokeOpacity={0.2} />
+          </motion.g>
+          {/* Open book — springs from spine when active */}
+          <motion.g
+            style={{ originX: 0.5, originY: 0.5 }}
+            animate={active
+              ? { scaleX: 1, opacity: 1 }
+              : { scaleX: 0, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 22 }}
+          >
+            <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
+            <line x1="6" y1="9" x2="11" y2="9" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="6" y1="12" x2="10" y2="12" strokeWidth={1} strokeOpacity={0.4} />
+            <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
+            <line x1="13" y1="9" x2="18" y2="9" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="13" y1="12" x2="17" y2="12" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="13" y1="15" x2="16" y2="15" strokeWidth={1} strokeOpacity={0.4} />
+            <line x1="12" y1="4" x2="12" y2="20" strokeWidth={2} />
+          </motion.g>
+        </motion.svg>
       )
     case 'list':
       return (
