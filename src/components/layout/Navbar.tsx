@@ -72,39 +72,33 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* Board */}
-          <rect x="4" y="3" width="16" height="18" rx="1.5" />
-          {/* Clip */}
-          <rect x="10" y="2" width="4" height="2" rx="0.5" />
-          {/* Row 1 */}
-          <rect x="7" y="8" width="2.5" height="2.5" rx="0.5" strokeWidth={1.2} />
-          <line x1="11.2" y1="9.25" x2="18" y2="9.25" strokeWidth={1} strokeOpacity={0.35} />
+          {/* Document outline */}
+          <rect x="3" y="3" width="18" height="18" rx="1.5" />
+          {/* Folded corner */}
+          <path d="M14 3v3h3" strokeWidth={1.2} strokeOpacity={0.35} />
+          {/* Line 1 — draws in from left */}
           <motion.path
-            d="M7.6 9.3l.6.7 1.2-1.2"
-            strokeWidth={1.5}
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+            d="M6 8h12"
+            strokeWidth={2.5}
+            initial={{ pathLength: 0 }}
+            animate={active ? { pathLength: 1 } : { pathLength: 0 }}
             transition={{ duration: 0.25, delay: 0 }}
           />
-          {/* Row 2 */}
-          <rect x="7" y="13" width="2.5" height="2.5" rx="0.5" strokeWidth={1.2} />
-          <line x1="11.2" y1="14.25" x2="18" y2="14.25" strokeWidth={1} strokeOpacity={0.35} />
+          {/* Line 2 */}
           <motion.path
-            d="M7.6 14.3l.6.7 1.2-1.2"
-            strokeWidth={1.5}
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-            transition={{ duration: 0.25, delay: 0.1 }}
+            d="M6 12h10"
+            strokeWidth={2.5}
+            initial={{ pathLength: 0 }}
+            animate={active ? { pathLength: 1 } : { pathLength: 0 }}
+            transition={{ duration: 0.25, delay: 0.08 }}
           />
-          {/* Row 3 */}
-          <rect x="7" y="18" width="2.5" height="2.5" rx="0.5" strokeWidth={1.2} />
-          <line x1="11.2" y1="19.25" x2="16" y2="19.25" strokeWidth={1} strokeOpacity={0.35} />
+          {/* Line 3 */}
           <motion.path
-            d="M7.6 19.3l.6.7 1.2-1.2"
-            strokeWidth={1.5}
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={active ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-            transition={{ duration: 0.25, delay: 0.2 }}
+            d="M6 16h11"
+            strokeWidth={2.5}
+            initial={{ pathLength: 0 }}
+            animate={active ? { pathLength: 1 } : { pathLength: 0 }}
+            transition={{ duration: 0.25, delay: 0.16 }}
           />
         </motion.svg>
       )
