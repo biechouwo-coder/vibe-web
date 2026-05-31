@@ -256,8 +256,8 @@ export default function Navbar() {
             Streak
           </p>
           <p className="mt-0.5 text-center text-[11px] font-bold tabular-nums text-[var(--accent)]">
-            {taskStats && taskStats.streak.currentStreak >= 2
-              ? `${taskStats.streak.currentStreak} days`
+            {taskStats && taskStats.totalTasks > 0 && taskStats.completedTasks === taskStats.totalTasks
+              ? `${taskStats.streak.currentStreak} day${taskStats.streak.currentStreak !== 1 ? 's' : ''}`
               : '-'}
           </p>
         </div>
