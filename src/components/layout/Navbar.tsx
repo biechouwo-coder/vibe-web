@@ -23,7 +23,7 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
       )
     case 'book':
       return (
-        <motion.svg
+        <svg
           className={className}
           fill="none"
           viewBox="0 0 24 24"
@@ -32,60 +32,15 @@ function NavIcon({ icon, active }: { icon: string; active: boolean }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {/* Left cover — static, no rotation */}
           <path d="M4 6c0-1.1.9-2 2-2h6v16H6c-1.1 0-2-.9-2-2V6z" />
+          <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
           <line x1="6" y1="9" x2="11" y2="9" strokeWidth={1} strokeOpacity={0.4} />
           <line x1="6" y1="12" x2="10" y2="12" strokeWidth={1} strokeOpacity={0.4} />
-          {/* Right cover — static, no rotation */}
-          <path d="M20 6c0-1.1-.9-2-2-2h-6v16h6c1.1 0 2-.9 2-2V6z" />
           <line x1="13" y1="9" x2="18" y2="9" strokeWidth={1} strokeOpacity={0.4} />
           <line x1="13" y1="12" x2="17" y2="12" strokeWidth={1} strokeOpacity={0.4} />
           <line x1="13" y1="15" x2="16" y2="15" strokeWidth={1} strokeOpacity={0.4} />
-          {/* Flipping pages — right side, fan outward */}
-          {[0, 1, 2].map((i) => (
-            <motion.g
-              key={`fr${i}`}
-              style={{ originX: 0, originY: 0.5 }}
-              animate={active
-                ? { rotate: 20 + i * 18, x: 0.5 + i * 0.3 }
-                : { rotate: 0, x: 0 }}
-              transition={{
-                type: 'spring', stiffness: 320, damping: 14,
-                delay: 0.04 + i * 0.07,
-              }}
-            >
-              <rect
-                x={12} y={5.5 + i * 0.3}
-                width={7.5 - i * 0.5} height={13 - i * 0.4}
-                rx={0.3} strokeWidth={0.5}
-                strokeOpacity={0.5 - i * 0.1}
-              />
-            </motion.g>
-          ))}
-          {/* Flipping pages — left side, fan outward */}
-          {[0, 1, 2].map((i) => (
-            <motion.g
-              key={`fl${i}`}
-              style={{ originX: 1, originY: 0.5 }}
-              animate={active
-                ? { rotate: -(20 + i * 18), x: -(0.5 + i * 0.3) }
-                : { rotate: 0, x: 0 }}
-              transition={{
-                type: 'spring', stiffness: 320, damping: 14,
-                delay: 0.04 + i * 0.07,
-              }}
-            >
-              <rect
-                x={4.5 - i * 0.3} y={5.5 + i * 0.3}
-                width={7.5 - i * 0.5} height={13 - i * 0.4}
-                rx={0.3} strokeWidth={0.5}
-                strokeOpacity={0.5 - i * 0.1}
-              />
-            </motion.g>
-          ))}
-          {/* Spine — always visible */}
-          <path d="M12 4v16" strokeWidth={2} />
-        </motion.svg>
+          <line x1="12" y1="4" x2="12" y2="20" strokeWidth={2} />
+        </svg>
       )
     case 'list':
       return (
