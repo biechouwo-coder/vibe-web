@@ -40,7 +40,7 @@ export async function generateConversation(scene: SceneContext): Promise<AiConve
 
   const isAcademic = scene.tags.includes('classroom') || scene.tags.includes('company') || scene.tags.includes('class-activity')
 
-  const prompt = `You are generating an English conversation for a Chinese university student in a Carbon Neutrality & Green Finance master's program at HKUST-GZ.
+  const prompt = `You are generating an English conversation for a Chinese university student.
 
 Today's conversation scene:
 **${scene.scenario}**
@@ -53,7 +53,7 @@ Return ONLY valid JSON (no markdown, no code blocks) matching this structure:
   "title": "Short engaging title (max 6 words)",
   "topic": "${scene.topic}",
   "scenario": "${scene.scenario}",
-  "background": "2-3 sentence narrative setting the scene before the dialogue starts",
+  "background": "2-3 sentence narrative describing the setting before the dialogue starts (do not mention any university or program name)",
   "dialogue": [
     {"speaker": "...", "text": "..."},
     {"speaker": "...", "text": "..."},
@@ -72,7 +72,7 @@ Return ONLY valid JSON (no markdown, no code blocks) matching this structure:
 Rules:
 - 4-6 dialogue exchanges (each exchange = one speaker line)
 - Speakers appropriate to the scene (e.g. You, Classmate, Professor, Roommate, Staff)
-- Include a 2-3 sentence background narrative that describes the setting and leads into the conversation
+- Include a 2-3 sentence background narrative that sets the scene (never mention the university, program name, or degree)
 - translation: each line starts with the same speaker name + Chinese full-width colon（：）, lines separated by \\n
 - translation must be complete, no omissions`
 

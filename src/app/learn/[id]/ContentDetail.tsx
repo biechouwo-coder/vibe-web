@@ -69,7 +69,7 @@ function parseUsefulExpressions(text: string): { expr: string; note: string }[] 
 }
 
 function parseDialogueLines(text: string) {
-  const speakers = ['Professor', 'You', 'Classmate', 'Team Member', 'Other Student', 'Staff', 'Advisor', 'Roommate', 'Director', 'Friend', 'Roommate', 'Student', 'Guide']
+  const speakers = ['Professor', 'You', 'Classmate', 'Team Member', 'Other Student', 'Staff', 'Advisor', 'Roommate', 'Director', 'Friend', 'Student', 'Guide', 'Manager', 'Colleague', 'Fellow Student', 'Teaching Assistant', 'TA']
   const raw = text.split('\n').filter(Boolean)
   const result: { speaker: string; message: string; isYou: boolean; chinese: string; isNarrative: boolean }[] = []
   for (let i = 0; i < raw.length; i++) {
@@ -84,12 +84,30 @@ function parseDialogueLines(text: string) {
         chinese = raw[i + 1].trim().replace('**zh:**', '').trim()
       }
       result.push({ speaker, message, isYou, chinese, isNarrative: false })
-    } else if (/^\*.+\*$/.test(line)) {
+    } else if (line.startsWith('*') && line.endsWith('*') && line.length > 2) {
       // Narrative/background line wrapped in *asterisks*
-      result.push({ speaker: '', message: line.replace(/^\*|\*$/g, ''), isYou: false, chinese: '', isNarrative: true })
+      result.push({ speaker: '', message: line.replace(/^\*+|\*+$/g, ''), isYou: false, chinese: '', isNarrative: true })
     }
   }
   return result
+}
+
+function highlightExprInDialogue(text: string, expressions: string[]): React.ReactNode {
+  if (!expressions.length) return text
+  const sorted = [...expressions].sort((a, b) => b.length - a.length)
+  const escaped = sorted.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const suffixes = '(?:s|es|ed|ing)?'
+  const regex = new RegExp(`\\b(${escaped.join('|')})${suffixes}\\b`, 'gi')
+  const parts = text.split(regex)
+  return parts.map((part, i) => {
+    const isMatch = expressions.some(expr => {
+      const w = part.toLowerCase()
+      const stem = expr.toLowerCase()
+      return w === stem || w === stem + 's' || w === stem + 'es' || w === stem + 'ed' || w === stem + 'ing'
+    })
+    if (isMatch) return <strong key={i} className="font-semibold">{part}</strong>
+    return part
+  })
 }
 
 function ConversationDetail({ content, handlePush }: { content: DailyContentWithMeta; handlePush: () => void }) {
@@ -102,6 +120,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
 
   const dialogueLines = dialogueText ? parseDialogueLines(dialogueText) : []
   const usefulExpressions = usefulExprText ? parseUsefulExpressions(usefulExprText) : []
+  const exprPhrases = usefulExpressions.map(ue => ue.expr)
 
   const isNewFormat = !!topic
   let legacyDialog: { speaker: string; message: string; isYou: boolean; chinese: string; isNarrative: boolean }[] = []
@@ -171,7 +190,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
                       {dl.speaker}
                     </span>
                   )}
-                  <span>{dl.message}</span>
+                  <span>{highlightExprInDialogue(dl.message, exprPhrases)}</span>
                   {dl.chinese && (
                     <p className="mt-1.5 text-xs leading-relaxed opacity-75" style={{ color: dl.isYou ? 'rgba(255,255,255,0.75)' : 'var(--muted)' }}>{dl.chinese}</p>
                   )}
