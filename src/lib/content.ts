@@ -271,6 +271,11 @@ function formatConversationContent(item: typeof conversationContent[0]): string 
   lines.push(`**Scenario:** ${item.scenario}`)
   lines.push(`
 **Dialogue:**`)
+  const bg = (item as { background?: string }).background
+  if (bg) {
+    lines.push(`
+*${bg}*`)
+  }
   for (let i = 0; i < item.dialogue.length; i++) {
     const d = item.dialogue[i]
     const zh = transLines[i]?.replace(/^[^：]*：\s*/, '').trim() || ''
@@ -307,22 +312,24 @@ export async function getDailyConversation()
   })
   if (existing) return existing
 
+  // Pick today's scene from the 7 daily-life scenarios
+  const scene = pickBySeed(conversationContent, seed)
+
   // Try AI-generated conversation first
-  const aiItem = await generateConversation(seed)
+  const aiItem = await generateConversation(scene)
   if (aiItem) {
     return upsertDailyContent(date, 'conversation', {
       title: aiItem.title,
-      content: formatConversationContent(aiItem as typeof conversationContent[0]),
-      tags: 'conversation,speaking,' + aiItem.topic.toLowerCase().replace(/\s+/g, '-'),
+      content: formatConversationContent(aiItem as unknown as typeof conversationContent[0]),
+      tags: scene.tags,
     })
   }
 
   // Fall back to static content
-  const item = pickBySeed(conversationContent, seed)
   return upsertDailyContent(date, 'conversation', {
-    title: item.title,
-    content: formatConversationContent(item),
-    tags: item.tags,
+    title: scene.title,
+    content: formatConversationContent(scene),
+    tags: scene.tags,
   })
 }
 

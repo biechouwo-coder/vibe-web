@@ -69,9 +69,9 @@ function parseUsefulExpressions(text: string): { expr: string; note: string }[] 
 }
 
 function parseDialogueLines(text: string) {
-  const speakers = ['Professor', 'You', 'Classmate', 'Team Member', 'Other Student', 'Staff', 'Advisor']
+  const speakers = ['Professor', 'You', 'Classmate', 'Team Member', 'Other Student', 'Staff', 'Advisor', 'Roommate', 'Director', 'Friend', 'Roommate', 'Student', 'Guide']
   const raw = text.split('\n').filter(Boolean)
-  const result: { speaker: string; message: string; isYou: boolean; chinese: string }[] = []
+  const result: { speaker: string; message: string; isYou: boolean; chinese: string; isNarrative: boolean }[] = []
   for (let i = 0; i < raw.length; i++) {
     const line = raw[i].trim()
     const speaker = speakers.find(s => line.startsWith(`${s}:`))
@@ -83,7 +83,10 @@ function parseDialogueLines(text: string) {
       if (i + 1 < raw.length && raw[i + 1].trim().startsWith('**zh:**')) {
         chinese = raw[i + 1].trim().replace('**zh:**', '').trim()
       }
-      result.push({ speaker, message, isYou, chinese })
+      result.push({ speaker, message, isYou, chinese, isNarrative: false })
+    } else if (/^\*.+\*$/.test(line)) {
+      // Narrative/background line wrapped in *asterisks*
+      result.push({ speaker: '', message: line.replace(/^\*|\*$/g, ''), isYou: false, chinese: '', isNarrative: true })
     }
   }
   return result
@@ -101,7 +104,7 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
   const usefulExpressions = usefulExprText ? parseUsefulExpressions(usefulExprText) : []
 
   const isNewFormat = !!topic
-  let legacyDialog: { speaker: string; message: string; isYou: boolean; chinese: string }[] = []
+  let legacyDialog: { speaker: string; message: string; isYou: boolean; chinese: string; isNarrative: boolean }[] = []
   let legacyVocab = ''
   let legacyTrans = ''
 
@@ -144,7 +147,15 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
         <div className="rounded-[var(--radius-panel)] border border-stone-200 bg-white p-5 shadow-sm shadow-stone-200/40 dark:border-stone-800 dark:bg-stone-900 dark:shadow-stone-950/30">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-stone-400">Dialogue</p>
           <div className="space-y-2.5">
-            {(dialogueLines.length > 0 ? dialogueLines : legacyDialog).map((dl, i) => (
+            {(dialogueLines.length > 0 ? dialogueLines : legacyDialog).map((dl, i) => {
+              if (dl.isNarrative) {
+                return (
+                  <div key={i} className="flex justify-center py-2">
+                    <p className="max-w-[90%] text-center text-sm italic leading-relaxed text-stone-500 dark:text-stone-400">{dl.message}</p>
+                  </div>
+                )
+              }
+              return (
               <div key={i} className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] rounded-[var(--radius-control)] px-3.5 py-2.5 text-sm leading-relaxed ${
                   dl.isYou
@@ -166,7 +177,8 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
                   )}
                 </div>
               </div>
-            ))}
+            )
+            })}
           </div>
         </div>
       )}

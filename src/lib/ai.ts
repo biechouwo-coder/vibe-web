@@ -17,6 +17,7 @@ interface AiConversation {
   title: string
   topic: string
   scenario: string
+  background: string
   dialogue: { speaker: string; text: string }[]
   usefulExpressions: { phrase: string; usage: string }[]
   toneNote: string
@@ -24,56 +25,55 @@ interface AiConversation {
   translation: string
 }
 
-const TOPICS = [
-  'carbon pricing mechanisms',
-  'ESG investing strategies',
-  'green bond markets',
-  'climate risk assessment',
-  'carbon accounting methods',
-  'renewable energy finance',
-  'sustainable supply chains',
-  'net-zero policy frameworks',
-  'carbon credit markets',
-  'climate scenario analysis',
-  'green technology investment',
-  'corporate sustainability reporting',
-]
+interface SceneContext {
+  title: string
+  topic: string
+  scenario: string
+  toneNote: string
+  practicePrompt: string
+  tags: string
+}
 
-export async function generateConversation(seed: number): Promise<AiConversation | null> {
+export async function generateConversation(scene: SceneContext): Promise<AiConversation | null> {
   const client = await getClient()
   if (!client) return null
 
-  const topic = TOPICS[seed % TOPICS.length]
+  const isAcademic = scene.tags.includes('classroom') || scene.tags.includes('company') || scene.tags.includes('class-activity')
 
-  const prompt = `You are generating an English conversation for a Chinese university student in a Carbon Neutrality & Green Finance master's program at HKUST-GZ. The conversation should be academically realistic.
+  const prompt = `You are generating an English conversation for a Chinese university student in a Carbon Neutrality & Green Finance master's program at HKUST-GZ.
 
-Generate a conversation about: **${topic}**
+Today's conversation scene:
+**${scene.scenario}**
+Tone: ${scene.toneNote}
+
+Generate a natural conversation that fits this scene.${isAcademic ? ' The conversation should include domain-specific terminology related to carbon neutrality and green finance.' : ' The conversation should be natural everyday English appropriate for the setting.'}
 
 Return ONLY valid JSON (no markdown, no code blocks) matching this structure:
 {
   "title": "Short engaging title (max 6 words)",
-  "topic": "${topic}",
-  "scenario": "One-sentence scene description (classroom, gym, cafeteria, dormitory, class activity, company visit, entertainment, etc.)",
+  "topic": "${scene.topic}",
+  "scenario": "${scene.scenario}",
+  "background": "2-3 sentence narrative setting the scene before the dialogue starts",
   "dialogue": [
-    {"speaker": "Professor", "text": "First line..."},
-    {"speaker": "You", "text": "Response..."},
-    {"speaker": "Classmate", "text": "..."}
+    {"speaker": "...", "text": "..."},
+    {"speaker": "...", "text": "..."},
+    {"speaker": "...", "text": "..."}
   ],
   "usefulExpressions": [
     {"phrase": "Expression 1", "usage": "When to use this expression (context/situation)", "translation": "中文翻译"},
     {"phrase": "Expression 2", "usage": "When to use this expression", "translation": "中文翻译"},
     {"phrase": "Expression 3", "usage": "When to use this expression", "translation": "中文翻译"}
   ],
-  "toneNote": "Tone description",
-  "practicePrompt": "Practice prompt for the student",
+  "toneNote": "${scene.toneNote}",
+  "practicePrompt": "${scene.practicePrompt}",
   "translation": "Speaker1：中文翻译\\nSpeaker2：中文翻译\\n..."
 }
 
 Rules:
 - 4-6 dialogue exchanges (each exchange = one speaker line)
-- Speakers: Professor, You, Classmate, Team Member, Other Student, Staff, Advisor
-- Dialogue must be natural academic English with domain-specific terminology
-- translation: each line starts with the SAME speaker name + Chinese full-width colon（：）, lines separated by \\n
+- Speakers appropriate to the scene (e.g. You, Classmate, Professor, Roommate, Staff)
+- Include a 2-3 sentence background narrative that describes the setting and leads into the conversation
+- translation: each line starts with the same speaker name + Chinese full-width colon（：）, lines separated by \\n
 - translation must be complete, no omissions`
 
   try {
