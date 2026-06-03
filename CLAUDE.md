@@ -58,7 +58,8 @@ npx prisma studio    # DB GUI
 - VocabCards: `src/components/learn/VocabCards.tsx` (academic glossary, 40px slide, reduced-motion aware)
 
 ## Content Library (`src/lib/content.ts`)
-- **Conversations (7)**: scene-based — Classroom, Gym, Cafeteria, Dormitory, Class Activity, Company Visit, Entertainment; each with `formatConversationContent()` — outputs Topic/Scenario/Dialogue/UsefulExpressions/ToneNote/PracticePrompt/Translation; **daily rotation** via `getShanghaiDateSeed()`
+- **Conversations (7)**: scene-based — Classroom, Gym, Cafeteria, Dormitory, Class Activity, Company Visit, Entertainment; AI generates scene-appropriate content via DeepSeek (`temperature: 0.8`) or falls back to static scenes; **daily rotation** via `pickBySeed(conversationContent, getShanghaiDateSeed())` → selects scene, then `generateConversation(scene)` for AI generation; prompt instructs AI not to mention university/program in background
+- Dialogue output: background narrative (`*italic*`, centered) before first speaker line; Useful Expression terms bolded in dialogue text via `highlightExprInDialogue()`; speaker recognition expanded to 18+ roles
 - **Readings (6)**: Journal-based `readingContent` array — paperTitle/authors/journal/year/doi/excerpt/writingFocus/vocabulary/discussionQuestions; **weekly rotation** via `getShanghaiWeekOfYear()`
 - One article per week (Mon-Sat chunked progressive study, Sunday full review)
 - **Weekly chunk system**:
