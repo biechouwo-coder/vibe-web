@@ -174,18 +174,22 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
                   </div>
                 )
               }
+              const isAcademic = ['Professor', 'Advisor', 'TA', 'Teaching Assistant'].includes(dl.speaker)
+              const isAuthority = ['Director', 'Manager', 'Staff', 'Guide'].includes(dl.speaker)
               return (
               <div key={i} className={`flex ${dl.isYou ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] rounded-[var(--radius-control)] px-3.5 py-2.5 text-sm leading-relaxed ${
                   dl.isYou
                     ? 'bg-[var(--academic-navy)] text-white dark:bg-[var(--academic-navy)]'
-                    : dl.speaker === 'Professor'
+                    : isAcademic
                       ? 'border-l-2 border-[var(--academic-navy)] bg-stone-50 text-stone-700 dark:border-[var(--academic-navy)] dark:bg-stone-800/50 dark:text-stone-300'
-                      : 'bg-stone-100 text-stone-700 dark:bg-stone-800 dark:text-stone-300'
+                      : isAuthority
+                        ? 'border-l-2 border-amber-700/30 bg-amber-50/50 text-stone-700 dark:border-amber-600/30 dark:bg-amber-900/10 dark:text-stone-300'
+                        : 'border-l-2 border-stone-200 bg-stone-100 text-stone-700 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300'
                 }`}>
                   {!dl.isYou && (
                     <span className={`mb-0.5 block text-[10px] font-semibold uppercase tracking-wider ${
-                      dl.speaker === 'Professor' ? 'text-[var(--academic-navy)]' : 'text-stone-500'
+                      isAcademic ? 'text-[var(--academic-navy)]' : isAuthority ? 'text-amber-700 dark:text-amber-400' : 'text-stone-500'
                     }`}>
                       {dl.speaker}
                     </span>
