@@ -1,213 +1,72 @@
-# vibe.web — 个人学习与计划助手
+# vibe.web
 
-> 专为 HKUST-GZ 碳中和与绿色金融硕士设计的个人网站，融合**每日英语学习**与**每日计划管理**。
+**Academic Research Desk · 个人英语学习与每日计划助手**
 
-🌐 线上地址：https://vibe-web-production-1f28.up.railway.app（建议手机电脑都收藏这个链接）
+围绕碳中和与绿色金融学习，把日常口语、专业词汇、论文阅读和每日任务放在同一个学习桌面。为 HKUST-GZ 碳中和与绿色金融硕士的个人学习场景设计。
 
----
+[访问网站](https://vibe-web-production-1f28.up.railway.app) · [使用指南](docs/USAGE.md) · [本地开发](docs/DEVELOPMENT.md) · [Notion 与 AI 配置](docs/INTEGRATIONS.md) · [设计规范](DESIGN.md)
 
-## 📖 这是什么？
+![Study Desk 首页：本周论文、今日学习重点、任务进度与下一步入口](docs/images/study-desk.png)
 
-vibe.web 是一个轻量级的个人效率工具，解决两件事：
+*本地新版首页预览，使用内置示例学习材料。*
 
-1. **英语学习** — 每天推送日常对话 + 碳中和/绿色金融专业英语（词汇 + 文献段落）
-2. **每日计划** — 追踪每日任务，用连胜机制给你正反馈
+## 一个学习桌面，四个入口
 
-所有学习内容可一键推送到 **Notion**，在 Notion 中学习。
+| 页面 | 用途 |
+| --- | --- |
+| **Study Desk** `/` | 查看本周论文、今日学习重点、任务进度和下一步入口 |
+| **Learn** `/learn` | 日常对话、论文词汇、阅读片段，以及本周已生成的学习记录 |
+| **Plans** `/plans` | 添加、完成和拖动排序任务；从任务池复用常见计划 |
+| **Settings** `/settings` | 切换主题、查看活动统计、配置 Notion 和 DeepSeek |
 
----
+## 核心功能
 
-## 🚀 功能速览
+- **每日口语**：七类生活场景轮换，中英对照、常用表达和练习提示；可选 DeepSeek 生成，未配置或生成失败时使用内置内容。
+- **每周论文学习**：同一篇论文贯穿一周，词汇与阅读来自同一条材料；按天分配阅读、词汇和讨论，并附论文元数据与 DOI。
+- **每日计划**：学习内容可在当天首次初始化时生成三项任务，支持手动任务、任务池、拖动排序、完成反馈与连续活跃天数。
+- **Notion 集成**：保存学习材料；配置启用后，访问学习页面时也会尝试自动推送。任务创建和完成切换会尝试向计划数据库追加记录。
+- **主题与布局**：Light / Dark / System 三种主题，桌面侧栏和移动端导航，纸白与深蓝的学术桌面风格。
 
-### 🏠 首页 Dashboard
-- 今日日期 + 学习桌面标题
-- Today's Focus — 每日重点阅读文献（navy 加粗左边框）
-- 任务完成进度条（今日完成 X/Y）
-- 连续学习天数（Streak）展示
-- 今日学习内容预览（对话 / 词汇 / 文献）
-- 今日任务清单（可勾选完成）
+自动推送由页面访问触发，当前没有每日定时调度。论文材料来自内置学习库，来源原文和引文使用应沿 DOI 回到原论文核对。完整说明见 [使用指南](docs/USAGE.md)。
 
-### 📚 Learn — 英语学习
-三种内容类型，每日自动轮换：
+## 本地运行
 
-| 类型 | 内容 | 更新频率 |
-|------|------|----------|
-| 💬 日常对话 | 港科广校园场景（课堂讨论、小组项目、展示汇报） | 每日 |
-| 📝 专业词汇 | 碳市场、绿色金融、ESG、学术研究术语 | 每日 |
-| 📄 文献段落 | 经济学人/HBR 风格的专业文章 + 讨论问题 | 每周（每日分块学习） |
-
-每篇内容包括：
-- 英文原文
-- 关键词汇表（中英对照）
-- 讨论问题（帮助思考）
-- 一键推送到 Notion 按钮
-
-### ✅ Plans — 每日计划
-- ➕ 添加今日任务
-- ☑️ 勾选完成任务（🎉 纸屑动画反馈）
-- 🔥 连胜 Streak 追踪（连续完成任务天数）
-- 🏆 成就徽章（3天🔥 / 7天⭐ / 14天👑 / 30天🏆）
-- 📊 历史统计（热力图 + 周/月总结）
-- 🤖 学习内容自动生成为今日任务（无需手动添加）
-
-### 🏠 Home — 今日布局
-按优先级从上到下：
-1. **Today's Focus** — 今日重点阅读文章（navy 左边框高亮），附带 Open Reading 快捷入口
-2. **Progress & Streak** — 任务进度条 + 连续学习天数
-3. **Today's Tasks** — 今日任务清单（可勾选完成，全部完成触发纸屑动画）
-4. **Learning Queue** — 三个学习卡片（Speaking / Vocabulary / Reading）
-
-### 💬 对话知识卡片
-点 **Read full →** 进入详情页后可看到：
-- **对话气泡** — 教授/同学气泡靠左，你的气泡靠右（navy 强调色）
-- **词汇卡片** — 带 IPA 国际音标 + 中英释义双列展示
-- **全文翻译** — 对照阅读区域
-
-### 🃏 词汇卡片切换
-词汇详情页采用**卡片式浏览**：
-- 每张卡片显示一个词汇（术语 → [音标] → 定义 → Example → 中文）
-- ◀ ▶ 按钮 + 圆点进度指示器切换
-- 🌀 弹性弹簧切换动画
-
-### 📝 词汇音标
-所有词汇内容（对话/词汇专题/文献）均标注 **IPA 国际音标**，方便发音学习。
-
-### 📚 专业词汇覆盖
-基于港科广 CNGF 硕士课程定制的 5 套词汇专题：
-`Carbon Pricing & Trading` · `Carbon Accounting` · `ESG Investing` · `Climate Science & Policy` · `Energy Economics`
-
-### ⚙️ Settings — 设置
-- **Appearance** — Light / Dark / System 三选一主题
-- **Notion Integration** — 配置 Token + 数据库 ID，启用/禁用自动推送
-- **About** — 应用版本及介绍
-
----
-
-## 🔗 Notion 集成
-
-### 前置条件
-1. 有一个 Notion 账号
-2. 创建两个 Notion Database：
-
-**英语学习 Database**：
-| 属性名 | 类型 | 说明 |
-|--------|------|------|
-| Date | Date | 日期 |
-| Type | Select | conversation / vocabulary / passage |
-| Title | Title | 标题 |
-| Tags | Multi-select | 标签 |
-| Status | Select | ready / studying / reviewed |
-
-**每日计划 Database**：
-| 属性名 | 类型 | 说明 |
-|--------|------|------|
-| Date | Date | 日期 |
-| Task | Title | 任务名称 |
-| Status | Select | pending / completed |
-| CompletedAt | Date | 完成时间 |
-
-### 配置步骤
-1. 访问 https://www.notion.so/profile/integrations
-2. 创建新的 Integration，获取 Token
-3. 在 Notion 中创建上述两个 Database
-4. 每个 Database 点击右上角 `···` → `Add connections` → 选择你的 Integration
-5. 从 Database URL 中复制 ID（32位字符串）
-6. 在 vibe.web → Settings 页面填入 Token 和 DB ID
-
----
-
-## 💻 本地开发
-
-### 环境要求
-- Node.js ≥ 20.9
-- npm 或 yarn
-
-### 快速开始
+需要 **Node.js ≥ 20.9** 和 npm。无需 Notion 或 AI 密钥即可使用基本学习与计划功能。
 
 ```bash
-# 克隆项目
 git clone https://github.com/biechouwo-coder/vibe-web.git
 cd vibe-web
 
-# 安装依赖
-npm install
+# 已有 .env 时保留原配置，只补充 DATABASE_URL。
+cat > .env <<'EOF'
+DATABASE_URL="file:./dev.db"
+EOF
 
-# 初始化数据库
-npx prisma generate
+npm ci
 npx prisma db push
-
-# 启动开发服务器
 npm run dev
 ```
 
-打开 http://localhost:3000
+打开 [localhost:3000](http://localhost:3000)。`.env` 与本地数据库已被 Git 忽略；依赖安装会生成 Prisma Client。更多命令和 PostgreSQL 部署说明见 [开发指南](docs/DEVELOPMENT.md)。
 
-### 环境变量
+## 文档导航
 
-创建 `.env.local`：
+| 文档 | 内容 |
+| --- | --- |
+| [使用指南](docs/USAGE.md) | 每日操作流程、每周学习安排、任务与历史记录 |
+| [集成配置](docs/INTEGRATIONS.md) | Notion 字段、环境变量、DeepSeek 配置、推送行为 |
+| [开发指南](docs/DEVELOPMENT.md) | 环境准备、目录结构、构建、数据库与部署 |
+| [设计规范](DESIGN.md) | 视觉方向、色彩、排版和组件约束 |
+| [代码协作规则](AGENTS.md) | 修改代码前应阅读的框架说明 |
 
-```env
-DATABASE_URL="file:./dev.db"
+## 技术栈
 
-# Notion（可选）
-NOTION_INTEGRATION_TOKEN=ntn_xxx
-NOTION_ENGLISH_DB_ID=xxx
-NOTION_PLANS_DB_ID=xxx
+Next.js 16 / React 19 / TypeScript / Tailwind CSS 4 / Framer Motion / dnd-kit / Prisma 6。SQLite 用于本地开发，PostgreSQL 用于 Railway 部署；Notion 与 DeepSeek 为可选集成。
 
-# DeepSeek（可选，AI 对话内容生成用）
-DEEPSEEK_API_KEY=sk-xxx
-```
+## 待完善
 
----
+- 页面访问之外的每日定时推送。
+- 上传和管理自定义学习材料。
+- 校验内置论文摘录的原文对应关系。
 
-## 🏗️ 技术栈
-
-| 技术 | 用途 |
-|------|------|
-| **Next.js 16** (App Router) | 框架 |
-| **TypeScript** | 类型安全 |
-| **Tailwind CSS 4** | 样式 |
-| **Framer Motion** | 动画 |
-| **Prisma** | ORM |
-| **SQLite** | 数据库（本地开发） |
-| **@notionhq/client** | Notion API |
-| **Railway** | 云部署 |
-
----
-
-## 📁 项目结构
-
-```
-src/
-├── app/                    # 页面路由
-│   ├── page.tsx            # 首页 Dashboard
-│   ├── learn/              # 英语学习
-│   ├── plans/              # 每日计划
-│   └── settings/           # 设置
-├── components/
-│   ├── layout/             # 导航栏、进度条
-│   ├── learn/              # 学习卡片
-│   ├── plans/              # 任务组件
-│   └── ui/                 # 动画、徽章、加载
-├── actions/
-│   ├── learn.ts            # 学习相关 Server Actions
-│   └── plans.ts            # 计划相关 Server Actions
-└── lib/
-    ├── prisma.ts           # Prisma 客户端
-    ├── notion.ts           # Notion API 封装
-    └── content.ts          # 学习内容库
-```
-
----
-
-## 🗺️ 后续规划
-
-- [x] **暗色/亮色模式** — 已支持三种主题：Light / Dark / System
-- [x] **AI 内容生成** — 接入 DeepSeek API 每日自动生成对话内容（Settings 页面配置密钥）
-- [x] **PostgreSQL 迁移** — 已用 Railway 内置 PostgreSQL 替代 SQLite，数据持久化
-- [ ] **定时推送** — 每天自动推送到 Notion（无需手动点击）
-- [ ] **自定义学习内容** — 用户可上传自己的学习材料
-
----
-
-*Built with Next.js · Deployed on Railway · ☕ powered by caffeine and curiosity*
+以上为后续方向，尚未作为已完成功能提供。

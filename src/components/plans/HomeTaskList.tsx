@@ -150,6 +150,9 @@ function SortableTaskRow({ task, onToggle }: { task: TaskWithMeta; onToggle: (id
       {/* Checkbox */}
       <button
         onClick={() => onToggle(task.id)}
+        role="checkbox"
+        aria-checked={task.completed}
+        aria-label={task.title}
         className="shrink-0 flex h-4 w-4 items-center justify-center rounded border transition-colors"
         style={{
           borderColor: task.completed ? 'var(--academic-navy)' : 'var(--text-soft)',
