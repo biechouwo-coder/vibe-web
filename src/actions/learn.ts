@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { getAllTodaysContent } from '@/lib/content'
-import { getNotionConfig as getNotionConfigFromLib, getNotionClient, pushEnglishContent } from '@/lib/notion'
+import { getNotionConfig as getNotionConfigFromLib, pushEnglishContent } from '@/lib/notion'
 import { prisma } from '@/lib/prisma'
 import { getShanghaiDate, getShanghaiDayOfWeek } from '@/lib/date'
 
@@ -51,17 +51,13 @@ export async function getContentHistory(limit = 50) {
 }
 
 export async function getNotionConfig() {
-  // Try env vars first, fall back to DB (Settings page)
-  const envConfig = await getNotionConfigFromLib()
-  if (envConfig?.hasToken) return envConfig
-
-  const config = await prisma.notionConfig.findFirst()
+  const config = await getNotionConfigFromLib()
   if (!config) return null
   return {
     dbEnglish: config.dbEnglish,
     dbPlans: config.dbPlans,
     enabled: config.enabled,
-    hasToken: Boolean(config.token),
+    hasToken: config.hasToken,
   }
 }
 
@@ -95,14 +91,16 @@ export async function saveNotionConfig(formData: FormData) {
 
 export async function getAiConfig() {
   const envKey = process.env.DEEPSEEK_API_KEY
-  if (envKey) return { apiKey: envKey, enabled: true, hasEnvKey: true }
+  if (envKey) return { hasApiKey: true, enabled: true, hasEnvKey: true }
 
   const config = await prisma.aiConfig.findFirst()
-  return config ?? { id: 'default', apiKey: null, enabled: false }
+  return { hasApiKey: Boolean(config?.apiKey), enabled: config?.enabled ?? false, hasEnvKey: false }
 }
 
 export async function saveAiConfig(formData: FormData) {
-  const apiKey = formData.get('apiKey')?.toString().trim() || null
+  const existing = await prisma.aiConfig.findFirst()
+  const input = formData.get('apiKey')?.toString().trim() ?? ''
+  const apiKey = formData.get('clearKey') === 'on' ? null : input || existing?.apiKey || null
   const enabled = formData.get('enabled') === 'on'
 
   await prisma.aiConfig.upsert({

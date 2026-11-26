@@ -5,7 +5,7 @@ import { saveAiConfig } from '@/actions/learn'
 
 interface AiSettingsFormProps {
   config: {
-    apiKey: string | null
+    hasApiKey: boolean
     enabled: boolean
     hasEnvKey?: boolean
   } | null
@@ -38,15 +38,22 @@ export default function AiSettingsForm({ config }: AiSettingsFormProps) {
           id="aiKey"
           name="apiKey"
           type="password"
-          placeholder={config?.apiKey ? '••••••••••••••••' : 'sk-xxxxxxxxxxxx'}
+          placeholder={config?.hasApiKey ? '••••••••••••••••' : 'sk-xxxxxxxxxxxx'}
           className="mt-1 w-full rounded-[var(--radius-control)] border border-stone-200 bg-stone-50 px-3 py-2 text-sm outline-none focus:border-[var(--academic-navy)] dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200"
         />
-        {config?.apiKey && (
+        {config?.hasApiKey && (
           <p className="mt-1 text-xs text-[var(--academic-navy)] dark:text-[var(--academic-navy)]">
             Key saved. Leave blank to keep the current key.
           </p>
         )}
       </div>
+
+      {config?.hasApiKey && (
+        <label className="flex items-center gap-2">
+          <input name="clearKey" type="checkbox" className="h-4 w-4" />
+          <span className="text-sm text-[var(--academic-red)]">Clear saved key</span>
+        </label>
+      )}
 
       <label className="flex items-center gap-2">
         <input

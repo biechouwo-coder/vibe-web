@@ -190,7 +190,7 @@ function splitSentences(text: string): string[] {
   const result: string[] = []
   // Match sentences ending with punctuation followed by a space or end-of-string.
   // Handles common abbreviations by requiring the next word to start with a capital.
-  let remaining = text.trim()
+  const remaining = text.trim()
   const re = /[.?!](?:\s+|$)/g
   let match: RegExpExecArray | null
   let prevEnd = 0
@@ -372,8 +372,6 @@ export async function getAllTodaysContent() {
   try {
     const date = getShanghaiDate()
     const reading = getWeeklyReadingItem()
-    const ci = getChunkIndex()
-
     const needsSeed = await (async () => {
       const anyTask = await prisma.task.findFirst({ where: { date } })
       if (anyTask) return false

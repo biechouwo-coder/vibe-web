@@ -7,12 +7,17 @@
     "build": "node scripts/build.js",
     "start": "node scripts/start.js",
     "lint": "eslint",
-    "postinstall": "node -e \"var u=process.env.DATABASE_URL||'';var s=u.startsWith('postgresql://')?'--schema=prisma/schema.postgres.prisma':'';require('child_process').execSync('npx prisma generate '+s,{stdio:'inherit',env:process.env})\""
+    "postinstall": "node scripts/database.js generate",
+    "db:generate": "node scripts/database.js generate",
+    "db:push": "node scripts/database.js push",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@next/env": "16.2.5",
     "@notionhq/client": "^5.20.0",
     "@prisma/client": "^6.19.3",
     "framer-motion": "^12.38.0",

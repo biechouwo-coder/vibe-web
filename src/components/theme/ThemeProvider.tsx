@@ -24,8 +24,10 @@ export const useTheme = () => useContext(ThemeContext)
 
 function getStored(): Theme {
   if (typeof window === 'undefined') return 'system'
-  const v = localStorage.getItem(STORAGE_KEY) as Theme | null
-  if (v === 'light' || v === 'dark' || v === 'system') return v
+  try {
+    const v = localStorage.getItem(STORAGE_KEY) as Theme | null
+    if (v === 'light' || v === 'dark' || v === 'system') return v
+  } catch { /* Storage can be unavailable in restricted browser sessions. */ }
   return 'system'
 }
 

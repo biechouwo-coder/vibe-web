@@ -125,15 +125,12 @@ function ConversationDetail({ content, handlePush }: { content: DailyContentWith
   const isNewFormat = !!topic
   let legacyDialog: { speaker: string; message: string; isYou: boolean; chinese: string; isNarrative: boolean }[] = []
   let legacyVocab = ''
-  let legacyTrans = ''
 
   if (!isNewFormat) {
     const old = content.content.match(/\*\*Dialogue:\*\*([\s\S]*?)(?=\*\*Key Vocabulary:\*\*|\*\*Translation:\*\*|$)/)
     legacyDialog = old ? parseDialogueLines(old[1].trim()) : []
     const v = content.content.match(/\*\*Key Vocabulary:\*\*([\s\S]*?)(?=\*\*Translation:\*\*|$)/)
     legacyVocab = v ? v[1].trim() : ''
-    const t = content.content.match(/\*\*Translation:\*\*([\s\S]*?)$/)
-    legacyTrans = t ? t[1].trim() : ''
   }
 
   const scene = getSceneStyle(content.tags, topic)

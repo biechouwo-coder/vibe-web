@@ -1,21 +1,12 @@
-// Build script: detect database type and run Prisma generate + Next build
-const { execSync } = require('child_process')
-const path = require('path')
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { execFileSync } = require('node:child_process')
+const { databaseSettings, runPrisma } = require('./database')
 
-const url = process.env.DATABASE_URL || ''
-const isPostgres = url.startsWith('postgresql://')
-const schemaFlag = isPostgres ? '--schema=prisma/schema.postgres.prisma' : ''
-const dbLabel = isPostgres ? 'PostgreSQL' : 'SQLite'
-
-console.log(`[build] Detected ${dbLabel} (DATABASE_URL=${url ? url.slice(0, 30) + '...' : '(unset)'})`)
-
-execSync(`npx prisma generate ${schemaFlag}`.trim(), {
+const settings = databaseSettings()
+console.log(`[build] Using ${settings.label}`)
+runPrisma(['generate'], settings)
+execFileSync(process.execPath, [require.resolve('next/dist/bin/next'), 'build'], {
+  cwd: settings.rootDir,
+  env: settings.env,
   stdio: 'inherit',
-  env: process.env,
-  cwd: path.resolve(__dirname, '..'),
-})
-execSync('npx next build', {
-  stdio: 'inherit',
-  env: process.env,
-  cwd: path.resolve(__dirname, '..'),
 })

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useMemo, useEffect } from 'react'
+import { useState, useCallback, useMemo, useOptimistic, useTransition } from 'react'
 import { motion } from 'framer-motion'
 import {
   DndContext,
@@ -27,44 +27,40 @@ interface TaskListProps {
 }
 
 export default function TaskList({ tasks: initialTasks }: TaskListProps) {
-  const [tasks, setTasks] = useState(initialTasks)
+  const [tasks, setTasks] = useOptimistic(initialTasks)
+  const [, startTransition] = useTransition()
   const [showConfetti, setShowConfetti] = useState(false)
 
-  // Sync when RSC revalidates (e.g. template added to today)
-  useEffect(() => { setTasks(initialTasks) }, [initialTasks])
-
-  const handleToggle = useCallback(async (taskId: string) => {
+  const handleToggle = useCallback((taskId: string) => {
     const task = tasks.find((t) => t.id === taskId)
     if (!task) return
+    const celebrate = !task.completed && tasks.filter((t) => !t.completed).length === 1
 
-    await toggleTask(taskId)
-
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === taskId ? { ...t, completed: !t.completed } : t
-      )
-    )
-
-    const remainingIncomplete = tasks.filter((t) => !t.completed).length
-    if (!task.completed && remainingIncomplete === 1) {
-      setShowConfetti(true)
-      setTimeout(() => setShowConfetti(false), 3000)
-    }
-  }, [tasks])
+    startTransition(async () => {
+      setTasks((prev) => prev.map((t) => t.id === taskId
+        ? { ...t, completed: !t.completed, completedAt: !t.completed ? new Date() : null }
+        : t))
+      await toggleTask(taskId)
+      if (celebrate) {
+        setShowConfetti(true)
+        setTimeout(() => setShowConfetti(false), 3000)
+      }
+    })
+  }, [tasks, setTasks])
 
   const handleDragEnd = useCallback((event: DragEndEvent) => {
     const { active, over } = event
     if (!over || active.id === over.id) return
+    const oldIndex = tasks.findIndex((t) => t.id === active.id)
+    const newIndex = tasks.findIndex((t) => t.id === over.id)
+    if (oldIndex < 0 || newIndex < 0) return
+    const reordered = arrayMove(tasks, oldIndex, newIndex)
 
-    setTasks((prev) => {
-      const taskIds = prev.map((t) => t.id)
-      const oldIndex = taskIds.indexOf(active.id as string)
-      const newIndex = taskIds.indexOf(over.id as string)
-      const reordered = arrayMove(prev, oldIndex, newIndex)
-      reorderTasks(reordered.map((t) => t.id))
-      return reordered
+    startTransition(async () => {
+      setTasks(reordered)
+      await reorderTasks(reordered.map((t) => t.id))
     })
-  }, [])
+  }, [tasks, setTasks])
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
