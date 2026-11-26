@@ -4,7 +4,7 @@
 ```bash
 npm run dev          # dev server (localhost:3000)
 npm run build        # node scripts/build.js (auto-detects PostgreSQL or SQLite → prisma generate + next build)
-npm start            # node scripts/start.js (auto-detects → prisma db push + next start)
+npm start            # loads env → non-destructive prisma db push → next start; exits on sync failure
 npx prisma studio    # DB GUI
 ```
 
@@ -16,7 +16,7 @@ npx prisma studio    # DB GUI
 - **Migrations:** `prisma/migrations/20260507091401_init/` + `20260510091002_add_unique_constraints/`
 - **Styling:** Tailwind CSS 4, class-based dark mode via `@custom-variant dark` + `html.dark`
 - **Animations:** Framer Motion — `useReducedMotion()` used; cards use `initial={false}`; page transitions via `PageTransition.tsx` (AnimatePresence + key=pathname)
-- **Database switching:** `scripts/build.js` + `scripts/start.js` auto-detect DATABASE_URL: `postgresql://` → uses `prisma/schema.postgres.prisma`, otherwise uses default `schema.prisma` (SQLite)
+- **Database switching:** `scripts/database.js` loads env files before install/build/start and selects DATABASE_URL: `postgresql://` or `postgres://` → uses `prisma/schema.postgres.prisma`, otherwise uses default `schema.prisma` (SQLite)
 - **Deploy:** Railway (auto-deploy from GitHub `master`)
 
 ## UI Components
@@ -54,7 +54,7 @@ npx prisma studio    # DB GUI
 - Task sort: `orderBy: [{ completed: 'asc' }, { sortOrder: 'asc' }]` — completed sink to bottom (both HomeTaskList sorted client-side too)
 - Sidebar nav: active item = `text-[10px] font-semibold` + navy left bar spring (`layoutId="nav-bar"`, `w-0.5`); inactive = `text-[10px] text-[var(--text-muted)]`
 - Academic keywords: `src/lib/academic-keywords.ts` — shared by DailyCard and ContentDetail
-- Notion API: `src/lib/notion.ts`; config returns `hasToken: boolean`, never raw token
+- Notion API: `src/lib/notion.ts`; internal helpers are server-only; settings actions in `src/actions/learn.ts` return `hasToken` / `hasApiKey`, never raw credentials
 - VocabCards: `src/components/learn/VocabCards.tsx` (academic glossary, 40px slide, reduced-motion aware)
 
 ## Content Library (`src/lib/content.ts`)

@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 
-import { getTodaysTasks, getStreak, getTemplates } from '@/actions/plans'
+import { getTodaysTasks, getTemplates } from '@/actions/plans'
 import { getShanghaiDateSeed } from '@/lib/date'
 import { getGreeting } from '@/lib/greetings'
 import AddTaskForm from '@/components/plans/AddTaskForm'
@@ -28,7 +28,6 @@ export default async function PlansPage() {
     })
     templates = await getTemplates()
   }
-  const streak = await getStreak()
   const seed = getShanghaiDateSeed()
   const greeting = getGreeting(seed * 13 + seed) // mix the seed for more variety
 

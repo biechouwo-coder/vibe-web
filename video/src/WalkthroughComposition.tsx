@@ -1,5 +1,5 @@
 import React from 'react'
-import { AbsoluteFill, Sequence, useVideoConfig, Audio } from 'remotion'
+import { AbsoluteFill, Sequence, useVideoConfig } from 'remotion'
 import { ScreenSlide } from './ScreenSlide'
 import screens from '../screens.json'
 
@@ -11,14 +11,13 @@ export const WalkthroughComposition: React.FC = () => {
     0
   )
 
-  let frameOffset = 0
-
   return (
     <AbsoluteFill style={{ backgroundColor: '#faf8f3' }}>
       {screens.screens.map((screen, index) => {
         const durationInFrames = screen.durationInSeconds * fps
-        const currentOffset = frameOffset
-        frameOffset += durationInFrames
+        const currentOffset = screens.screens.slice(0, index).reduce(
+          (frames, previous) => frames + previous.durationInSeconds * fps, 0
+        )
 
         return (
           <Sequence

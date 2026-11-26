@@ -15,6 +15,8 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 
 所有学习内容可一键推送到 **Notion**，在 Notion 中学习。
 
+这是单用户工具，目前没有内置登录或用户隔离。公网部署应先通过平台访问控制或认证反向代理限制访问；仅设置 API 密钥不等于开启登录保护。
+
 ---
 
 ## 🚀 功能速览
@@ -120,7 +122,7 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 
 ### 环境要求
 - Node.js ≥ 20.9
-- npm 或 yarn
+- npm（仓库提供 `package-lock.json`，使用 `npm ci`）
 
 ### 快速开始
 
@@ -129,12 +131,12 @@ vibe.web 是一个轻量级的个人效率工具，解决两件事：
 git clone https://github.com/biechouwo-coder/vibe-web.git
 cd vibe-web
 
-# 安装依赖
-npm install
+# 创建本地配置，再安装锁定版本依赖
+cp .env.example .env
+npm ci
 
-# 初始化数据库
-npx prisma generate
-npx prisma db push
+# 初始化本地数据库
+npm run db:push
 
 # 启动开发服务器
 npm run dev
@@ -144,19 +146,37 @@ npm run dev
 
 ### 环境变量
 
-创建 `.env.local`：
+复制 `.env.example` 为 `.env` 并修改。这样 Prisma CLI 和 Next.js 都能读取相同的本地配置：
 
 ```env
 DATABASE_URL="file:./dev.db"
 
 # Notion（可选）
-NOTION_INTEGRATION_TOKEN=ntn_xxx
+NOTION_TOKEN=ntn_xxx
 NOTION_ENGLISH_DB_ID=xxx
 NOTION_PLANS_DB_ID=xxx
 
 # DeepSeek（可选，AI 对话内容生成用）
 DEEPSEEK_API_KEY=sk-xxx
 ```
+
+### 常用检查
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm start
+```
+
+`npm run build` 和 `npm start` 会先加载环境文件，再根据 `DATABASE_URL` 选择 SQLite 或 PostgreSQL schema；支持 `postgres://` 和 `postgresql://`。构建日志不打印数据库连接串。Next.js 构建会下载 Google Fonts，需要联网。
+
+`npm run db:push` 会为首次运行准备缺失的本地 SQLite 文件，不覆盖已有文件。`npm start` 会运行未启用 `--accept-data-loss` 的 `prisma db push`。如果 schema 变更可能丢失数据，启动将中止；请先备份并审查迁移，不要直接忽略提示。SQLite 文件需要持久存储，生产环境可使用 PostgreSQL。仓库没有提供 PostgreSQL 的版本化迁移记录，`db push` 不能替代生产迁移审查。
+
+设置页只向浏览器传递密钥是否已配置；密钥仍以明文保存在服务端数据库或环境变量中。留空保存会保留已有密钥，勾选清除才会删除。
+
+`video/` 是独立的 Remotion 视频草稿，不参与网站 TypeScript 构建；其依赖与素材尚未配置为可重复构建流程。
 
 ---
 
@@ -211,3 +231,10 @@ src/
 ---
 
 *Built with Next.js · Deployed on Railway · ☕ powered by caffeine and curiosity*
+
+## 本次维护验证（2026-11-26）
+
+- ESLint、TypeScript、6 项回归测试及 Next.js 生产构建通过。
+- 在独立的本地 SQLite 数据库上验证了首次初始化、启动以及首页、Plans、Learn、Settings、历史页的 HTTP 200 响应。
+- 无头 Chrome 验证了密钥不进入设置页、留空保存密钥、创建任务、在 Plans 和首页切换完成状态、刷新后保留状态和删除任务。使用的是禁用集成的测试占位密钥，没有调用真实 Notion 或 DeepSeek 账号。
+- PostgreSQL 实例、真实 Notion 推送与 DeepSeek 生成尚未进行端到端验证；这次没有更改线上配置或数据库。
